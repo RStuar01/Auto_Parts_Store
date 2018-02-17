@@ -1,5 +1,9 @@
 package DatabaseLayer;
 
+import BusinessLayer.Customer;
+import BusinessLayer.Employee;
+import BusinessLayer.Supplier;
+
 // List imports
 
 /**
@@ -11,5 +15,27 @@ package DatabaseLayer;
 public interface DataReader {
 
 	// List methods used to read the database.
+	
+	// obtainCustomerInformation
+	public Customer obtainCustomerInformation(String lastName, String firstName,
+			String phoneNumber);
+	
+	// obtainEmployeeInformation
+	public Employee obtainEmployeeInformation(String lastName, String firstName,
+			String phoneNumber);
+	
+	// obtainSupplierInformation
+	public Supplier obtainSupplierInformation(String lastName, String firstName,
+			String phoneNumber);
+	
+	// obtainCompanyInformtion
+	
+	// obtainInvoiceInformation
+	// obtainInvoiceLineItemInformation
+	
+	// obtainProductInformation
+	
+	// obtainAccountingPurchasesInformation
+	// obtainAccountingSalesInformation
 	
 }

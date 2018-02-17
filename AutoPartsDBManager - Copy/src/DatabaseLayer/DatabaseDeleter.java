@@ -59,9 +59,9 @@ public class DatabaseDeleter implements DeleterDAO {
 		}
 		
 		//String url = "jdbc:mysql://localhost:3306/mydb";
-		String url = "jdbc:mysql://localhost:3306/auto_parts_schema";
-		String username = "root";
-		String password = "rick6022";
+		String url = "jdbc:mysql://127.0.0.1:3306/auto_parts_schema";
+		String username = "autouser";
+		String password = "autouser";
 		
 		try {
 			connection = DriverManager.getConnection(url, username, password);
