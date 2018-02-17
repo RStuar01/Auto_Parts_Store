@@ -18,12 +18,12 @@ public class InvoiceLineItem {
 	private String productID;
 	
 	// Default Constructor
-	InvoiceLineItem() {
+	public InvoiceLineItem() {
 		this("", "", "", "");
 	}
 	
 	// Overloaded Constructor
-	public InvoiceLineItem(String invoiceLineNumber, String invoiceNumber,
+	InvoiceLineItem(String invoiceLineNumber, String invoiceNumber,
 			String quantityPurchased, String productID) {
 		this.invoiceLineNumber = invoiceLineNumber;
 		this.invoiceNumber = invoiceNumber;
@@ -62,7 +62,7 @@ public class InvoiceLineItem {
 	
 	@Override
 	public String toString() {
-		return invoiceNumber + ", " + invoiceLineNumber + ", " +
-				quantityPurchased + ", " + productID;
+		return productID + ", " + invoiceNumber + ", " + invoiceLineNumber + ", " +
+				quantityPurchased;
 	}
 }

@@ -17,7 +17,7 @@ public class AccountingPurchases {
 	private String productID;
 	
 	// Default Constructor
-	AccountingPurchases() {
+	public AccountingPurchases() {
 		this("", "", "", "");
 	}
 	

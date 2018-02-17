@@ -1,8 +1,5 @@
 package DatabaseLayer;
 
-import BusinessLayer.Company;
-import BusinessLayer.Product;
-
 /**
  * Interface Name:		ReaderDAO
  * Description:			This interface provides the data access object used to implement

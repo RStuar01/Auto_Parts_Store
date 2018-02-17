@@ -13,6 +13,7 @@ public class Supplier extends People {
 	// Fields
 	private String supplierID;
 	private String companyID;
+	private String companyName;
 	
 	// Default Constructor
 	public Supplier() {
@@ -48,6 +49,14 @@ public class Supplier extends People {
 	
 	public String getCompanyID() {
 		return companyID;
+	}
+	
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	
+	public String getCompanyName() {
+		return companyName;
 	}
 	
 	@Override

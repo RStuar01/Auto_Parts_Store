@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import BusinessLayer.Product;
-
 /**
  * Class Name:		WriteHelper
  * Description:		This class contains the methods called from the DatabaseWriter class
@@ -18,8 +16,7 @@ import BusinessLayer.Product;
 public class WriteHelper {
 	
 	private Connection connObj = null;
-	private static ReaderDAO readerDAO;
-	
+
 	/**
 	 * Constructor called from the DatabaseWriter class to create an instance of this class.
 	 */
@@ -591,74 +588,8 @@ public class WriteHelper {
 		}
 				
 		DatabaseWriter.closeConnection(connObj);
-	}
-	
-	public boolean verifyProductInDatabase(Product p) {
-		
-		boolean exists = false;
-		
-		String productID = p.getProductID();
-		
-		System.out.println("In verifyProducts");
-		readerDAO = DAOFactory.getReaderDAO();
-		Product existingProduct = readerDAO.lookupProduct(productID);
-		
-		
-		
-		
-		if(p.getProductID().equalsIgnoreCase(existingProduct.getProductID())) {
-			if(p.getDescription().equalsIgnoreCase(existingProduct.getDescription())) {
-				if(p.getYearMinimum().equalsIgnoreCase(existingProduct.getYearMinimum())) {
-					if(p.getYearMaximum().equalsIgnoreCase(existingProduct.getYearMaximum())) {
-						if(p.getMake().equalsIgnoreCase(existingProduct.getMake())) {
-							if(p.getModel().equalsIgnoreCase(existingProduct.getModel())) {
-								exists = true;
-								System.out.println("Boolean set");
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		return exists;
-	}
-	
-	public void writeIncomingProduct(Product product, String productID) {
-		
-		String quantityArriving = "";
-		String oldQuantity = "";
-		int newQuantity = 0;
-		
-		System.out.println("Writing product");
-		String update = null;
-		 
-		System.out.println("Quantity arriving: " + product.getQuantityInStock());
-		oldQuantity = readerDAO.getQuantityInStock(productID);
-		System.out.println("oldQuantity = " + oldQuantity);
-		
-		quantityArriving = product.getQuantityInStock();
-		productID = product.getProductID();
-		newQuantity = Integer.parseInt(oldQuantity) + Integer.parseInt(quantityArriving);
-		
-		// Need to verify that does not exceed maxQuantity
-		
-		update = "UPDATE product "
-				+ "SET quantity_in_stock = " + newQuantity
-				+ " WHERE product = " + productID + ";";
-		
-		Statement stmt = null;
-		
-		connObj = DatabaseWriter.getDBConnection();
-								
-		try {
-			stmt = connObj.createStatement();
-			stmt.executeUpdate(update);
-		}
-		catch (SQLException e) {
-			System.out.println(e.toString());
-		}
 				
-		DatabaseWriter.closeConnection(connObj);
+		
+		
 	}
 }

@@ -76,6 +76,6 @@ public class Invoice {
 	
 	@Override
 	public String toString() {
-		return invoiceNumber + "-" + date + " " + time;
+		return invoiceNumber;
 	}
 }

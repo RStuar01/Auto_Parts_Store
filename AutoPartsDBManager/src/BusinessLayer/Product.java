@@ -176,6 +176,6 @@ public class Product {
 	
 	@Override
 	public String toString() {
-		return productID + ", " + description;
+		return productID;
 	}
 }

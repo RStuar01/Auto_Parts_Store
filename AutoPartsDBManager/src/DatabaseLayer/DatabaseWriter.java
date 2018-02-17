@@ -5,9 +5,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-
-import BusinessLayer.Product;
 
 // List imports
 
@@ -65,10 +62,10 @@ public class DatabaseWriter implements WriterDAO {
 		}
 		
 		//String url = "jdbc:mysql://localhost:3306/mydb";
-		String url = "jdbc:mysql://localhost:3306/auto_parts_schema";
-		String username = "root";
-		String password = "rick6022";
-		
+		String url = "jdbc:mysql://127.0.0.1:3306/auto_parts_schema";
+		String username = "autouser";
+		String password = "autouser";
+	
 		try {
 			connection = DriverManager.getConnection(url, username, password);
 		}
@@ -198,21 +195,7 @@ public class DatabaseWriter implements WriterDAO {
 		System.out.println("Sales Tax: " + salesTax);
 		writerHelper.enterAccountingSales(lineID, quantityPurchased, productID, dollarValue,
 				salesTax);
-	}
-	
-	public void writeIncomingProducts(ArrayList<Product> rfidProducts) {
 		
-		boolean exists = false;
 		
-		System.out.println("In the write method");
-		
-		for(Product p: rfidProducts) {
-			exists = writerHelper.verifyProductInDatabase(p);
-			String productID = p.getProductID();
-			if(exists) {
-				writerHelper.writeIncomingProduct(p, productID);
-				exists = false;
-			}
-		}
 	}
 }

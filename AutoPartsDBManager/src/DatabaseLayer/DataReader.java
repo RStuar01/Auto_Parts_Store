@@ -1,13 +1,7 @@
 package DatabaseLayer;
 
-import java.util.ArrayList;
-
-import BusinessLayer.Company;
 import BusinessLayer.Customer;
 import BusinessLayer.Employee;
-import BusinessLayer.Invoice;
-import BusinessLayer.InvoiceLineItem;
-import BusinessLayer.Product;
 import BusinessLayer.Supplier;
 
 // List imports
@@ -35,20 +29,12 @@ public interface DataReader {
 			String phoneNumber);
 	
 	// obtainCompanyInformtion
-	public Company obtainCompanyInformation(String companyName);
 	
 	// obtainInvoiceInformation
-	public ArrayList<Invoice> getInvoices(String customerID);
-	
 	// obtainInvoiceLineItemInformation
-	public ArrayList<InvoiceLineItem> getInvoiceLineItems(String invoiceNumber);
 	
 	// obtainProductInformation
-	public ArrayList<Product> getCompatibleProducts(String compatibilityNumber);
-	public Product lookupProduct(String productID);
-	public Product lookupProduct(String description, String year, String make,
-			String model);
-	public String getQuantityInStock(String productID);
+	
 	// obtainAccountingPurchasesInformation
 	// obtainAccountingSalesInformation
 	

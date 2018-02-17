@@ -1,11 +1,7 @@
 package PresentationLayer;
 
 import java.awt.EventQueue;
-import java.util.ArrayList;
-
 import javax.swing.UnsupportedLookAndFeelException;
-
-
 
 
 import DatabaseLayer.*;
@@ -27,15 +23,10 @@ public class AutoPartsStoreGui {
 	private static WriterDAO writerDAO;
 	private static ReaderDAO readerDAO;
 	private static DeleterDAO deleterDAO;
-	private static RFIDDAO rfidDAO;
 	
 	private static String choice = "";
 	
 	// Other local variables
-	private static ArrayList<Product> compatibleProducts;
-	private static ArrayList<Invoice> invoices;
-	private static ArrayList<InvoiceLineItem> lineItems;
-	private static ArrayList<Product> rfidProducts;
 	/*
 	 
 	
@@ -82,23 +73,6 @@ public class AutoPartsStoreGui {
 		writerDAO = DAOFactory.getWriterDAO();
 		readerDAO = DAOFactory.getReaderDAO();
 		deleterDAO = DAOFactory.getDeleterDAO();
-		rfidDAO = DAOFactory.getRFIDDAO();
-		
-		// read any incoming products
-		System.out.println("Reading new products");
-		rfidProducts = rfidDAO.ProductTextFile();
-		
-		if(rfidProducts != null) {
-			System.out.println("Products from the arraylist");
-			for(Product p: rfidProducts) {
-				System.out.println(p.toString());
-			}
-			writerDAO.writeIncomingProducts(rfidProducts);
-		}
-		else {
-			System.out.println("Products is null");
-		}
-		
 		
 		// Temporarily call manageNewPersonCreation() from here
 		choice = "Customer";
@@ -218,78 +192,18 @@ public class AutoPartsStoreGui {
 		*/
 		
 		// Read and create a Supplier object
-		/*
 		lastName = "CobblePot";
 		firstName = "Oswald";
 		phoneNumber = "111-224-7890";
 		
 		Supplier supplier = null;
 		
-		supplier = readerDAO.obtainSupplierInformation(lastName, firstName, phoneNumber);
-		People q = (People) supplier;
-		emailAddress = q.getEmailAddress();
-		System.out.println(emailAddress);
-		*/
+		//supplier = readerDAO.obtainSupplierInformation(lastName, firstName, phoneNumber);
+		//People q = (People) supplier;
+		//emailAddress = q.getEmailAddress();
+		//System.out.println(emailAddress);
 		
-		//***************************** NEW methods - 2/10/18**************
 		// Read and create a Company object
-		//WORKS
-		/*
-		System.out.println("About to read a Company");
-		String companyName = "Gotham Iron Works Ltd.";
-		Company company = null;
-		
-		company = readerDAO.obtainCompanyInformation(companyName);
-		emailAddress = company.getEmailAddress();
-		System.out.println("Email Address: " + emailAddress);
-		*/
-		
-		// lookup a product
-		// WORKS
-		/*
-		String description = "starter";
-		String year = "2013";
-		String make = "Toyota";
-		String model = "Corolla";
-		Product currentProduct = null;
-		
-		currentProduct = readerDAO.lookupProduct(description, year, make, model);
-		System.out.println("Product: " + currentProduct.toString());
-		*/
-		
-		// lookup an alternate part - need an ArrayList to hold multiples
-		//WORKS
-		/*
-		String productID = "Am123B";
-		compatibleProducts = readerDAO.getCompatibleProducts(productID);
-		
-		System.out.println("In main: \n");
-		for(Product product: compatibleProducts) {
-			System.out.println("Product: " + product.toString());
-		}
-		*/
-		
-		// lookup a customers invoices
-		//WORKS
-		/*
-		String customerID = "1";
-		invoices = readerDAO.getInvoices(customerID);
-		System.out.println("Main-Invoices ");
-		for(Invoice i: invoices) {
-			System.out.println("Invoice: " + i.toString());
-		}
-		*/
-		
-		// get the line items for an invoice
-		// WORKS
-		/*
-		String invoiceNumber = "1";
-		lineItems = readerDAO.getInvoiceLineItems(invoiceNumber);
-		System.out.println("Main-line items ");
-		for(InvoiceLineItem lineItems: lineItems) {
-			System.out.println("Line Items: " + lineItems.toString());
-		}
-		*/
 		
 	}
 	
