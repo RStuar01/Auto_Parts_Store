@@ -605,7 +605,7 @@ public static ArrayList<AccountingPurchases> obtainPurchaseList() {
 
 public static String obtainPassword(String username) {
 	
-	String query = "SELECT password FROM login WHERE " + username + " = username";
+	String query = "SELECT password FROM login WHERE username = '" + username + "'";
 	String password = "";
 	
 	Statement stmt = null;

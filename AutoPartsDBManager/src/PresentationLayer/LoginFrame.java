@@ -78,33 +78,32 @@ public class LoginFrame extends JFrame {
     private void doLoginButton() throws UnsupportedLookAndFeelException, DBException {
     	// Test login data
     	
-    	boolean login = true;
-    	
+     	
     	String password;
     	
-    	/*
-    	while (login = false)
-    	{
-    		if (usernameField.getText() != null && passwordField.getText() != null)
+    	
+    
+    		if (usernameField.getText().equals("") || passwordField.getText().equals(""))
     		{
-    			password = passwordField.getText();
-    			if (password != null)
-    			{
-    			if (password == DatabaseReader.obtainPassword(usernameField.getText()))
-    			{
-    				login = true;
-    			}
-    				else
-    				JOptionPane.showMessageDialog(this, "Username or password was incorrect.",
-                        "Invalid Login", JOptionPane.INFORMATION_MESSAGE);
-    			}
-    		else
     			JOptionPane.showMessageDialog(this, "Username or password was empty. Please enter values",
                         "Invalid Login", JOptionPane.INFORMATION_MESSAGE);
-    	}
-    	*/
+    		}
+    		else
+    		{
+    		password = passwordField.getText();
+			if (password.equals(DatabaseReader.obtainPassword(usernameField.getText())))
+			{
+				
+				AutoPartsStoreFrame gui = new AutoPartsStoreFrame();
+			}
+				else
+				JOptionPane.showMessageDialog(this, "Username or password was incorrect.",
+                    "Invalid Login", JOptionPane.INFORMATION_MESSAGE);
+    		}
     	
-    	AutoPartsStoreFrame gui = new AutoPartsStoreFrame();
+    	
+    	
+    	
     }
     
    private JPanel addLoginFields() {
