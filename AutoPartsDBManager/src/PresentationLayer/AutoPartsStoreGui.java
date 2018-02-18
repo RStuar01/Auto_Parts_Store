@@ -1,6 +1,8 @@
 package PresentationLayer;
 
 import java.awt.EventQueue;
+import java.sql.SQLException;
+
 import javax.swing.UnsupportedLookAndFeelException;
 
 
@@ -64,11 +66,21 @@ public class AutoPartsStoreGui {
 	//private static void MainAutoPartsGUI() { // changed to version below
 	/**
      * @param args the command line arguments
+	 * @throws SQLException 
      */
-    public static void main(String[] args) throws DBException, UnsupportedLookAndFeelException {
-        AutoPartsStoreFrame gui = new AutoPartsStoreFrame();
+    public static void main(String[] args) throws DBException, UnsupportedLookAndFeelException, SQLException {
+        
+    
+    		
+    		LoginFrame loginFrame = new LoginFrame();
+    	
+    
+    	
+    	
 	
-		// TODO Auto-generated method stub
+		
+    	
+    	// TODO Auto-generated method stub
 		initialize();
 		writerDAO = DAOFactory.getWriterDAO();
 		readerDAO = DAOFactory.getReaderDAO();

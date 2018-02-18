@@ -603,5 +603,32 @@ public static ArrayList<AccountingPurchases> obtainPurchaseList() {
 	return purchases;
 }
 
+public static String obtainPassword(String username) {
+	
+	String query = "SELECT password FROM login WHERE " + username + " = username";
+	String password = "";
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			password = rs.getString(1);
+		}
+		
+	}
+	
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+	
+	return password;
+}
+
 }
 
