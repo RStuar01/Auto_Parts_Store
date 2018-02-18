@@ -15,6 +15,7 @@ import BusinessLayer.Invoice;
 import BusinessLayer.InvoiceLineItem;
 import BusinessLayer.Product;
 import BusinessLayer.Supplier;
+import PresentationLayer.SalesTableModel;
 
 // List imports here
 
@@ -491,7 +492,7 @@ public static ArrayList<Product> obtainProductList() {
 
 public static ArrayList<Invoice> obtainInvoiceList() {
 	
-	String query = "SELECT * FROM invoice, invoice_line_item";
+	String query = "SELECT * FROM invoice";
 	ArrayList<Invoice> invoices = new ArrayList<>();
 	
 	Statement stmt = null;
@@ -507,18 +508,15 @@ public static ArrayList<Invoice> obtainInvoiceList() {
 			String time = rs.getString(3);
 			String customerID = rs.getString(4);
 			String employeeID = rs.getString(5);
-			String productID = rs.getString(9);
-			String quantityPurchased = rs.getString(8);
+		
 			
 			Invoice i = new Invoice();
-			InvoiceLineItem invoiceLine = new InvoiceLineItem();
 			i.setInvoiceNumber(invoiceNumber);
 			i.setDate(date);
 			i.setTime(time);
 			i.setCustomerID(customerID);
 			i.setEmployeeID(employeeID);
-			invoiceLine.setProductID(productID);
-			invoiceLine.setQuantityPurchased(quantityPurchased);
+			
 			
 			invoices.add(i);
 		}
@@ -530,6 +528,44 @@ public static ArrayList<Invoice> obtainInvoiceList() {
 	DatabaseWriter.closeConnection(connObj);
 			
 	return invoices;
+}
+
+public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemList(int invoiceNumberInput) {
+	
+		
+	String query = "SELECT * FROM invoice_line_item where invoice_invoice_number = " + (invoiceNumberInput + 1);
+	ArrayList<InvoiceLineItem> invoiceLineItems = new ArrayList<>();
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			String invoiceLineNumber = rs.getString(1);
+			String invoiceNumber = rs.getString(2);
+			String quantityPurchased = rs.getString(3);
+			String productID = rs.getString(4);
+			
+			InvoiceLineItem i = new InvoiceLineItem();
+			i.setInvoiceLineNumber(invoiceLineNumber);
+			i.setInvoiceNumber(invoiceNumber);
+			i.setQuantityPurchased(quantityPurchased);
+			i.setProductID(productID);
+			
+			
+			invoiceLineItems.add(i);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return invoiceLineItems;
 }
 
 public static ArrayList<AccountingPurchases> obtainPurchaseList() {

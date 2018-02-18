@@ -60,6 +60,10 @@ public class InvoiceLineItem {
 		this.productID = productID;
 	}
 	
+	public String getProductID() {
+		return productID;
+	}
+	
 	@Override
 	public String toString() {
 		return productID + ", " + invoiceNumber + ", " + invoiceLineNumber + ", " +
