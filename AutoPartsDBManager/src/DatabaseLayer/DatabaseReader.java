@@ -13,6 +13,7 @@ import BusinessLayer.Customer;
 import BusinessLayer.Employee;
 import BusinessLayer.Invoice;
 import BusinessLayer.InvoiceLineItem;
+import BusinessLayer.People;
 import BusinessLayer.Product;
 import BusinessLayer.Supplier;
 
@@ -31,7 +32,9 @@ public class DatabaseReader implements ReaderDAO {
 	// Declare variables
 	private static Connection connObj = null;	// Changed to static
 	private ReadHelper readHelper = null;
-	
+	private ArrayList<Product> compatibleProducts = null;
+	private ArrayList<Invoice> invoices = null;
+	private ArrayList<InvoiceLineItem> lineItems = null;
 	
 	// Define methods
 	/**
@@ -75,9 +78,9 @@ public class DatabaseReader implements ReaderDAO {
 		}
 		
 		//String url = "jdbc:mysql://localhost:3306/mydb";
-		String url = "jdbc:mysql://127.0.0.1:3306/auto_parts_schema";
-		String username = "autouser";
-		String password = "autouser";
+		String url = "jdbc:mysql://localhost:3306/auto_parts_schema";
+		String username = "root";
+		String password = "rick6022";
 		
 		try {
 			connection = DriverManager.getConnection(url, username, password);
@@ -87,7 +90,7 @@ public class DatabaseReader implements ReaderDAO {
 		}
 		
 		System.out.println("DatabaseReader - Connection Established!");			
-		
+		DatabaseWriter.closeConnection(connObj);
 			
 		return connection;
 	}
@@ -230,7 +233,6 @@ public class DatabaseReader implements ReaderDAO {
 		String state = "";
 		String zipCode = "";
 		String unitNumber = "";
-		String homePhone = "";
 		String cellPhone = "";
 		String emailAddress = "";
 		
@@ -280,9 +282,7 @@ public class DatabaseReader implements ReaderDAO {
 		return currentSupplier;
 	}
 	
-	
-	
-	public static ArrayList<Customer> obtainCustomerList() {
+public static ArrayList<Customer> obtainCustomerList() {
 		
 		String query = "SELECT  * FROM customer, address, contact_info "
 				+ "where customer.contact_info_contact_info_id = contact_info.contact_info_id "
@@ -337,99 +337,6 @@ public class DatabaseReader implements ReaderDAO {
 				
 		return customers;
 	}
-	
-public static ArrayList<Supplier> obtainSupplierList() {
-		
-		String query = "SELECT * FROM supplier, address, contact_info, company "
-				+ "where supplier.Address_address_id = address.address_id "
-				+ "and supplier.contact_info_contact_info_id = contact_info.contact_info_id "
-				+ "and supplier.company_company_id = company.company_id";
-		
-		ArrayList<Supplier> supplier = new ArrayList<>();
-		
-		Statement stmt = null;
-		
-		connObj =  DatabaseWriter.getDBConnection();
-						
-		try {	
-			stmt = connObj.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				String supplierID = rs.getString(1);
-				String lastName = rs.getString(2);
-				String firstName = rs.getString(3);
-				String contactInfoID = rs.getString(4);
-				String addressID = rs.getString(5);
-				String companyID = rs.getString(6);
-				String streetAddress = rs.getString(8);
-				String city = rs.getString(9);
-				String state = rs.getString(10);
-				String zipCode = rs.getString(11);
-				String unitNumber = rs.getString(12);
-				String homePhone = rs.getString(14);
-				String cellPhone = rs.getString(15);
-				String emailAddress = rs.getString(16);
-				String companyName = rs.getString(20);
-				
-				Supplier s = new Supplier();
-				
-				s.setSupplierID(supplierID);
-				s.setLastName(lastName);
-				s.setFirstName(firstName);
-				s.setContactInfoID(contactInfoID);
-				s.setAddressID(addressID);
-				s.setCompanyID(companyID);
-				s.setStreetAddress(streetAddress);
-				s.setCity(city);
-				s.setState(state);
-				s.setZipCode(zipCode);
-				s.setUnitNumber(unitNumber);
-				s.setPhoneNumber(homePhone);
-				s.setCellPhoneNumber(cellPhone);
-				s.setEmailAddress(emailAddress);
-				s.setCompanyName(companyName);
-				
-				supplier.add(s);
-			}
-		}
-		catch (SQLException e) {
-			System.out.println(e.toString());
-		}
-		
-		DatabaseWriter.closeConnection(connObj);
-				
-		return supplier;
-	}
-
-public static ArrayList<Company> obtainCompanyList() {
-	
-	String query = "select company_name from company, "
-			+ "supplier where supplier.company_company_id = company.company_id";
-	ArrayList<Company> company = new ArrayList<>();
-	
-	Statement stmt = null;
-	
-	connObj =  DatabaseWriter.getDBConnection();
-					
-	try {	
-		stmt = connObj.createStatement();
-		ResultSet rs = stmt.executeQuery(query);
-		while (rs.next()) {
-			String companyName = rs.getString(1);
-			
-			Company c = new Company();
-			c.setCompanyName(companyName);
-			company.add(c);
-		}
-	}
-	catch (SQLException e) {
-		System.out.println(e.toString());
-	}
-	
-	DatabaseWriter.closeConnection(connObj);
-			
-	return company;
-}
 
 public static ArrayList<Product> obtainProductList() {
 	
@@ -489,6 +396,41 @@ public static ArrayList<Product> obtainProductList() {
 	return products;
 }
 
+public static ArrayList<AccountingPurchases> obtainPurchaseList() {
+	
+	String query = "SELECT * FROM accounting_purchases";
+	ArrayList<AccountingPurchases> purchases = new ArrayList<>();
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			String purchaseID = rs.getString(1);
+			String purchaseQty = rs.getString(2);
+			String dollarValue = rs.getString(3);
+			String productID = rs.getString(4);
+			
+			AccountingPurchases p = new AccountingPurchases();
+			p.setAccountingPurchasesRecordID(purchaseID);
+			p.setPurchasesQuantity(purchaseQty);
+			p.setDollarValue(dollarValue);
+			p.setProductID(productID);
+			purchases.add(p);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return purchases;
+}
+
 public static ArrayList<Invoice> obtainInvoiceList() {
 	
 	String query = "SELECT * FROM invoice, invoice_line_item";
@@ -532,10 +474,14 @@ public static ArrayList<Invoice> obtainInvoiceList() {
 	return invoices;
 }
 
-public static ArrayList<AccountingPurchases> obtainPurchaseList() {
+public static ArrayList<Supplier> obtainSupplierList() {
 	
-	String query = "SELECT * FROM accounting_purchases";
-	ArrayList<AccountingPurchases> purchases = new ArrayList<>();
+	String query = "SELECT * FROM supplier, address, contact_info, company "
+			+ "where supplier.Address_address_id = address.address_id "
+			+ "and supplier.contact_info_contact_info_id = contact_info.contact_info_id "
+			+ "and supplier.company_company_id = company.company_id";
+	
+	ArrayList<Supplier> supplier = new ArrayList<>();
 	
 	Statement stmt = null;
 	
@@ -545,17 +491,41 @@ public static ArrayList<AccountingPurchases> obtainPurchaseList() {
 		stmt = connObj.createStatement();
 		ResultSet rs = stmt.executeQuery(query);
 		while (rs.next()) {
-			String purchaseID = rs.getString(1);
-			String purchaseQty = rs.getString(2);
-			String dollarValue = rs.getString(3);
-			String productID = rs.getString(4);
+			String supplierID = rs.getString(1);
+			String lastName = rs.getString(2);
+			String firstName = rs.getString(3);
+			String contactInfoID = rs.getString(4);
+			String addressID = rs.getString(5);
+			String companyID = rs.getString(6);
+			String streetAddress = rs.getString(8);
+			String city = rs.getString(9);
+			String state = rs.getString(10);
+			String zipCode = rs.getString(11);
+			String unitNumber = rs.getString(12);
+			String homePhone = rs.getString(14);
+			String cellPhone = rs.getString(15);
+			String emailAddress = rs.getString(16);
+			String companyName = rs.getString(20);
 			
-			AccountingPurchases p = new AccountingPurchases();
-			p.setAccountingPurchasesRecordID(purchaseID);
-			p.setPurchasesQuantity(purchaseQty);
-			p.setDollarValue(dollarValue);
-			p.setProductID(productID);
-			purchases.add(p);
+			Supplier s = new Supplier();
+			
+			s.setSupplierID(supplierID);
+			s.setLastName(lastName);
+			s.setFirstName(firstName);
+			s.setContactInfoID(contactInfoID);
+			s.setAddressID(addressID);
+			s.setCompanyID(companyID);
+			s.setStreetAddress(streetAddress);
+			s.setCity(city);
+			s.setState(state);
+			s.setZipCode(zipCode);
+			s.setUnitNumber(unitNumber);
+			s.setPhoneNumber(homePhone);
+			s.setCellPhoneNumber(cellPhone);
+			s.setEmailAddress(emailAddress);
+			s.setCompanyName(companyName);
+			
+			supplier.add(s);
 		}
 	}
 	catch (SQLException e) {
@@ -564,8 +534,405 @@ public static ArrayList<AccountingPurchases> obtainPurchaseList() {
 	
 	DatabaseWriter.closeConnection(connObj);
 			
-	return purchases;
+	return supplier;
 }
-
+	
+	public Company obtainCompanyInformation(String companyName) {
+		
+		Company currentCompany = null;
+		String query = null;
+		
+		String companyID = "0";
+		String addressID = "0";
+		String contactInfoID = "0";
+		String streetAddress = "";
+		String city = "";
+		String state = "";
+		String zipCode = "";
+		String unitNumber = "";
+		String phoneNumber = "";
+		String cellPhone = "";
+		String emailAddress = "";
+		
+		//NOTE:  this does NOT use REGEXP so name must be exact
+		query = "SELECT c.company_id, c.Address_address_id, "
+				+ "c.contact_info_contact_info_id, c.company_name, a.street_address, "
+				+ "a.city, a.state, a.zip_code, "
+				+ "a.unit_number, ci.phone_number, ci.cell_phone_number, " 
+				+ "ci.email_address "
+				+ "FROM company c JOIN address a "
+				+ "ON c.Address_address_id = a.address_id "
+				+ "JOIN contact_info ci "
+				+ "ON c.contact_info_contact_info_id = ci.contact_info_id "
+				+ "WHERE company_name = '" + companyName + "';";
+		
+		Statement stmt = null;
+		
+		connObj =  DatabaseWriter.getDBConnection();
+						
+		try {	
+			System.out.println("In the try statement");
+			stmt = connObj.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				System.out.println("In the While statement");
+				companyID = rs.getString(1);
+				addressID = rs.getString(2);
+				contactInfoID = rs.getString(3);
+				companyName = rs.getString(4);
+				streetAddress = rs.getString(5);
+				city = rs.getString(6);
+				state = rs.getString(7);
+				zipCode = rs.getString(8);
+				unitNumber = rs.getString(9);
+				phoneNumber = rs.getString(10);
+				cellPhone = rs.getString(11);
+				emailAddress = rs.getString(12);
+				
+				System.out.println("About to create Company Object");
+				currentCompany = new Company(companyID, companyName,
+						streetAddress, city, state, zipCode, unitNumber,
+						phoneNumber, cellPhone, emailAddress);
+			}
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+		
+		return currentCompany;
+	}
+	
+	public Product lookupProduct(String productID) {
+		
+		Product existingProduct = null;
+		String query = null;
+		//String productID = "";
+		String description = "";
+		String yearMin = "";
+		String yearMax = "";
+		String make = "";
+		String model = "";
+		String supplierPrice = "";
+		String sellPrice = "";
+		String coreCharge = "";
+		String compatibilityNumber  = "";
+		String companyID = "";
+		String minStockQuantity = "";
+		String maxStockQuantity = "";
+		String location = "";
+		String stockQuantity = "";
+		
+		query = "SELECT description, year_minimum, year_maximum, make, "
+				+ "model, supplier_price, sell_price, core_charge, "
+				+ "compatibility_number, company_company_id, "
+				+ "min_quantity_in_stock, max_quantity_in_stock, "
+				+ "warehouse_location, quantity_in_stock "
+				+ "FROM product "
+				+ "WHERE product = " + productID + ";";
+		
+		Statement stmt = null;
+		
+		connObj =  DatabaseWriter.getDBConnection();
+						
+		try {	
+			System.out.println("In the try statement");
+			stmt = connObj.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				System.out.println("In the While statement");
+				//productID = rs.getString(1);
+				description = rs.getString(1);
+				yearMin = rs.getString(2);
+				yearMax = rs.getString(3);
+				make = rs.getString(4);
+				model = rs.getString(5);
+				supplierPrice = rs.getString(6);
+				sellPrice = rs.getString(7);
+				coreCharge = rs.getString(8);
+				compatibilityNumber = rs.getString(9);
+				companyID = rs.getString(10);
+				minStockQuantity = rs.getString(11);
+				maxStockQuantity = rs.getString(12);
+				location = rs.getString(13);
+				stockQuantity = rs.getString(14);
+		
+				existingProduct = new Product(productID, description, yearMin,
+						yearMax, make, model, supplierPrice, sellPrice, coreCharge,
+						compatibilityNumber, companyID, minStockQuantity,
+						maxStockQuantity, location, stockQuantity);
+			}
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+		
+		return existingProduct;
+	}
+	
+	public Product lookupProduct(String description, String year, String make,
+			String model) {
+		
+		String query = null;
+		String productID = "";
+		Product currentProduct = null;
+		//String description = "";
+		String yearMin = "";
+		String yearMax = "";
+		//make = "";
+		//model = "";
+		String supplierPrice = "";
+		String sellPrice = "";
+		String coreCharge = "";
+		String compatibilityNumber  = "";
+		String companyID = "";
+		String minStockQuantity = "";
+		String maxStockQuantity = "";
+		String location = "";
+		String stockQuantity = "";
+		
+		query = "SELECT product, year_minimum, year_maximum, supplier_price, "
+				+ "sell_price, core_charge, compatibility_number, "
+				+ "company_company_id, min_quantity_in_stock, "
+				+ "max_quantity_in_stock, warehouse_location, quantity_in_stock "
+				+ "FROM product "
+				+ "WHERE description = '" + description + "' "
+				+ "AND year_minimum <= '" + year + "' "
+				+ "AND year_maximum >= '" + year + "' "
+				+ "AND make = '" + make + "' "
+				+ "AND model = '" + model + "';";
+		
+		Statement stmt = null;
+		
+		connObj =  DatabaseWriter.getDBConnection();
+						
+		try {	
+			System.out.println("In the try statement");
+			stmt = connObj.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				System.out.println("In the While statement");
+				productID = rs.getString(1);
+				yearMin = rs.getString(2);
+				yearMax = rs.getString(3);
+				supplierPrice = rs.getString(4);
+				sellPrice = rs.getString(5);
+				coreCharge = rs.getString(6);
+				compatibilityNumber = rs.getString(7);
+				companyID = rs.getString(8);
+				minStockQuantity = rs.getString(9);
+				maxStockQuantity = rs.getString(10);
+				location = rs.getString(11);
+				stockQuantity = rs.getString(12);
+				
+				currentProduct = new Product(productID, description, yearMin,
+						yearMax, make, model, supplierPrice, sellPrice, coreCharge,
+						compatibilityNumber, companyID, minStockQuantity,
+						maxStockQuantity, location, stockQuantity);
+			}
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+				
+		
+		return currentProduct;
+	}
+	
+	public ArrayList<Product> getCompatibleProducts(String compatibilityNumber) {
+		
+		compatibleProducts = new ArrayList<Product>();
+		String query = null;
+		
+		String productID = "";
+		String description = "";
+		String yearMin = "";
+		String yearMax = "";
+		String make = "";
+		String model = "";
+		String supplierPrice = "";
+		String sellPrice = "";
+		String coreCharge = "";
+		String companyID = "";
+		String minStockQuantity = "";
+		String maxStockQuantity = "";
+		String location = "";
+		String stockQuantity = "";
+		
+		query = "SELECT product, description, year_minimum, year_maximum, "
+				+ "make, model, supplier_price, sell_price, core_charge, "
+				+ "compatibility_number, company_company_id, "
+				+ "min_quantity_in_stock, max_quantity_in_stock, "
+				+ "warehouse_location, quantity_in_stock "
+				+ "FROM product "
+				+ "WHERE compatibility_number = '" + compatibilityNumber + "';";
+		
+		Statement stmt = null;
+		
+		connObj =  DatabaseWriter.getDBConnection();
+						
+		try {	
+			System.out.println("In the try statement");
+			stmt = connObj.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				System.out.println("In the While statement");
+				productID = rs.getString(1);
+				description = rs.getString(2);
+				yearMin = rs.getString(3);
+				yearMax = rs.getString(4);
+				make = rs.getString(5);
+				model = rs.getString(6);
+				supplierPrice = rs.getString(7);
+				sellPrice = rs.getString(8);
+				coreCharge = rs.getString(9);
+				compatibilityNumber = rs.getString(10);
+				companyID = rs.getString(11);
+				minStockQuantity = rs.getString(12);
+				maxStockQuantity = rs.getString(13);
+				location = rs.getString(14);
+				stockQuantity = rs.getString(15);
+				
+				Product nextProduct = new Product(productID, description,
+						yearMin, yearMax, make, model, supplierPrice,
+						sellPrice, coreCharge, compatibilityNumber,
+						companyID, minStockQuantity, maxStockQuantity,
+						location, stockQuantity);
+				
+				compatibleProducts.add(nextProduct);
+				
+			}
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+		
+		return compatibleProducts;
+	}
+	
+	public ArrayList<Invoice> getInvoices(String customerID) {
+		
+		invoices = new ArrayList<Invoice>();
+		String query = null;
+		String invoiceNumber = "";
+		String date = "";
+		String time = "";
+		String employeeID = "";
+		
+		query = "SELECT invoice_number, date, time, employee_employee_id "
+				+ "FROM invoice "
+				+ "WHERE customer_customer_id = '" + customerID + "';";
+		
+		Statement stmt = null;
+		
+		connObj =  DatabaseWriter.getDBConnection();
+						
+		try {	
+			System.out.println("In the invoices try statement");
+			stmt = connObj.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				System.out.println("In the While statement");
+				invoiceNumber = rs.getString(1);
+				date = rs.getString(2);
+				time = rs.getString(3);
+				employeeID = rs.getString(4);
+				
+				Invoice nextInvoice = new Invoice(invoiceNumber, date, time,
+						customerID, employeeID);
+		
+				invoices.add(nextInvoice);
+			}
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+		
+		return invoices;
+	}
+	
+	public ArrayList<InvoiceLineItem> getInvoiceLineItems(String invoiceNumber) {
+		
+		lineItems = new ArrayList<InvoiceLineItem>();
+		String query = null;
+		String lineNumber = "";
+		String quantityPurchased = "";
+		String productID = "";
+		
+		query = "SELECT invoice_line_number, quantity_purchased, product_product "
+				+ "FROM invoice_line_item "
+				+ "WHERE invoice_invoice_number = " + invoiceNumber + ";";
+		
+		Statement stmt = null;
+		
+		connObj =  DatabaseWriter.getDBConnection();
+						
+		try {	
+			System.out.println("In the invoices try statement");
+			stmt = connObj.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				System.out.println("In the While statement");
+				lineNumber = rs.getString(1);
+				quantityPurchased = rs.getString(2);
+				productID = rs.getString(3);
+				
+				InvoiceLineItem nextLineItem = new InvoiceLineItem(lineNumber,
+						invoiceNumber, quantityPurchased, productID);
+				
+				lineItems.add(nextLineItem);
+			}
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+				
+				
+		return lineItems;
+	}
+	
+	public String getQuantityInStock(String productID) {
+		
+		String quantity = "";
+		String query = null;
+		
+		query = "SELECT quantity_in_stock "
+				+ "FROM product "
+				+ "WHERE product = '" + productID + "';";
+		
+		Statement stmt = null;
+		
+		connObj =  DatabaseWriter.getDBConnection();
+		System.out.println("Product ID: " + productID);
+		
+		try {	
+			stmt = connObj.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				System.out.println("In the quantity while statement");
+				quantity = rs.getString(1);
+			}
+			System.out.println("quantity: " + quantity);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+			
+		System.out.println("Quantity: " + quantity);
+		
+		return quantity;
+	}
 }
-

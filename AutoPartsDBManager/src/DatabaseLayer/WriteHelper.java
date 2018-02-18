@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import BusinessLayer.Product;
+
 /**
  * Class Name:		WriteHelper
  * Description:		This class contains the methods called from the DatabaseWriter class
@@ -16,7 +18,8 @@ import java.sql.Statement;
 public class WriteHelper {
 	
 	private Connection connObj = null;
-
+	private static ReaderDAO readerDAO;
+	
 	/**
 	 * Constructor called from the DatabaseWriter class to create an instance of this class.
 	 */
@@ -588,8 +591,285 @@ public class WriteHelper {
 		}
 				
 		DatabaseWriter.closeConnection(connObj);
+	}
+	
+	public boolean verifyProductInDatabase(Product p) {
+		
+		boolean exists = false;
+		
+		String productID = p.getProductID();
+		
+		System.out.println("In verifyProducts");
+		readerDAO = DAOFactory.getReaderDAO();
+		Product existingProduct = readerDAO.lookupProduct(productID);
+		
+		
+		
+		if(existingProduct != null) {
+			if(p.getProductID().equalsIgnoreCase(existingProduct.getProductID())) {
+				if(p.getDescription().equalsIgnoreCase(existingProduct.getDescription())) {
+					if(p.getYearMinimum().equalsIgnoreCase(existingProduct.getYearMinimum())) {
+						if(p.getYearMaximum().equalsIgnoreCase(existingProduct.getYearMaximum())) {
+							if(p.getMake().equalsIgnoreCase(existingProduct.getMake())) {
+								if(p.getModel().equalsIgnoreCase(existingProduct.getModel())) {
+									exists = true;
+									System.out.println("Boolean set");
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		else {
+			System.out.println("writeHelper.VerifyProductInDatabase");
+			System.out.println("Product is null - does not match existing product!");
+		}
+		
+		return exists;
+	}
+	
+	public void writeIncomingProduct(Product product, String productID) {
+		
+		String quantityArriving = "";
+		String oldQuantity = "";
+		String maxQuantityInStock = "";
+		String supplyPrice = "";
+		String dollarValue = "";
+		int newQuantity = 0;
+		int maxQuantity = 0;
+		int quantityAccepted = 0;
+		int quantityRejected = 0;
+		
+		System.out.println("Writing product");
+		String update = null;
+		 
+		System.out.println("Quantity arriving: " + product.getQuantityInStock());
+		oldQuantity = readerDAO.getQuantityInStock(productID);
+		System.out.println("oldQuantity = " + oldQuantity);
+		
+		quantityArriving = product.getQuantityInStock();
+		productID = product.getProductID();
+		newQuantity = Integer.parseInt(oldQuantity) + Integer.parseInt(quantityArriving);
+		
+		// Need to verify that does not exceed maxQuantity
+		maxQuantityInStock = getMaxQuantityInStock(productID);
+		maxQuantity = Integer.parseInt(maxQuantityInStock);
+		
+		if(newQuantity > maxQuantity) {
+			System.out.println("Quantity exceeds max quantity!");
+			System.out.println("Maximum quantity allowed: " + maxQuantity);
+			quantityAccepted = maxQuantity - Integer.parseInt(oldQuantity);
+			newQuantity = quantityAccepted + Integer.parseInt(oldQuantity);
+			quantityRejected = Integer.parseInt(quantityArriving) - quantityAccepted;
+			
+			System.out.println("quantity accepted: " + quantityAccepted);
+			System.out.println("quantity rejected: " + quantityRejected);
+			
+			
+		}
+		
+			update = "UPDATE product "
+					+ "SET quantity_in_stock = " + newQuantity
+					+ " WHERE product = " + productID + ";";
+			
+			Statement stmt = null;
+			
+			connObj = DatabaseWriter.getDBConnection();
+									
+			try {
+				stmt = connObj.createStatement();
+				stmt.executeUpdate(update);
+			}
+			catch (SQLException e) {
+				System.out.println(e.toString());
+			}
+			
+			// copied from line 167 DatabaseWriter // strings
+			String quantityReceived = Integer.toString(quantityAccepted);
+			supplyPrice = product.getSupplierPrice();
+			System.out.println("SupplierPrice: " + supplyPrice);
+			dollarValue = obtainDollarValue(quantityReceived, supplyPrice);
+			System.out.println("Dollar Value: " + dollarValue);
+			enterToAccountingPurchases (quantityReceived, dollarValue, productID);
 				
+		DatabaseWriter.closeConnection(connObj);
+	}
+	
+	public String getMaxQuantityInStock(String productID) {
+		
+		String maxQuantityInStock = "";
+		
+		String query = null;
+		ResultSet rs = null;
+		
+		query = "SELECT max_quantity_in_stock "
+				+ "FROM product "
+				+ "WHERE product = '" + productID + "';";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(query);			
+			while(rs.next()) {
+				maxQuantityInStock = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
+		
+		return maxQuantityInStock;
+	}
+	
+	public Boolean checkReorderNecessity(String productID) {
+		
+		Boolean reorder = false;
+		int quantityInStock = 0;
+		int minQuantity = 0;
+		String query = null;
+		ResultSet rs = null;
+		
+		query = "SELECT quantity_in_stock, min_quantity_in_stock "
+				+ "FROM product "
+				+ "WHERE product = '" + productID + "';";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(query);			
+			while(rs.next()) {
+				quantityInStock = rs.getInt(1);
+				minQuantity = rs.getInt(2);
+				System.out.println("In Stock: " + quantityInStock);
+				System.out.println("Max: " + minQuantity);
+				if(minQuantity >= quantityInStock) {
+					reorder = true;
+				}
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
 		
 		
+		
+		return reorder;
+	}
+	
+	public void updateQuantityInStock(String productID, String quantityPurchased) {
+		
+		String update = null;
+		
+		update = "UPDATE product "
+				+ "SET quantity_in_stock = quantity_in_stock - " + quantityPurchased
+				+ " WHERE product = " + productID + ";";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(update);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+	}
+	
+	public void createOrderForProduct(String productID) {
+		
+		String quantityToOrder = "";
+		String quantityInStock = "";
+		String maxQuantity = "";
+		String dollarValue = "";
+		String supplyPrice = "";
+		int quantity = 0;
+		
+		maxQuantity = getMaxQuantityInStock(productID);
+		quantityInStock = getQuantityInStock(productID);
+		quantity = Integer.parseInt(maxQuantity) - Integer.parseInt(quantityInStock);
+		quantityToOrder = Integer.toString(quantity);
+		supplyPrice = obtainSupplyPrice(productID);
+		
+		dollarValue = obtainDollarValue(quantityToOrder, supplyPrice);
+		
+		// write the order to accounting_purchases
+		enterToAccountingPurchases(quantityToOrder, dollarValue, productID);
+		System.out.println("Purchase made!");
+		
+	}
+	
+	public String getQuantityInStock(String productID) {
+		
+		String quantityInStock = "";
+		
+		String query = null;
+		ResultSet rs = null;
+		
+		query = "SELECT quantity_in_stock "
+				+ "FROM product "
+				+ "WHERE product = '" + productID + "';";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(query);			
+			while(rs.next()) {
+				quantityInStock = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
+		
+		return quantityInStock;
+	}
+	
+	public String obtainSupplyPrice(String productID) {
+		
+		String supplyPrice = "";
+		
+		String query = null;
+		ResultSet rs = null;
+		
+		query = "SELECT supplier_price "
+				+ "FROM product "
+				+ "WHERE product = '" + productID + "';";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(query);			
+			while(rs.next()) {
+				supplyPrice = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
+		
+		return supplyPrice;
 	}
 }

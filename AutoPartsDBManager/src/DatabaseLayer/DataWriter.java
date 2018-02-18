@@ -1,5 +1,9 @@
 package DatabaseLayer;
 
+import java.util.ArrayList;
+
+import BusinessLayer.Product;
+
 // List imports
 
 /**
@@ -25,5 +29,7 @@ public interface DataWriter {
 	
 	public void manageSale(String date, String time, String customerID, String employeeID,
 			String quantityPurchased, String productID);
+	
+	public void writeIncomingProducts(ArrayList<Product> rfidProducts);
 	
 }

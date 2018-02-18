@@ -42,4 +42,10 @@ public class DAOFactory {
 		DatabaseDeleter dDAO = new DatabaseDeleter();
 		return dDAO;
 	}
+	
+public static RFIDDAO getRFIDDAO() {
+		
+		RFIDTextReader rfidTextDAO = new RFIDTextReader();
+		return rfidTextDAO;
+	}
 }

@@ -1,6 +1,7 @@
-package PresentationLayer;
+ package PresentationLayer;
 
 import java.awt.EventQueue;
+import java.util.ArrayList;
 import javax.swing.UnsupportedLookAndFeelException;
 
 
@@ -23,45 +24,16 @@ public class AutoPartsStoreGui {
 	private static WriterDAO writerDAO;
 	private static ReaderDAO readerDAO;
 	private static DeleterDAO deleterDAO;
+	private static RFIDDAO rfidDAO;
 	
 	private static String choice = "";
 	
 	// Other local variables
-	/*
-	 
+	private static ArrayList<Product> compatibleProducts;
+	private static ArrayList<Invoice> invoices;
+	private static ArrayList<InvoiceLineItem> lineItems;
+	private static ArrayList<Product> rfidProducts;
 	
-	  //Launch the application
-	  //@param args
-	 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("hello!");
-		
-		//Remove next line
-		MainAutoPartsGUI();
-		
-		// ********** REMOVE THIS AND REPLACE with code for this program
-		// This is an example of how it may be written from another program I wrote
-		/**
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PeopleManager window = new PeopleManager();	
-					window.peopleManagerFrame.setVisible(true);
-					window.peopleManagerFrame.setLocationRelativeTo(null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	
-		
-		
-	}
-	*/
-	
-	//Remove later and replace with version below
-	//private static void MainAutoPartsGUI() { // changed to version below
 	/**
      * @param args the command line arguments
      */
@@ -73,6 +45,24 @@ public class AutoPartsStoreGui {
 		writerDAO = DAOFactory.getWriterDAO();
 		readerDAO = DAOFactory.getReaderDAO();
 		deleterDAO = DAOFactory.getDeleterDAO();
+		rfidDAO = DAOFactory.getRFIDDAO();
+		
+		// read any incoming products
+				System.out.println("Reading new products");
+				rfidProducts = rfidDAO.ProductTextFile();
+				
+				if(rfidProducts != null) {
+					System.out.println("Products from the arraylist");
+					for(Product p: rfidProducts) {
+						System.out.println(p.toString());
+					}
+					
+					// this should return a string for accepted/rejected products
+					writerDAO.writeIncomingProducts(rfidProducts);
+				}
+				else {
+					System.out.println("Products is null");
+				}
 		
 		// Temporarily call manageNewPersonCreation() from here
 		choice = "Customer";
@@ -120,7 +110,7 @@ public class AutoPartsStoreGui {
 				state, zipCode, unitNumber, phoneNumber, cellPhone, emailAddress, companyID);
 		*/
 		
-		// enter a product and update accounting_purchases
+		// manually enter a product and update accounting_purchases
 		// WORKS
 		/*
 		choice = "Product";	// this not needed here
@@ -144,19 +134,22 @@ public class AutoPartsStoreGui {
 				maxStockQuantity, location, quantityInStock);
 		*/
 		
-		// Manage a Sale
+		// Manage a Sale - NEED TO CALL FOR EACH LINE ITEM
+		// maybe create invoice and each line item here.
+		// or pass each line item to manageSale and add it there.
 		// WORKS
-		/*
+		
 		String date = "2018-02-03";
 		String time = "20:00";
 		String customerID = "1";
 		String employeeID = "2";
-		String quantityPurchased = "3";
+		String quantityPurchased = "30";
 		String productID = "6";
 		
+		// check to see if reorder is necessary from this method
 		writerDAO.manageSale(date, time, customerID, employeeID, quantityPurchased, 
 				productID);
-		*/
+		
 		
 		// AREA TO READ INFORMATION FROM DB**************************
 		
@@ -203,9 +196,69 @@ public class AutoPartsStoreGui {
 		//emailAddress = q.getEmailAddress();
 		//System.out.println(emailAddress);
 		
+		//******************* NEW methods - 2/10/18*********************
 		// Read and create a Company object
+		//WORKS
+				/*
+				System.out.println("About to read a Company");
+				String companyName = "Gotham Iron Works Ltd.";
+				Company company = null;
+				
+				company = readerDAO.obtainCompanyInformation(companyName);
+				emailAddress = company.getEmailAddress();
+				System.out.println("Email Address: " + emailAddress);
+				*/
+				
+				// lookup a product
+				// WORKS
+				/*
+				String description = "starter";
+				String year = "2013";
+				String make = "Toyota";
+				String model = "Corolla";
+				Product currentProduct = null;
+				
+				currentProduct = readerDAO.lookupProduct(description, year, make, model);
+				System.out.println("Product: " + currentProduct.toString());
+				*/
+				
+				// lookup an alternate part - need an ArrayList to hold multiples
+				//WORKS
+				/*
+				String productID = "Am123B";
+				compatibleProducts = readerDAO.getCompatibleProducts(productID);
+				
+				System.out.println("In main: \n");
+				for(Product product: compatibleProducts) {
+					System.out.println("Product: " + product.toString());
+				}
+				*/
+				
+				// lookup a customers invoices
+				//WORKS
+				/*
+				String customerID = "1";
+				invoices = readerDAO.getInvoices(customerID);
+				System.out.println("Main-Invoices ");
+				for(Invoice i: invoices) {
+					System.out.println("Invoice: " + i.toString());
+				}
+				*/
+				
+				// get the line items for an invoice
+				// WORKS
+				/*
+				String invoiceNumber = "1";
+				lineItems = readerDAO.getInvoiceLineItems(invoiceNumber);
+				System.out.println("Main-line items ");
+				for(InvoiceLineItem lineItems: lineItems) {
+					System.out.println("Line Items: " + lineItems.toString());
+				}
+				*/
+				
+			}
 		
-	}
+	
 	
 	
 	// Constructor for the main gui

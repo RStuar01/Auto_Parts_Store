@@ -1,0 +1,68 @@
+package BusinessLayer;
+
+/**
+ * Class Name:					InvoiceLineItem
+ * Description:					This class  provides fields specific
+ * 								to this class, along with get/set accessors/mutators, and an 
+ * 								overridden toString method.
+ * @author Craig Mathes, Michael Meesseman, Richard Stuart
+ * @created Saturday, 1,20,2018
+ */
+
+public class InvoiceLineItem {
+	
+	// Fields
+	private String invoiceLineNumber;
+	private String invoiceNumber;
+	private String quantityPurchased;
+	private String productID;
+	
+	// Default Constructor
+	public InvoiceLineItem() {
+		this("", "", "", "");
+	}
+	
+	// Overloaded Constructor
+	InvoiceLineItem(String invoiceLineNumber, String invoiceNumber,
+			String quantityPurchased, String productID) {
+		this.invoiceLineNumber = invoiceLineNumber;
+		this.invoiceNumber = invoiceNumber;
+		this.quantityPurchased = quantityPurchased;
+		this.productID = productID;
+	}
+	
+	// Get and Set Accessors/Mutators
+	public void setInvoiceLineNumber(String invoiceLineNumber) {
+		this.invoiceLineNumber = invoiceLineNumber;
+	}
+	
+	public String getInvoiceLineNumber() {
+		return invoiceLineNumber;
+	}
+	
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+	
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+	
+	public void setQuantityPurchased(String quantityPurchased) {
+		this.quantityPurchased = quantityPurchased;
+	}
+	
+	public String getQuantityPurchased() {
+		return quantityPurchased;
+	}
+	
+	public void setProductID(String productID) {
+		this.productID = productID;
+	}
+	
+	@Override
+	public String toString() {
+		return productID + ", " + invoiceNumber + ", " + invoiceLineNumber + ", " +
+				quantityPurchased;
+	}
+}

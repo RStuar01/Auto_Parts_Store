@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
+import BusinessLayer.Product;
 
 // List imports
 
@@ -62,10 +65,10 @@ public class DatabaseWriter implements WriterDAO {
 		}
 		
 		//String url = "jdbc:mysql://localhost:3306/mydb";
-		String url = "jdbc:mysql://127.0.0.1:3306/auto_parts_schema";
-		String username = "autouser";
-		String password = "autouser";
-	
+		String url = "jdbc:mysql://localhost:3306/auto_parts_schema";
+		String username = "root";
+		String password = "rick6022";
+		
 		try {
 			connection = DriverManager.getConnection(url, username, password);
 		}
@@ -120,9 +123,9 @@ public class DatabaseWriter implements WriterDAO {
 			writerHelper.writeEmployeeInformation(addressID, contactInfoID, lastName, firstName);
 		}
 		else if (choice == "Supplier") {
-			//addressID = "50";
-			//contactInfoID = "48";
-			companyID = "8";
+			//addressID = "38";
+			//contactInfoID = "38";
+			//companyID = "5";
 			writerHelper.writeSupplierInformation(addressID, contactInfoID, lastName, firstName,
 					companyID);
 		}
@@ -170,6 +173,7 @@ public class DatabaseWriter implements WriterDAO {
 	}
 	
 	// Manages a sale - creates the invoice, 1 line item, updates accounting_sales
+	//NEED TO ADAPT FOR MULTIPLE LINE ITEMS
 	public void manageSale(String date, String time, String customerID, String employeeID,
 			String quantityPurchased, String productID) {
 		
@@ -178,6 +182,7 @@ public class DatabaseWriter implements WriterDAO {
 		String sellPrice = "";
 		String dollarValue = "";
 		String salesTax = "";
+		Boolean reorderProduct = false;
 		
 		writerHelper.createInvoice(date, time, customerID, employeeID);
 		invoiceID = writerHelper.obtainNewInvoiceNumber(date, time, customerID, employeeID);
@@ -195,7 +200,42 @@ public class DatabaseWriter implements WriterDAO {
 		System.out.println("Sales Tax: " + salesTax);
 		writerHelper.enterAccountingSales(lineID, quantityPurchased, productID, dollarValue,
 				salesTax);
+		writerHelper.updateQuantityInStock(productID, quantityPurchased);
 		
+		// check if reorder necessary
+		reorderProduct = writerHelper.checkReorderNecessity(productID);
+		System.out.println("Need to reorder: " + reorderProduct);
+		
+		if(reorderProduct) {
+			writerHelper.createOrderForProduct(productID);
+		}
 		
 	}
+	
+	public void writeIncomingProducts(ArrayList<Product> rfidProducts) {
+		
+		boolean exists = false;
+		
+		System.out.println("In the write method");
+		
+		for(Product p: rfidProducts) {
+			exists = writerHelper.verifyProductInDatabase(p);
+			String productID = p.getProductID();
+			if(exists) {
+				writerHelper.writeIncomingProduct(p, productID);
+				
+				
+				
+				
+				
+				exists = false;
+			}
+			else {
+				System.out.println("Product does not exist in database - enter product!");
+			}
+		}
+		
+	}
+	
+	
 }

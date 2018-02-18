@@ -23,7 +23,7 @@ public class InvoiceLineItem {
 	}
 	
 	// Overloaded Constructor
-	InvoiceLineItem(String invoiceLineNumber, String invoiceNumber,
+	public InvoiceLineItem(String invoiceLineNumber, String invoiceNumber,
 			String quantityPurchased, String productID) {
 		this.invoiceLineNumber = invoiceLineNumber;
 		this.invoiceNumber = invoiceNumber;
