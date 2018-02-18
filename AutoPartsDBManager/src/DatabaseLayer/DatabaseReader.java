@@ -16,6 +16,7 @@ import BusinessLayer.InvoiceLineItem;
 import BusinessLayer.People;
 import BusinessLayer.Product;
 import BusinessLayer.Supplier;
+import PresentationLayer.SalesTableModel;
 
 // List imports here
 
@@ -433,7 +434,7 @@ public static ArrayList<AccountingPurchases> obtainPurchaseList() {
 
 public static ArrayList<Invoice> obtainInvoiceList() {
 	
-	String query = "SELECT * FROM invoice, invoice_line_item";
+	String query = "SELECT * FROM invoice";
 	ArrayList<Invoice> invoices = new ArrayList<>();
 	
 	Statement stmt = null;
@@ -449,18 +450,15 @@ public static ArrayList<Invoice> obtainInvoiceList() {
 			String time = rs.getString(3);
 			String customerID = rs.getString(4);
 			String employeeID = rs.getString(5);
-			String productID = rs.getString(9);
-			String quantityPurchased = rs.getString(8);
+		
 			
 			Invoice i = new Invoice();
-			InvoiceLineItem invoiceLine = new InvoiceLineItem();
 			i.setInvoiceNumber(invoiceNumber);
 			i.setDate(date);
 			i.setTime(time);
 			i.setCustomerID(customerID);
 			i.setEmployeeID(employeeID);
-			invoiceLine.setProductID(productID);
-			invoiceLine.setQuantityPurchased(quantityPurchased);
+			
 			
 			invoices.add(i);
 		}
@@ -474,7 +472,49 @@ public static ArrayList<Invoice> obtainInvoiceList() {
 	return invoices;
 }
 
+<<<<<<< HEAD
 public static ArrayList<Supplier> obtainSupplierList() {
+=======
+public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemList(int invoiceNumberInput) {
+	
+		
+	String query = "SELECT * FROM invoice_line_item where invoice_invoice_number = " + (invoiceNumberInput + 1);
+	ArrayList<InvoiceLineItem> invoiceLineItems = new ArrayList<>();
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			String invoiceLineNumber = rs.getString(1);
+			String invoiceNumber = rs.getString(2);
+			String quantityPurchased = rs.getString(3);
+			String productID = rs.getString(4);
+			
+			InvoiceLineItem i = new InvoiceLineItem();
+			i.setInvoiceLineNumber(invoiceLineNumber);
+			i.setInvoiceNumber(invoiceNumber);
+			i.setQuantityPurchased(quantityPurchased);
+			i.setProductID(productID);
+			
+			
+			invoiceLineItems.add(i);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return invoiceLineItems;
+}
+
+public static ArrayList<AccountingPurchases> obtainPurchaseList() {
+>>>>>>> 700d98a6ee505bed56a8aa70635f8c6d17aa57da
 	
 	String query = "SELECT * FROM supplier, address, contact_info, company "
 			+ "where supplier.Address_address_id = address.address_id "
@@ -536,6 +576,7 @@ public static ArrayList<Supplier> obtainSupplierList() {
 			
 	return supplier;
 }
+<<<<<<< HEAD
 	
 	public Company obtainCompanyInformation(String companyName) {
 		
@@ -935,4 +976,34 @@ public static ArrayList<Supplier> obtainSupplierList() {
 		
 		return quantity;
 	}
+=======
+
+public static String obtainPassword(String username) {
+	
+	String query = "SELECT password FROM login WHERE username = '" + username + "'";
+	String password = "";
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			password = rs.getString(1);
+		}
+		
+	}
+	
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+	
+	return password;
+}
+
+>>>>>>> 700d98a6ee505bed56a8aa70635f8c6d17aa57da
 }

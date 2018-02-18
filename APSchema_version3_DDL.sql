@@ -267,6 +267,16 @@ CREATE TABLE IF NOT EXISTS `auto_parts_schema`.`accounting_purchases` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `auto_parts_schema`.`login`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `auto_parts_schema`.`login` (
+  
+`username` varchar(50) NOT NULL,
+  
+`password` VARCHAR(50) NOT NULL,
+  
+PRIMARY KEY (`username`));
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

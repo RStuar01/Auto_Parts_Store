@@ -23,13 +23,16 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.TableModel;
 
+import BusinessLayer.Invoice;
+import BusinessLayer.Product;
+
 /**
  *
  * @author Michael
  */
 public class SalesFrame extends JFrame {
     private JTable salesTable;
-    private TableModel salesTableModel;
+    private SalesTableModel salesTableModel;
     
     public SalesFrame() throws UnsupportedLookAndFeelException, DBException, SQLException {
         try {
@@ -53,6 +56,25 @@ public class SalesFrame extends JFrame {
     
     private JPanel buildButtonPanel() throws DBException {
         JPanel panel = new JPanel();
+        
+        JButton selectButton = new JButton("Select");
+        selectButton.addActionListener((ActionEvent) -> {
+            try {
+				doSelectButton();
+			} catch (UnsupportedLookAndFeelException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        });
+    
+        panel.add(selectButton);
+        
     
         JButton addButton = new JButton("Add");
         addButton.addActionListener((ActionEvent) -> {
@@ -68,21 +90,14 @@ public class SalesFrame extends JFrame {
                 doEditButton();
             } catch (DBException e) {
                 System.out.println(e);
-            }
+            } catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         });
         panel.add(editButton);
         
-        JButton deleteButton = new JButton("Delete");
-        deleteButton.setToolTipText("Delete selected customer");
-        deleteButton.addActionListener((ActionEvent) -> {
-            try {
-                doDeleteButton();
-            } catch (DBException e) {
-                System.out.println(e);
-            }
-        });
-        panel.add(deleteButton);
-        
+                
         JButton helpButton = new JButton("Help");
         helpButton.addActionListener((ActionEvent) -> {
             doHelpButton();
@@ -101,21 +116,47 @@ public class SalesFrame extends JFrame {
         
     }
     
+    private void doSelectButton() throws UnsupportedLookAndFeelException, DBException, SQLException {
+    	SalesItemFrame salesItemFrame = new SalesItemFrame(salesTable.getSelectedRow());
+        salesItemFrame.setLocationRelativeTo(this);
+        salesItemFrame.setVisible(true);
+    }
+    
     private void doAddButton() {
-        
+    	SalesForm salesForm = new SalesForm(this, "Add Invoice", true);
+        salesForm.setLocationRelativeTo(this);
+        salesForm.setVisible(true);
     }
     
-    private void doEditButton() throws DBException {
-        
+    private void doEditButton() throws DBException, SQLException {
+    	int selectedRow = salesTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "No invoice is currently "
+                    + "selected.", "No Invoice selected", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            Invoice invoice = SalesTableModel.getInvoices(selectedRow);
+            SalesForm salesForm = new SalesForm(this, "Edit Invoice", true, invoice);
+            salesForm.setLocationRelativeTo(this);
+            salesForm.setVisible(true);
+        }
     }
     
-    private void doDeleteButton() throws DBException {
-        
-    }
+   
     
     private void doHelpButton()
     {
-        
+    	JOptionPane.showMessageDialog(this, "Press the 'Add' button to add a customer. \n"
+                + "Press the 'Edit' button after selecting a customer to edit their name. \n"
+                + "Press the 'Delete' button after selecting a customer to delete that customer. \n"
+                + "Press the 'Exit' button to exit the program.", 
+                    "Help Window", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void fireDatabaseUpdatedEvent() throws SQLException
+    {
+        ((SalesTableModel) salesTableModel).databaseUpdated();
     }
        
     private JTable buildSalesTable() throws DBException, SQLException {

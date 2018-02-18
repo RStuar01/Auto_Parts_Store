@@ -15,9 +15,9 @@ import DatabaseLayer.DatabaseReader;
 public class SalesTableModel extends AbstractTableModel {
 			
 				  
-				    private List<Invoice> invoices;
+				    private static List<Invoice> invoices;
 				    private final String[] COLUMN_NAMES = {"Invoice Number", "Date", 
-				    		"Time", "Customer ID", "Employee ID", "Product ID", "Quantity Purchased"};
+				    		"Time", "Customer ID", "Employee ID"};
 				    
 				    public SalesTableModel() throws SQLException{
 				        invoices = DatabaseReader.obtainInvoiceList();
@@ -56,7 +56,7 @@ public class SalesTableModel extends AbstractTableModel {
 				        }
 				    }
 				    
-				    Invoice getInvoices(int rowIndex) throws SQLException {
+				    static Invoice getInvoices(int rowIndex) throws SQLException {
 				        return invoices.get(rowIndex);
 				    }
 				    
