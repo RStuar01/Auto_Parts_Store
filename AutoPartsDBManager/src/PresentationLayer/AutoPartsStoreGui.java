@@ -1,12 +1,12 @@
  package PresentationLayer;
 
 import java.awt.EventQueue;
-<<<<<<< HEAD
+
 import java.util.ArrayList;
-=======
+
 import java.sql.SQLException;
 
->>>>>>> 700d98a6ee505bed56a8aa70635f8c6d17aa57da
+
 import javax.swing.UnsupportedLookAndFeelException;
 
 

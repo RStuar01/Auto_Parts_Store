@@ -80,8 +80,8 @@ public class DatabaseReader implements ReaderDAO {
 		
 		//String url = "jdbc:mysql://localhost:3306/mydb";
 		String url = "jdbc:mysql://localhost:3306/auto_parts_schema";
-		String username = "root";
-		String password = "rick6022";
+		String username = "autouser";
+		String password = "autouser";
 		
 		try {
 			connection = DriverManager.getConnection(url, username, password);
@@ -472,9 +472,8 @@ public static ArrayList<Invoice> obtainInvoiceList() {
 	return invoices;
 }
 
-<<<<<<< HEAD
-public static ArrayList<Supplier> obtainSupplierList() {
-=======
+
+
 public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemList(int invoiceNumberInput) {
 	
 		
@@ -513,8 +512,8 @@ public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemList(int invoiceNu
 	return invoiceLineItems;
 }
 
-public static ArrayList<AccountingPurchases> obtainPurchaseList() {
->>>>>>> 700d98a6ee505bed56a8aa70635f8c6d17aa57da
+public static ArrayList<Supplier> obtainSupplierList() {
+
 	
 	String query = "SELECT * FROM supplier, address, contact_info, company "
 			+ "where supplier.Address_address_id = address.address_id "
@@ -576,7 +575,7 @@ public static ArrayList<AccountingPurchases> obtainPurchaseList() {
 			
 	return supplier;
 }
-<<<<<<< HEAD
+
 	
 	public Company obtainCompanyInformation(String companyName) {
 		
@@ -976,7 +975,7 @@ public static ArrayList<AccountingPurchases> obtainPurchaseList() {
 		
 		return quantity;
 	}
-=======
+
 
 public static String obtainPassword(String username) {
 	
@@ -1005,5 +1004,5 @@ public static String obtainPassword(String username) {
 	return password;
 }
 
->>>>>>> 700d98a6ee505bed56a8aa70635f8c6d17aa57da
+
 }

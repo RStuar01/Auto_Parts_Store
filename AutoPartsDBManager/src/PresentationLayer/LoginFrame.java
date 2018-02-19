@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -25,7 +26,7 @@ import DatabaseLayer.DatabaseReader;
 public class LoginFrame extends JFrame {
 	
 	 private JTextField usernameField;
-	 private JTextField passwordField;
+	 private JPasswordField passwordField;
 	 private JButton loginButton;
 	 private JButton cancelButton;
 	
@@ -109,7 +110,7 @@ public class LoginFrame extends JFrame {
    private JPanel addLoginFields() {
 	   
 	   usernameField = new JTextField();
-       passwordField = new JTextField();
+       passwordField = new JPasswordField();
        cancelButton = new JButton();
        loginButton = new JButton();
        
