@@ -1004,5 +1004,63 @@ public static String obtainPassword(String username) {
 	return password;
 }
 
+public static ArrayList<Customer> obtainCustomerFilter(String column, String search)
+{
+	String query = "SELECT  * FROM customer, address, contact_info "
+			+ "where customer.contact_info_contact_info_id = contact_info.contact_info_id "
+			+ "and customer.Address_address_id = address.address_id and " + column + " = '" + search + "'";
+	
+	ArrayList<Customer> customers = new ArrayList<>();
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			String customerID = rs.getString(1);
+			String lastName = rs.getString(2);
+			String firstName = rs.getString(3);
+			String contactInfoID = rs.getString(4);
+			String addressID = rs.getString(5);
+			String streetAddress = rs.getString(7);
+			String city = rs.getString(8);
+			String state = rs.getString(9);
+			String zipCode = rs.getString(10);
+			String unitNumber = rs.getString(11);
+			String homePhone = rs.getString(13);
+			String cellPhone = rs.getString(14);
+			String emailAddress = rs.getString(15);
+			
+			Customer c = new Customer();
+			c.setCustomerID(customerID);
+			c.setLastName(lastName);
+			c.setFirstName(firstName);
+			c.setContactInfoID(contactInfoID);
+			c.setAddressID(addressID);
+			c.setStreetAddress(streetAddress);
+			c.setCity(city);
+			c.setState(state);
+			c.setZipCode(zipCode);
+			c.setUnitNumber(unitNumber);
+			c.setPhoneNumber(homePhone);
+			c.setCellPhoneNumber(cellPhone);
+			c.setEmailAddress(emailAddress);
+			
+			customers.add(c);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return customers;
+	
+}
+
 
 }

@@ -78,5 +78,15 @@ public class CustomerTableModel extends AbstractTableModel {
 	        customers = DatabaseReader.obtainCustomerList();
 			fireTableDataChanged();
 	    }
+	    
+	    public void refresh(String column, String search){
+	        customers = DatabaseReader.obtainCustomerFilter(column, search);
+	        fireTableDataChanged();
+	    }
+	    
+	    public void reset(){
+	        customers = DatabaseReader.obtainCustomerList();
+	        fireTableDataChanged();
+	    }
 	}
 
