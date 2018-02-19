@@ -81,19 +81,7 @@ public class CustomerInformationFrame extends JFrame {
         });
         panel.add(editButton);
         
-        JButton deleteButton = new JButton("Delete");
-        deleteButton.setToolTipText("Delete selected customer");
-        deleteButton.addActionListener((ActionEvent) -> {
-            try {
-                doDeleteButton();
-            } catch (DBException e) {
-                System.out.println(e);
-            } catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        });
-        panel.add(deleteButton);
+        
         
         JButton helpButton = new JButton("Help");
         helpButton.addActionListener((ActionEvent) -> {
@@ -134,31 +122,7 @@ public class CustomerInformationFrame extends JFrame {
         }
     }
     
-    private void doDeleteButton() throws DBException, SQLException {
-    	int selectedRow = customerTable.getSelectedRow();
-        
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "No customer is currently selected", 
-                    "No customer selected.", JOptionPane.ERROR_MESSAGE);
-        }
-        else
-        {
-            Customer customer = customerTableModel.getCustomer(selectedRow);
-            int ask = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete " 
-                    + customer.getFirstName() + " " + customer.getLastName() + " from the database?", "Confirm Delete",
-                    JOptionPane.YES_NO_OPTION);
-            if (ask == JOptionPane.YES_OPTION) {
-                try {
-                    // Delete method from DatabaseDeleter
-                    fireDatabaseUpdatedEvent();
-                }
-                catch (SQLException e) {
-                    System.out.println(e);
-                }
-            }
-        }
-    }
-    
+   
     private void doHelpButton()
     {
     	JOptionPane.showMessageDialog(this, "Press the 'Add' button to add a customer. \n"

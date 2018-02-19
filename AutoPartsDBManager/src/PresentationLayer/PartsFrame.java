@@ -75,19 +75,7 @@ public class PartsFrame  extends JFrame {
         });
         panel.add(editButton);
         
-        JButton deleteButton = new JButton("Delete");
-        deleteButton.setToolTipText("Delete selected customer");
-        deleteButton.addActionListener((ActionEvent) -> {
-            try {
-                doDeleteButton();
-            } catch (DBException e) {
-                System.out.println(e);
-            } catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        });
-        panel.add(deleteButton);
+        
         
         JButton helpButton = new JButton("Help");
         helpButton.addActionListener((ActionEvent) -> {
@@ -128,36 +116,12 @@ public class PartsFrame  extends JFrame {
         }
     }
     
-    private void doDeleteButton() throws DBException, SQLException {
-    	int selectedRow = partTable.getSelectedRow();
-        
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "No part is currently selected", 
-                    "No part selected.", JOptionPane.ERROR_MESSAGE);
-        }
-        else
-        {
-            Product product = PartsTableModel.getProducts(selectedRow);
-            int ask = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete " 
-                    + product.getDescription() + " from the database?", "Confirm Delete",
-                    JOptionPane.YES_NO_OPTION);
-            if (ask == JOptionPane.YES_OPTION) {
-                try {
-                    // Delete method from DatabaseDeleter
-                    fireDatabaseUpdatedEvent();
-                }
-                catch (SQLException e) {
-                    System.out.println(e);
-                }
-            }
-        }
-    }
+  
     
     private void doHelpButton()
     {
-    	JOptionPane.showMessageDialog(this, "Press the 'Add' button to add a customer. \n"
-                + "Press the 'Edit' button after selecting a customer to edit their name. \n"
-                + "Press the 'Delete' button after selecting a customer to delete that customer. \n"
+    	JOptionPane.showMessageDialog(this, "Press the 'Add' button to add a part. \n"
+                + "Press the 'Edit' button after selecting a part to edit their name. \n"
                 + "Press the 'Exit' button to exit the program.", 
                     "Help Window", JOptionPane.INFORMATION_MESSAGE);
     }

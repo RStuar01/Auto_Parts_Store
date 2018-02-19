@@ -147,9 +147,9 @@ public class SalesFrame extends JFrame {
     
     private void doHelpButton()
     {
-    	JOptionPane.showMessageDialog(this, "Press the 'Add' button to add a customer. \n"
-                + "Press the 'Edit' button after selecting a customer to edit their name. \n"
-                + "Press the 'Delete' button after selecting a customer to delete that customer. \n"
+    	JOptionPane.showMessageDialog(this, "Press the 'Select' button after selecting an invoice to see invoice details. \n"
+    			+ "Press the 'Add' button to add a invoice. \n"
+                + "Press the 'Edit' button after selecting a invoice to edit their name. \n"
                 + "Press the 'Exit' button to exit the program.", 
                     "Help Window", JOptionPane.INFORMATION_MESSAGE);
     }
