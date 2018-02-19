@@ -14,7 +14,7 @@ public class Employee extends People {
 	private String employeeID;
 	
 	// Default Constructor
-	Employee() {
+	public Employee() {
 		super();
 		employeeID = "";
 	}

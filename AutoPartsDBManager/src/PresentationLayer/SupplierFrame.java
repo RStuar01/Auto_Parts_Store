@@ -76,19 +76,7 @@ public class SupplierFrame  extends JFrame {
         });
         panel.add(editButton);
         
-        JButton deleteButton = new JButton("Delete");
-        deleteButton.setToolTipText("Delete selected customer");
-        deleteButton.addActionListener((ActionEvent) -> {
-            try {
-                doDeleteButton();
-            } catch (DBException e) {
-                System.out.println(e);
-            } catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        });
-        panel.add(deleteButton);
+       
         
         JButton helpButton = new JButton("Help");
         helpButton.addActionListener((ActionEvent) -> {
@@ -129,36 +117,12 @@ public class SupplierFrame  extends JFrame {
         }
     }
     
-    private void doDeleteButton() throws DBException, SQLException {
-    	int selectedRow = supplierTable.getSelectedRow();
-        
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "No supplier is currently selected", 
-                    "No supplier selected.", JOptionPane.ERROR_MESSAGE);
-        }
-        else
-        {
-            BusinessLayer.Supplier supplier = supplierTableModel.getSuppliers(selectedRow);
-            int ask = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete " 
-                    + supplier.getCompanyName() + " from the database?", "Confirm Delete",
-                    JOptionPane.YES_NO_OPTION);
-            if (ask == JOptionPane.YES_OPTION) {
-                try {
-                    // Delete method from DatabaseDeleter
-                    fireDatabaseUpdatedEvent();
-                }
-                catch (SQLException e) {
-                    System.out.println(e);
-                }
-            }
-        }
-    }
+    
     
     private void doHelpButton()
     {
     	JOptionPane.showMessageDialog(this, "Press the 'Add' button to add a supplier. \n"
                 + "Press the 'Edit' button after selecting a supplier to edit their name. \n"
-                + "Press the 'Delete' button after selecting a supplier to delete that customer. \n"
                 + "Press the 'Exit' button to exit the program.", 
                     "Help Window", JOptionPane.INFORMATION_MESSAGE);
     }
