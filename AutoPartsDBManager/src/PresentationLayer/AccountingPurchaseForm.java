@@ -52,6 +52,7 @@ public class AccountingPurchaseForm extends JDialog{
 		        purchaseQtyField.setText(purchase.getPurchasesQuantity());
 		        dollarValueField.setText(purchase.getDollarValue());
 		        purchaseIDField.setEditable(false);
+		        dollarValueField.setEditable(false);
 		     }
 		    
 		    private void initComponents() {
