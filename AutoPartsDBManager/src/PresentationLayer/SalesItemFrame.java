@@ -1,16 +1,19 @@
 package PresentationLayer;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.ScrollPane;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -24,9 +27,12 @@ public class SalesItemFrame extends JFrame{
 	
 	    private JTable salesItemTable;
 	    private SalesItemTableModel salesItemTableModel;
-	    private int invoiceNumberInput;
+	    private String invoiceNumberInput;
 	    
-	    public SalesItemFrame(int invoiceNumberInput) throws UnsupportedLookAndFeelException, DBException, SQLException {
+	    private JTextField searchField;
+	    private JComboBox searchCombo;
+	    
+	    public SalesItemFrame(String invoiceNumberInput) throws UnsupportedLookAndFeelException, DBException, SQLException {
 	        try {
 	            UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
 	        }
@@ -43,6 +49,7 @@ public class SalesItemFrame extends JFrame{
 	        add(buildButtonPanel(), BorderLayout.SOUTH);
 	        salesItemTable = buildSalesTable();
 	        add(new JScrollPane(salesItemTable), BorderLayout.CENTER);
+	        add(buildSearchPanel(), BorderLayout.NORTH);
 	        setVisible(true);
 	                
 	    }
@@ -56,7 +63,7 @@ public class SalesItemFrame extends JFrame{
 	        });
 	    
 	        panel.add(addButton);
-	        
+	       /* 
 	        JButton editButton = new JButton("Edit");
 	        editButton.setToolTipText("Edit selected Sales Line");
 	        editButton.addActionListener((ActionEvent) -> {
@@ -71,7 +78,7 @@ public class SalesItemFrame extends JFrame{
 	        });
 	        panel.add(editButton);
 	        
-	        
+	        */
 	        
 	        JButton helpButton = new JButton("Help");
 	        helpButton.addActionListener((ActionEvent) -> {
@@ -97,6 +104,7 @@ public class SalesItemFrame extends JFrame{
 	        salesItemForm.setVisible(true);
 	    }
 	    
+	    /*
 	    private void doEditButton() throws DBException, SQLException {
 	    	int selectedRow = salesItemTable.getSelectedRow();
 	        if (selectedRow == -1) {
@@ -111,6 +119,8 @@ public class SalesItemFrame extends JFrame{
 	            salesItemForm.setVisible(true);
 	        }
 	    }
+	    
+	    */
 	    
 	    private void doHelpButton()
 	    {
@@ -135,6 +145,66 @@ public class SalesItemFrame extends JFrame{
 	        return table;
 	    }
 	
-
+	    private JPanel buildSearchPanel() {
+	 	   
+	 	   String[] fields = {"Invoice Line Number", "Invoice Number", 
+				  	"Quantity Purchased", "Product ID"};
+	 	   
+	 	   JPanel panel = new JPanel();
+	 	   
+	 	   searchField = new JTextField();
+	 	   Dimension longField = new Dimension(300, 20);
+	        searchField.setPreferredSize(longField);
+	        searchField.setMinimumSize(longField);
+	        
+	        panel.add(searchField);
+	        
+	        searchCombo = new JComboBox(fields);
+	        panel.add(searchCombo);
+	        
+	        JButton searchButton = new JButton("Search");
+	        searchButton.addActionListener((ActionEvent) -> {
+	            try {
+	 			doSearchButton();
+	 		} catch (SQLException e) {
+	 			// TODO Auto-generated catch block
+	 			e.printStackTrace();
+	 		}
+	        });
+	    
+	        panel.add(searchButton);
+	 	   
+	 	   return panel;
+	    }
+	    
+	    private void doSearchButton() throws SQLException {
+	 	   
+	 	   String column;
+	 	   
+	 	   switch(searchCombo.getSelectedIndex())
+	 	   {
+	 	   case 0:
+	 		   column = "invoice_line_number";
+	 		   break;
+	 	   case 1:
+	 		   column = "invoice_invoice_number";
+	 		   break;
+	 	   case 2:
+	 		   column = "quantity_purchased";
+	 		   break;
+	 	   case 3:
+	 		   column = "product_product";
+	 		   break;
+	 	   default:
+	 		   column = "";
+	 		   break;
+	 		   
+	 	   }
+	 	   
+	 	   if(searchField.getText().equals(""))
+	 		  salesItemTableModel.reset();
+	 	   else
+	 		  salesItemTableModel.refresh(column, searchField.getText());
+	    }
 
 }

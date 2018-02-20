@@ -6,8 +6,12 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -94,7 +98,7 @@ public class LoginFrame extends JFrame {
     		password = passwordField.getText();
 			if (password.equals(DatabaseReader.obtainPassword(usernameField.getText())))
 			{
-				
+				dispose();
 				AutoPartsStoreFrame gui = new AutoPartsStoreFrame();
 			}
 				else
@@ -129,12 +133,24 @@ public class LoginFrame extends JFrame {
        loginPanel.add(new JLabel("Password:"), getConstraints(0, 1, GridBagConstraints.LINE_END));
        loginPanel.add(passwordField, getConstraints(1, 1, GridBagConstraints.LINE_START));
        
-       //setLayout(new BorderLayout());
-       //add(loginPanel, BorderLayout.CENTER);
-       //pack();
+       passwordField.addActionListener(new ActionListener() {
+    	   	public void actionPerformed(ActionEvent e) {
+    	   		try {
+					doLoginButton();
+				} catch (UnsupportedLookAndFeelException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DBException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+    	   	}
+       });
        
        return loginPanel;
+       
    }
+
    
    private GridBagConstraints getConstraints(int x, int y, int anchor) {
        GridBagConstraints c = new GridBagConstraints();

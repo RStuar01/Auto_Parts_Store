@@ -61,6 +61,7 @@ public class AccountingPurchaseForm extends JDialog{
 		        dollarValueField = new JTextField();
 		        cancelButton = new JButton();
 		        confirmButton = new JButton();
+		        purchaseIDField.setEditable(false);
 		        
 		        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		       

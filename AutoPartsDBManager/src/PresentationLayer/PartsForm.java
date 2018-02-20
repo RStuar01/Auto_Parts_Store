@@ -97,6 +97,7 @@ public class PartsForm extends JDialog {
 			    qtyInStockField = new JTextField();
 			    cancelButton = new JButton();
 		        confirmButton = new JButton();
+		        productIDField.setEditable(false);
 		        
 		        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		       

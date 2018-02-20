@@ -69,8 +69,9 @@ public class CustomerInfoForm extends JDialog {
 	        homePhoneField.setText(customer.getPhoneNumber());
 	        cellPhoneField.setText(customer.getCellPhoneNumber());
 	        emailField.setText(customer.getEmailAddress());
-	        lastNameField.setEditable(false);
-	        firstNameField.setEditable(false);
+	        customerIDField.setEditable(false);
+	        contactInfoIDField.setEditable(false);
+	        addressIDField.setEditable(false);
 	    }
 	    
 	    private void initComponents() {
@@ -89,6 +90,9 @@ public class CustomerInfoForm extends JDialog {
 	        emailField = new JTextField();
 	        cancelButton = new JButton();
 	        confirmButton = new JButton();
+	        customerIDField.setEditable(false);
+	        contactInfoIDField.setEditable(false);
+	        addressIDField.setEditable(false);
 	        
 	        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	       

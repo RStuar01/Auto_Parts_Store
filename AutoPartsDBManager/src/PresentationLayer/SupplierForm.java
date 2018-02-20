@@ -75,7 +75,9 @@ public class SupplierForm extends JDialog {
 		        emailField.setText(supplier.getEmailAddress());
 		        companyNameField.setText(supplier.getCompanyName());
 		        supplierIDField.setEditable(false);
-		        firstNameField.setEditable(false);
+		        contactInfoIDField.setEditable(false);
+		        addressIDField.setEditable(false);
+		        companyIDField.setEditable(false);
 		    }
 		    
 		    private void initComponents() {
@@ -96,6 +98,10 @@ public class SupplierForm extends JDialog {
 		        companyNameField = new JTextField();
 		        cancelButton = new JButton();
 		        confirmButton = new JButton();
+		        supplierIDField.setEditable(false);
+		        contactInfoIDField.setEditable(false);
+		        addressIDField.setEditable(false);
+		        companyIDField.setEditable(false);
 		        
 		        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		       

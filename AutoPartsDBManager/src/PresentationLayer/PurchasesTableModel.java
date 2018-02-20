@@ -60,6 +60,16 @@ public class PurchasesTableModel extends AbstractTableModel{
 					        purchases = DatabaseReader.obtainPurchaseList();
 							fireTableDataChanged();
 					    }
+					    
+					    public void refresh(String column, String search){
+					        purchases = DatabaseReader.obtainPurchaseFilter(column, search);
+					        fireTableDataChanged();
+					    }
+					    
+					    public void reset(){
+					        purchases = DatabaseReader.obtainPurchaseList();
+					        fireTableDataChanged();
+					    }
 					}
 
 

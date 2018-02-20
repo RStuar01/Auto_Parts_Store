@@ -57,6 +57,7 @@ public class SalesForm extends JDialog{
 				        timeField.setText(invoice.getTime());
 				        customerIDField.setText(invoice.getCustomerID());
 				        employeeIDField.setText(invoice.getEmployeeID());
+				        invoiceNumberField.setEditable(false);
 				        }
 				    
 				    private void initComponents() {
@@ -67,6 +68,7 @@ public class SalesForm extends JDialog{
 				        employeeIDField = new JTextField();
 				        cancelButton = new JButton();
 				        confirmButton = new JButton();
+				        invoiceNumberField.setEditable(false);
 				        
 				        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 				       
