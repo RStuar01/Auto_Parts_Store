@@ -53,6 +53,9 @@ public class SalesItemForm extends JDialog{
 			        invoiceNumberField.setText(invoiceLineItem.getInvoiceNumber());
 			        purchasedQtyField.setText(invoiceLineItem.getQuantityPurchased());
 			        productIDField.setText(invoiceLineItem.getProductID());
+			        invoiceLineItemNumberField.setEditable(false);
+			        invoiceNumberField.setEditable(false);
+			        
 			        }
 			    
 			    private void initComponents() {
@@ -62,6 +65,8 @@ public class SalesItemForm extends JDialog{
 			        productIDField = new JTextField();
 			        cancelButton = new JButton();
 			        confirmButton = new JButton();
+			        invoiceLineItemNumberField.setEditable(false);
+			        invoiceNumberField.setEditable(false);
 			        
 			        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			       

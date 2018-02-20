@@ -533,10 +533,10 @@ public static ArrayList<Invoice> obtainInvoiceList() {
 
 
 
-public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemList(int invoiceNumberInput) {
+public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemList(String invoiceNumberInput) {
 	
 		
-	String query = "SELECT * FROM invoice_line_item where invoice_invoice_number = " + (invoiceNumberInput + 1);
+	String query = "SELECT * FROM invoice_line_item where invoice_invoice_number = '" + invoiceNumberInput + "'";
 	ArrayList<InvoiceLineItem> invoiceLineItems = new ArrayList<>();
 	
 	Statement stmt = null;
@@ -1181,6 +1181,274 @@ public static ArrayList<Employee> obtainEmployeeFilter(String column, String sea
 	
 }
 
+public static ArrayList<AccountingPurchases> obtainPurchaseFilter(String column, String search)
+{
+	String query = "SELECT * FROM accounting_purchases where " + column + " = '" + search + "'";
+	
+	ArrayList<AccountingPurchases> purchases = new ArrayList<>();
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			String purchaseID = rs.getString(1);
+			String purchaseQty = rs.getString(2);
+			String dollarValue = rs.getString(3);
+			String productID = rs.getString(4);
+			
+			AccountingPurchases p = new AccountingPurchases();
+			p.setAccountingPurchasesRecordID(purchaseID);
+			p.setPurchasesQuantity(purchaseQty);
+			p.setDollarValue(dollarValue);
+			p.setProductID(productID);
+			purchases.add(p);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return purchases;
+	
+}
+
+
+public static ArrayList<Product> obtainProductFilter(String column, String search) {
+	
+	String query = "SELECT * FROM product where " + column + " = '" + search + "'";
+	ArrayList<Product> products = new ArrayList<>();
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			String productID = rs.getString(1);
+			String description = rs.getString(2);
+			String minYear = rs.getString(3);
+			String maxYear = rs.getString(4);
+			String make = rs.getString(5);
+			String model = rs.getString(6);
+			String supplierPrice = rs.getString(7);
+			String sellPrice = rs.getString(8);
+			String coreCharge = rs.getString(9);
+			String compNumber = rs.getString(10);
+			String companyID = rs.getString(11);
+			String minStockQty = rs.getString(12);
+			String maxStockQty = rs.getString(13);
+			String warehouseLocation = rs.getString(14);
+			String stockQty = rs.getString(15);
+			
+			Product p = new Product();
+			p.setProductID(productID);
+			p.setDescription(description);
+			p.setYearMinimum(minYear);
+			p.setYearMaximum(maxYear);
+			p.setMake(make);
+			p.setModel(model);
+			p.setSupplierPrice(supplierPrice);
+			p.setSellPrice(sellPrice);
+			p.setCoreCharge(coreCharge);
+			p.setCompatibilityNumber(compNumber);
+			p.setCompanyID(companyID);
+			p.setMinQuantityInStock(minStockQty);
+			p.setMaxQuantityInStock(maxStockQty);
+			p.setWarehouseLocation(warehouseLocation);
+			p.setQuantityInStock(stockQty);
+			
+			products.add(p);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return products;
+}
+
+public static ArrayList<Supplier> obtainSupplierFilter(String column, String search) {
+
+	
+	String query = "SELECT * FROM supplier, address, contact_info, company "
+			+ "where supplier.Address_address_id = address.address_id "
+			+ "and supplier.contact_info_contact_info_id = contact_info.contact_info_id "
+			+ "and supplier.company_company_id = company.company_id and " + column + " = '" + search + "'";
+		
+	
+	ArrayList<Supplier> supplier = new ArrayList<>();
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			String supplierID = rs.getString(1);
+			String lastName = rs.getString(2);
+			String firstName = rs.getString(3);
+			String contactInfoID = rs.getString(4);
+			String addressID = rs.getString(5);
+			String companyID = rs.getString(6);
+			String streetAddress = rs.getString(8);
+			String city = rs.getString(9);
+			String state = rs.getString(10);
+			String zipCode = rs.getString(11);
+			String unitNumber = rs.getString(12);
+			String homePhone = rs.getString(14);
+			String cellPhone = rs.getString(15);
+			String emailAddress = rs.getString(16);
+			String companyName = rs.getString(20);
+			
+			Supplier s = new Supplier();
+			
+			s.setSupplierID(supplierID);
+			s.setLastName(lastName);
+			s.setFirstName(firstName);
+			s.setContactInfoID(contactInfoID);
+			s.setAddressID(addressID);
+			s.setCompanyID(companyID);
+			s.setStreetAddress(streetAddress);
+			s.setCity(city);
+			s.setState(state);
+			s.setZipCode(zipCode);
+			s.setUnitNumber(unitNumber);
+			s.setPhoneNumber(homePhone);
+			s.setCellPhoneNumber(cellPhone);
+			s.setEmailAddress(emailAddress);
+			s.setCompanyName(companyName);
+			
+			supplier.add(s);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return supplier;
+}
+
+public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemFilter(String invoiceNumberInput,
+		String column, String search) {
+	
+	
+	String query = "SELECT * FROM invoice_line_item where invoice_invoice_number "
+			+ "= '" + invoiceNumberInput  + "' and " + column + " = '" + search + "'";
+	ArrayList<InvoiceLineItem> invoiceLineItems = new ArrayList<>();
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			String invoiceLineNumber = rs.getString(1);
+			String invoiceNumber = rs.getString(2);
+			String quantityPurchased = rs.getString(3);
+			String productID = rs.getString(4);
+			
+			InvoiceLineItem i = new InvoiceLineItem();
+			i.setInvoiceLineNumber(invoiceLineNumber);
+			i.setInvoiceNumber(invoiceNumber);
+			i.setQuantityPurchased(quantityPurchased);
+			i.setProductID(productID);
+			
+			
+			invoiceLineItems.add(i);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return invoiceLineItems;
+}
+
+public static ArrayList<Invoice> obtainInvoiceFilter(String column, String search) {
+	
+	String query = "SELECT * FROM invoice where " + column + " = '" + search + "'";
+	ArrayList<Invoice> invoices = new ArrayList<>();
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			String invoiceNumber = rs.getString(1);
+			String date = rs.getString(2);
+			String time = rs.getString(3);
+			String customerID = rs.getString(4);
+			String employeeID = rs.getString(5);
+		
+			
+			Invoice i = new Invoice();
+			i.setInvoiceNumber(invoiceNumber);
+			i.setDate(date);
+			i.setTime(time);
+			i.setCustomerID(customerID);
+			i.setEmployeeID(employeeID);
+			
+			
+			invoices.add(i);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return invoices;
+}
+
+
+public String obtainInvoiceNumber(String input) {
+	
+	
+	String query = "SELECT invoice_number FROM invoice where invoic_number  = '" + input +"'";
+			
+	String invoiceNumber = "";
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			invoiceNumber = rs.getString(1);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return invoiceNumber;
+}
 
 
 }

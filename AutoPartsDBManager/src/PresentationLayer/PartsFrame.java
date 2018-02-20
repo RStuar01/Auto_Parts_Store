@@ -8,16 +8,19 @@ package PresentationLayer;
 //package autopartsstoregui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.ScrollPane;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -30,6 +33,9 @@ import BusinessLayer.Product;
 public class PartsFrame  extends JFrame {
     private JTable partTable;
     private PartsTableModel productTableModel;
+    
+    private JTextField searchField;
+    private JComboBox searchCombo;
     
     public PartsFrame() throws UnsupportedLookAndFeelException, DBException, SQLException {
         try {
@@ -47,6 +53,7 @@ public class PartsFrame  extends JFrame {
         add(buildButtonPanel(), BorderLayout.SOUTH);
         partTable = buildProductTable();
         add(new JScrollPane(partTable), BorderLayout.CENTER);
+        add(buildSearchPanel(), BorderLayout.NORTH);
         setVisible(true);
                 
     }
@@ -136,6 +143,104 @@ public class PartsFrame  extends JFrame {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setBorder(null);
         return table;
+    }
+    
+    private JPanel buildSearchPanel() {
+ 	   
+ 	   String[] fields = {"Product ID", "Description", 
+	    		"Minimum Year", "Maximum Year", "Make", "Model", "Supplier Price",
+	    		"Sell Price", "Core Charge", "Compatibility Number", "Company ID",
+	    		"Minimum Quantity in Stock", "Maximum Quantity in Stock", "Warehouse Location", 
+	    		"Quantity in Stock"};
+ 	   
+ 	   JPanel panel = new JPanel();
+ 	   
+ 	   searchField = new JTextField();
+ 	   Dimension longField = new Dimension(300, 20);
+        searchField.setPreferredSize(longField);
+        searchField.setMinimumSize(longField);
+        
+        panel.add(searchField);
+        
+        searchCombo = new JComboBox(fields);
+        panel.add(searchCombo);
+        
+        JButton searchButton = new JButton("Search");
+        searchButton.addActionListener((ActionEvent) -> {
+            try {
+ 			doSearchButton();
+ 		} catch (SQLException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+        });
+    
+        panel.add(searchButton);
+ 	   
+ 	   return panel;
+    }
+    
+    private void doSearchButton() throws SQLException {
+ 	   
+ 	   String column;
+ 	   
+ 	   switch(searchCombo.getSelectedIndex())
+ 	   {
+ 	   case 0:
+ 		   column = "product";
+ 		   break;
+ 	   case 1:
+ 		   column = "description";
+ 		   break;
+ 	   case 2:
+ 		   column = "year_minimum";
+ 		   break;
+ 	   case 3:
+ 		   column = "year_maximum";
+ 		   break;
+ 	   case 4:
+ 		   column = "make";
+ 		   break;
+ 	   case 5:
+ 		   column = "model";
+ 		   break;
+ 	   case 6:
+ 		   column = "supplier_price";
+ 		   break;
+ 	   case 7:
+ 		   column = "sell_price";
+ 		   break;
+ 	   case 8:
+ 		   column = "core_charge";
+ 		   break;
+ 	   case 9: 
+ 		   column = "compatibility_number";
+ 		   break;
+ 	   case 10:
+ 		   column = "company_company_id";
+ 		   break;
+ 	   case 11:
+ 		   column = "min_quantity_in_stock";
+ 		   break;
+ 	   case 12:
+ 		   column = "max_quantity_in_stock";
+ 		   break;
+ 	   case 13:
+ 		   column = "warehouse_location";
+ 		   break;
+ 	   case 14:
+ 		   column = "quantity_in_stock";
+ 		   break;
+ 	   default:
+ 		   column = "";
+ 		   break;
+ 		   
+ 	   }
+ 	   
+ 	   if(searchField.getText().equals(""))
+ 		   productTableModel.reset();
+ 	   else
+ 		   productTableModel.refresh(column, searchField.getText());
     }
 }
 

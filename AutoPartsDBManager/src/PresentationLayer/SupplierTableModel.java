@@ -87,6 +87,16 @@ public class SupplierTableModel extends AbstractTableModel {
 		        suppliers = DatabaseReader.obtainSupplierList();
 				fireTableDataChanged();
 		    }
+		    
+		    public void refresh(String column, String search){
+		        suppliers = DatabaseReader.obtainSupplierFilter(column, search);
+		        fireTableDataChanged();
+		    }
+		    
+		    public void reset(){
+		        suppliers = DatabaseReader.obtainSupplierList();
+		        fireTableDataChanged();
+		    }
 		}
 
 

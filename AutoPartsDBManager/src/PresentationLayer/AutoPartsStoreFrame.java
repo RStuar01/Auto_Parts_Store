@@ -82,7 +82,7 @@ public class AutoPartsStoreFrame extends JFrame{
     
         panel.add(employeeButton);
         
-        JButton accountingButton = new JButton("Accounting");
+        JButton accountingButton = new JButton("Purchases");
         accountingButton.addActionListener((ActionEvent) -> {
             try {
                 doAccountingButton();

@@ -84,6 +84,16 @@ public class PartsTableModel extends AbstractTableModel{
 			        products = DatabaseReader.obtainProductList();
 					fireTableDataChanged();
 			    }
+			    
+			    public void refresh(String column, String search){
+			        products = DatabaseReader.obtainProductFilter(column, search);
+			        fireTableDataChanged();
+			    }
+			    
+			    public void reset(){
+			        products = DatabaseReader.obtainProductList();
+			        fireTableDataChanged();
+			    }
 			}
 
 

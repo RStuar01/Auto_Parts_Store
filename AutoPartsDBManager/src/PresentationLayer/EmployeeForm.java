@@ -72,8 +72,9 @@ public class EmployeeForm extends JDialog {
 		        homePhoneField.setText(employee.getPhoneNumber());
 		        cellPhoneField.setText(employee.getCellPhoneNumber());
 		        emailField.setText(employee.getEmailAddress());
-		        lastNameField.setEditable(false);
-		        firstNameField.setEditable(false);
+		        employeeIDField.setEditable(false);
+		        contactInfoIDField.setEditable(false);
+		        addressIDField.setEditable(false);
 		    }
 		    
 		    private void initComponents() {
@@ -92,6 +93,9 @@ public class EmployeeForm extends JDialog {
 		        emailField = new JTextField();
 		        cancelButton = new JButton();
 		        confirmButton = new JButton();
+		        employeeIDField.setEditable(false);
+		        contactInfoIDField.setEditable(false);
+		        addressIDField.setEditable(false);
 		        
 		        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		       

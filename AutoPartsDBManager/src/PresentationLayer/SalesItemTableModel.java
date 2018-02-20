@@ -18,9 +18,9 @@ public class SalesItemTableModel extends AbstractTableModel {
 				private List<InvoiceLineItem> invoiceLineItems;
 				private final String[] COLUMN_NAMES = {"Invoice Line Number", "Invoice Number", 
 					  	"Quantity Purchased", "Product ID"};
-				int invoiceNumberInput;
+				String invoiceNumberInput;
 					    
-				public SalesItemTableModel(int invoiceNumberInput) throws SQLException{
+				public SalesItemTableModel(String invoiceNumberInput) throws SQLException{
 					 this.invoiceNumberInput = invoiceNumberInput;
 				     invoiceLineItems = DatabaseReader.obtainInvoiceLineItemList(invoiceNumberInput);
 				     
@@ -64,6 +64,16 @@ public class SalesItemTableModel extends AbstractTableModel {
 					    void databaseUpdated() throws SQLException{
 					        invoiceLineItems = DatabaseReader.obtainInvoiceLineItemList(invoiceNumberInput);
 							fireTableDataChanged();
+					    }
+					    
+					    public void refresh(String column, String search){
+					        invoiceLineItems = DatabaseReader.obtainInvoiceLineItemFilter(invoiceNumberInput, column, search);
+					        fireTableDataChanged();
+					    }
+					    
+					    public void reset(){
+					    	 invoiceLineItems = DatabaseReader.obtainInvoiceLineItemList(invoiceNumberInput);
+					        fireTableDataChanged();
 					    }
 					}
 

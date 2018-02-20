@@ -64,7 +64,18 @@ public class SalesTableModel extends AbstractTableModel {
 				        invoices = DatabaseReader.obtainInvoiceList();
 						fireTableDataChanged();
 				    }
-				}
+				    
+				    public void refresh(String column, String search){
+				        invoices = DatabaseReader.obtainInvoiceFilter(column, search);
+				        fireTableDataChanged();
+				    }
+				    
+				    public void reset(){
+				        invoices = DatabaseReader.obtainInvoiceList();
+				        fireTableDataChanged();
+				    }
+				    
+}
 
 
 
