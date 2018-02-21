@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -19,7 +21,9 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import BusinessLayer.Customer;
+import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseWriter;
+import DatabaseLayer.WriterDAO;
 
 public class CustomerInfoForm extends JDialog {
 	   
@@ -44,12 +48,15 @@ public class CustomerInfoForm extends JDialog {
 	    private JTextField emailField;
 	    private JButton confirmButton;
 	    private JButton cancelButton;
+	    private boolean dataEntered = true;
+	    private static WriterDAO writerDAO;
 	    
 	    private Customer customer = new Customer();
 	    
 	    public CustomerInfoForm(java.awt.Frame parent, String title, boolean modal) {
 	        super(parent, title, modal);
 	        initComponents();
+	        writerDAO = DAOFactory.getWriterDAO();
 	    }
 	    
 	    public CustomerInfoForm(java.awt.Frame parent, String title, boolean modal, Customer customer) {
@@ -193,6 +200,18 @@ public class CustomerInfoForm extends JDialog {
 	    }
 	    
 	    private void confirmButtonActionPerformed() throws SQLException {
+	    	
+	    	processData();
+	    	
+	    	if(dataEntered) {
+	    		
+	    		//Write to the DB
+	    		System.out.println("All data entered!");
+	    		
+	    	}
+	    	
+	    	dataEntered = true;
+	    	/*
 	        if (validateData()) {
 	            setData();
 	            if (confirmButton.getText().equals("Add")) {
@@ -203,8 +222,68 @@ public class CustomerInfoForm extends JDialog {
 	                doEdit();
 	            }
 	        }
+	        */
 	    }
 	    
+	    // Added by Rick
+	    private void processData() {
+	    	
+	    	String choice = "Customer";
+	    	String companyID = "";
+	    	
+	    	String lastName = verifyEntry(lastNameField);
+	    	String firstName = verifyEntry(firstNameField);
+	    	String streetAddress = verifyEntry(streetAddressField);
+	    	String city = verifyEntry(cityField);
+	    	String state = verifyEntry(stateField);
+	    	String zipCode = verifyEntry(zipCodeField);
+	    	String unitNumber = verifyEntry(unitNumberField);
+	    	String homePhone = verifyEntry(homePhoneField);
+	    	String cellPhone = verifyEntry(cellPhoneField);
+	    	String email = verifyEntry(emailField);
+	    	
+	    	if(dataEntered) {
+	    		writerDAO.manageNewPersonCreation(choice, lastName, firstName,
+    				streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
+    				email, companyID);
+	    	}
+	    }
+	    
+	    // Added by Rick
+	    private String verifyEntry(JTextField name) {
+	    	String dataItem = "";
+	    	boolean valid = true;
+	    		
+	    	dataItem = name.getText();
+	    	
+	    	if(name == unitNumberField) {
+	    		//dataItem = name.getText();
+	    		if(dataItem.length() == 0 || dataItem == "DataMissing") {
+	    			dataItem = "N.A.";
+	    			unitNumberField.setText(dataItem);
+	    		}
+	    	}
+	    	
+	    	if(name == emailField) {
+	    		valid = emailValidator(emailField.getText());
+	    		if(!valid) {
+	    			emailField.setText("Invalid Email");
+	    			name.setForeground(Color.RED);
+	    		}
+	    	}
+	    	
+	    	//dataItem = name.getText();
+	    	if(dataItem.length() == 0) {
+				name.setForeground(Color.RED);
+				name.setText("Data Missing");
+				dataEntered = false;
+	    	}
+	    	else if(dataItem.equals("Data Missing") || dataItem.equals("Invalid Email")) {
+	    		dataEntered = false;
+	    	}
+		
+	    	return dataItem;
+	    }
 	    
 	    private boolean isEmpty()
 	    {
@@ -225,6 +304,7 @@ public class CustomerInfoForm extends JDialog {
 	    
 	    private boolean validateData() {
 	        
+	    	
 	        boolean valid = false;
 	        String email = emailField.getText();
 	        
@@ -242,6 +322,7 @@ public class CustomerInfoForm extends JDialog {
 	        }
 	        
 	        return valid;
+	        
 	    }
 
 	    /*
