@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -20,7 +22,9 @@ import javax.swing.WindowConstants;
 
 import BusinessLayer.Customer;
 import BusinessLayer.Supplier;
+import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseWriter;
+import DatabaseLayer.WriterDAO;
 
 public class SupplierForm extends JDialog {
 	  
@@ -48,11 +52,18 @@ public class SupplierForm extends JDialog {
 		    private JButton confirmButton;
 		    private JButton cancelButton;
 		    
+		    //Added by Rick
+		    private boolean dataEntered = true;
+		    private static WriterDAO writerDAO;
+		    
 		    private Supplier supplier = new Supplier();
 		    
 		    public SupplierForm(java.awt.Frame parent, String title, boolean modal) {
 		        super(parent, title, modal);
 		        initComponents();
+		        
+		     // Added by Rick
+		        writerDAO = DAOFactory.getWriterDAO();
 		    }
 		    
 		    public SupplierForm(java.awt.Frame parent, String title, boolean modal, Supplier supplier) {
@@ -210,7 +221,22 @@ public class SupplierForm extends JDialog {
 		    }
 		    
 		    private void confirmButtonActionPerformed() throws SQLException {
-		        if (validateData()) {
+		        
+		    	// Added by Rick
+		    	processData();
+		    	
+		    	if(dataEntered) {
+		    		
+		    		//Write to the DB
+		    		System.out.println("All data entered!");
+		    		
+		    	}
+		    	
+		    	dataEntered = true;
+		    	
+		    	// Modified by Rick
+		    	/*
+		    	if (validateData()) {
 		            setData();
 		            if (confirmButton.getText().equals("Add")) {
 		                doAdd();
@@ -220,6 +246,68 @@ public class SupplierForm extends JDialog {
 		                doEdit();
 		            }
 		        }
+		        */
+		    }
+		    
+		    // Added by Rick
+		    private void processData() {
+		    	
+		    	String choice = "Supplier";
+		    	
+		    	String lastName = verifyEntry(lastNameField);
+		    	String firstName = verifyEntry(firstNameField);
+		    	String streetAddress = verifyEntry(streetAddressField);
+		    	String city = verifyEntry(cityField);
+		    	String state = verifyEntry(stateField);
+		    	String zipCode = verifyEntry(zipCodeField);
+		    	String unitNumber = verifyEntry(unitNumberField);
+		    	String homePhone = verifyEntry(homePhoneField);
+		    	String cellPhone = verifyEntry(cellPhoneField);
+		    	String email = verifyEntry(emailField);
+		    	String companyID = verifyEntry(companyNameField);
+		    	
+		    	if(dataEntered) {
+		    		writerDAO.manageNewPersonCreation(choice, lastName, firstName,
+	    				streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
+	    				email, companyID);
+		    	}
+		    }
+		    
+		 // Added by Rick
+		    private String verifyEntry(JTextField name) {
+		    	String dataItem = "";
+		    	boolean valid = true;
+		    		
+		    	dataItem = name.getText();
+		    	
+		    	if(name == unitNumberField) {
+		    		//dataItem = name.getText();
+		    		if(dataItem.length() == 0 || dataItem == "DataMissing") {
+		    			dataItem = "N.A.";
+		    			unitNumberField.setText(dataItem);
+		    		}
+		    	}
+		    	
+		    	if(name == emailField) {
+		    		valid = emailValidator(emailField.getText());
+		    		if(!valid) {
+		    			emailField.setText("Invalid Email");
+		    			name.setForeground(Color.RED);
+		    			dataEntered = false;
+		    		}
+		    	}
+		    	
+		    	//dataItem = name.getText();
+		    	if(dataItem.length() == 0) {
+					name.setForeground(Color.RED);
+					name.setText("Data Missing");
+					dataEntered = false;
+		    	}
+		    	else if(dataItem.equals("Data Missing") || dataItem.equals("Invalid Email")) {
+		    		dataEntered = false;
+		    	}
+			
+		    	return dataItem;
 		    }
 		    
 		    

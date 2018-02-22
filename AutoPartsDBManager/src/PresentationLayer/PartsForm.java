@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -20,7 +22,9 @@ import javax.swing.WindowConstants;
 
 import BusinessLayer.Customer;
 import BusinessLayer.Product;
+import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseWriter;
+import DatabaseLayer.WriterDAO;
 
 public class PartsForm extends JDialog {
 			   
@@ -48,11 +52,18 @@ public class PartsForm extends JDialog {
 		    private JButton confirmButton;
 		    private JButton cancelButton;
 		    
+		  //Added by Rick
+		    private boolean dataEntered = true;
+		    private static WriterDAO writerDAO;
+		    
 		    private Product product = new Product();
 		    
 		    public PartsForm(java.awt.Frame parent, String title, boolean modal) {
 		        super(parent, title, modal);
 		        initComponents();
+		        
+		     // Added by Rick
+		        writerDAO = DAOFactory.getWriterDAO();
 		    }
 		    
 		    public PartsForm(java.awt.Frame parent, String title, boolean modal, Product product) {
@@ -207,7 +218,15 @@ public class PartsForm extends JDialog {
 		    }
 		    
 		    private void confirmButtonActionPerformed() throws SQLException {
-		        if (validateData()) {
+		        
+		    	// Added by Rick
+		    	processData();
+		    	
+		    	
+		    	
+		    	// Modified by Rick
+		    	/*
+		    	if (validateData()) {
 		            setData();
 		            if (confirmButton.getText().equals("Add")) {
 		                doAdd();
@@ -217,6 +236,53 @@ public class PartsForm extends JDialog {
 		                doEdit();
 		            }
 		        }
+		        */
+		    }
+		    
+		    //Added by Rick
+		    private void processData() {
+		    	
+		    	String description = verifyEntry(descriptionField);
+		    	String minYear = verifyEntry(minYearField);
+		    	String maxYear = verifyEntry(maxYearField);
+		    	String make = verifyEntry(makeField);
+		    	String model = verifyEntry(modelField);
+		    	String supplierPrice = verifyEntry(supplierPriceField);
+		    	String sellPrice = verifyEntry(sellPriceField);
+		    	String coreCharge = verifyEntry(coreChargeField);
+		    	String compatibilityNumber = verifyEntry(compatibilityNumberField);
+		    	String companyID = verifyEntry(companyIDField);
+		    	String minStockQuantity = verifyEntry(minStockQtyField);
+		    	String maxStockQuantity = verifyEntry(maxStockQtyField);
+		    	String warehouseLocation = verifyEntry(warehouseLocationField);
+		    	String quantityInStock = verifyEntry(qtyInStockField);
+		    	
+		    	if(dataEntered) {
+		    		writerDAO.manuallyEnterNewPart(description, minYear, maxYear,
+		    				make, model, supplierPrice, sellPrice, coreCharge,
+		    				compatibilityNumber, companyID, minStockQuantity,
+		    				maxStockQuantity, warehouseLocation, quantityInStock);
+		    	}
+		    }
+		    
+		 // Added by Rick
+		    private String verifyEntry(JTextField name) {
+		    	String dataItem = "";
+		    	boolean valid = true;
+		    		
+		    	dataItem = name.getText();
+		    	
+		    	//dataItem = name.getText();
+		    	if(dataItem.length() == 0) {
+					name.setForeground(Color.RED);
+					name.setText("Data Missing");
+					dataEntered = false;
+		    	}
+		    	else if(dataItem.equals("Data Missing")) {
+		    		dataEntered = false;
+		    	}
+			
+		    	return dataItem;
 		    }
 		    
 		    /*

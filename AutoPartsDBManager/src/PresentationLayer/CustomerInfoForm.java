@@ -48,6 +48,8 @@ public class CustomerInfoForm extends JDialog {
 	    private JTextField emailField;
 	    private JButton confirmButton;
 	    private JButton cancelButton;
+	    
+	    //Added by Rick
 	    private boolean dataEntered = true;
 	    private static WriterDAO writerDAO;
 	    
@@ -56,6 +58,8 @@ public class CustomerInfoForm extends JDialog {
 	    public CustomerInfoForm(java.awt.Frame parent, String title, boolean modal) {
 	        super(parent, title, modal);
 	        initComponents();
+	        
+	        // Added by Rick
 	        writerDAO = DAOFactory.getWriterDAO();
 	    }
 	    
@@ -201,6 +205,7 @@ public class CustomerInfoForm extends JDialog {
 	    
 	    private void confirmButtonActionPerformed() throws SQLException {
 	    	
+	    	// Added by Rick
 	    	processData();
 	    	
 	    	if(dataEntered) {

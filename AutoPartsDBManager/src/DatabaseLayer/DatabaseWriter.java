@@ -237,5 +237,111 @@ public class DatabaseWriter implements WriterDAO {
 		
 	}
 	
+	public void manuallyEnterNewAccountingPurchase(String productID, 
+			String quantityPurchased, String dollarValue) {
+		
+		String newPurchaseUpdate = null;
+		
+		newPurchaseUpdate = "insert into accounting_purchases " +
+				"(accounting_purchases_record_id, purchases_quantity, dollar_value, "
+				+ "product_product) " +
+				"values (DEFAULT, '" + quantityPurchased + "', -'" + dollarValue + "', '" +
+				productID + "');";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(newPurchaseUpdate);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
+	}
 	
+	public void manuallyEnterNewPart(String description, String minYear, String maxYear,
+			String make, String model, String supplierPrice, String sellPrice, 
+			String coreCharge, String compatibilityNumber, String companyID, 
+			String minStockQuantity, String maxStockQuantity,
+			String warehouseLocation, String quantityInStock) {
+		
+		String newPartUpdate = null;
+		
+		newPartUpdate = "insert into product "
+				+ "values (DEFAULT, '" + description + "', '" + minYear + "', '"
+				+ maxYear + "', '" + make + "', '" + model + "', '" + supplierPrice
+				+ "', '" + sellPrice + "', '" + coreCharge + "', '"
+				+ compatibilityNumber + "', '" + companyID + "', '"
+				+ minStockQuantity + "', '" + maxStockQuantity + "', '"
+				+ warehouseLocation + "', '" + quantityInStock + "');";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(newPartUpdate);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
+	}
+	
+	// copy from writeHelper - due to changes in gui
+	public void createInvoice(String date, String time, String customerID, String employeeID) {
+		
+		String newInvoiceUpdate = null;
+		
+		newInvoiceUpdate = "insert into invoice " +
+				"(invoice_number, date, time, customer_customer_id, employee_employee_id) " +
+				"values (DEFAULT, '" + date + "', '" + time + "', '" + customerID + "', '" +
+				employeeID + "');";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(newInvoiceUpdate);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
+	}
+	
+	public void createInvoiceLineItem(String invoiceNum, String quantityPurchased,
+			String productID) {
+		
+		String newInvoiceLineItemUpdate = null;
+		
+		newInvoiceLineItemUpdate = "insert into invoice_line_item " +
+				"(invoice_line_number, invoice_invoice_number, quantity_purchased, " +
+				"product_product) " +
+				"values (DEFAULT, '" + invoiceNum + "', '" + quantityPurchased +
+				"', '" + productID + "');";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(newInvoiceLineItemUpdate);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
+	}
 }

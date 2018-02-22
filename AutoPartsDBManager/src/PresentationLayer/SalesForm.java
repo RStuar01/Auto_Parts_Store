@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -17,7 +19,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+
+import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseWriter;
+import DatabaseLayer.WriterDAO;
 import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Customer;
 import BusinessLayer.Invoice;
@@ -41,11 +46,18 @@ public class SalesForm extends JDialog{
 				    private JButton confirmButton;
 				    private JButton cancelButton;
 				    
+				  //Added by Rick
+				    private boolean dataEntered = true;
+				    private static WriterDAO writerDAO;
+				    
 				    private Invoice invoice = new Invoice();
 				    
 				    public SalesForm(java.awt.Frame parent, String title, boolean modal) {
 				        super(parent, title, modal);
 				        initComponents();
+				        
+				        // Added by Rick
+				        writerDAO = DAOFactory.getWriterDAO();
 				    }
 				    
 				    public SalesForm(java.awt.Frame parent, String title, boolean modal, Invoice invoice) {
@@ -137,7 +149,22 @@ public class SalesForm extends JDialog{
 				    }
 				    
 				    private void confirmButtonActionPerformed() throws SQLException {
-				        if (validateData()) {
+				        
+				    	// Added by Rick
+				    	processData();
+				    	
+				    	if(dataEntered) {
+				    		
+				    		//Write to the DB
+				    		System.out.println("All data entered!");
+				    		
+				    	}
+				    	
+				    	dataEntered = true;
+				    	
+				    	//Modified by Rick
+				    	/*
+				    	if (validateData()) {
 				            setData();
 				            if (confirmButton.getText().equals("Add")) {
 				                doAdd();
@@ -147,6 +174,45 @@ public class SalesForm extends JDialog{
 				                doEdit();
 				            }
 				        }
+				        */
+				    }
+				    
+				    // Added by Rick
+				    private void processData() {
+				    	
+				    	String date = verifyEntry(dateField);
+				    	String time = verifyEntry(timeField);
+				    	String customerID = verifyEntry(customerIDField);
+				    	String employeeID = verifyEntry(employeeIDField);
+				    	
+				    	if(dataEntered) {
+				    		writerDAO.createInvoice(date, time, customerID, employeeID);
+				    	}
+				    }
+				    
+				 // Added by Rick
+				    private String verifyEntry(JTextField name) {
+				    	String dataItem = "";
+				    	boolean valid = true;
+				    		
+				    	dataItem = name.getText();
+				    	
+				    	// Need to write methods to validate the Date and Time
+				    	// entries to make sure in proper form.
+				    	//EX: Date = yyyy-mm-dd
+				    	// 		Time = 20:32  (8:32 pm)
+				    	// these should be done by using time from computer for Now
+				    	
+				    	if(dataItem.length() == 0) {
+							name.setForeground(Color.RED);
+							name.setText("Data Missing");
+							dataEntered = false;
+				    	}
+				    	else if(dataItem.equals("Data Missing")) {
+				    		dataEntered = false;
+				    	}
+					
+				    	return dataItem;
 				    }
 				    
 				    /*

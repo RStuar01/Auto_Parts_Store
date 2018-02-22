@@ -32,4 +32,20 @@ public interface DataWriter {
 	
 	public void writeIncomingProducts(ArrayList<Product> rfidProducts);
 	
+	public void manuallyEnterNewAccountingPurchase(String productID, 
+			String quantityPurchased, String dollarValue);
+	
+	public void manuallyEnterNewPart(String description, String minYear, String maxYear,
+			String make, String model, String supplierPrice, String sellPrice, 
+			String coreCharge, String compatibilityNumber, String companyID, 
+			String minStockQuantity, String maxStockQuantity,
+			String warehouseLocation, String quantityInStock);
+	
+	// copy from writeHelper due to gui changes
+	public void createInvoice(String date, String time, String customerID,
+			String employeeID);
+	
+	// copy from writeHelper due to gui changes
+	public void createInvoiceLineItem(String invoiceNumber, String purchasedQuantity,
+			String productID);
 }

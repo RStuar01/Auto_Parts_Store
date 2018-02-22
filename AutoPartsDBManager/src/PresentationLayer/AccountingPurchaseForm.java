@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -17,7 +19,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+
+import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseWriter;
+import DatabaseLayer.WriterDAO;
 import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Customer;
 
@@ -36,11 +41,18 @@ public class AccountingPurchaseForm extends JDialog{
 		    private JButton confirmButton;
 		    private JButton cancelButton;
 		    
+		  //Added by Rick
+		    private boolean dataEntered = true;
+		    private static WriterDAO writerDAO;
+		    
 		    private AccountingPurchases purchase = new AccountingPurchases();
 		    
 		    public AccountingPurchaseForm(java.awt.Frame parent, String title, boolean modal) {
 		        super(parent, title, modal);
 		        initComponents();
+		        
+		        //Added by Rick
+		        writerDAO = DAOFactory.getWriterDAO();
 		    }
 		    
 		    public AccountingPurchaseForm(java.awt.Frame parent, String title, boolean modal, AccountingPurchases purchase) {
@@ -127,7 +139,12 @@ public class AccountingPurchaseForm extends JDialog{
 		    }
 		    
 		    private void confirmButtonActionPerformed() throws SQLException {
-		        if (validateData()) {
+		        
+		    	// Added by Rick
+		    	processData();
+		    	
+		    	/*
+		    	if (validateData()) {
 		            setData();
 		            if (confirmButton.getText().equals("Add")) {
 		                doAdd();
@@ -137,6 +154,40 @@ public class AccountingPurchaseForm extends JDialog{
 		                doEdit();
 		            }
 		        }
+		        */
+		    }
+		    
+		    // Added by Rick
+		    private void processData() {
+		    	
+		    	String productID = verifyEntry(productIDField);
+		    	String quantityPurchased = verifyEntry(purchaseQtyField);
+		    	String dollarValue = verifyEntry(dollarValueField);
+		    	
+		    	if(dataEntered) {
+		    		writerDAO.manuallyEnterNewAccountingPurchase(productID, 
+		    				quantityPurchased, dollarValue);
+		    	}
+		    	
+		    }
+		    
+		    // Added by Rick
+		    private String verifyEntry(JTextField name) {
+		    	String dataItem = "";
+		    	boolean valid = true;
+		    		
+		    	dataItem = name.getText();
+		    	
+		    	if(dataItem.length() == 0) {
+					name.setForeground(Color.RED);
+					name.setText("Data Missing");
+					dataEntered = false;
+		    	}
+		    	else if(dataItem.equals("Data Missing")) {
+		    		dataEntered = false;
+		    	}
+			
+		    	return dataItem;
 		    }
 		    
 		    /*
