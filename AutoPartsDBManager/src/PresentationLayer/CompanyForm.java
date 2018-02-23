@@ -144,7 +144,7 @@ public class CompanyForm extends JDialog {
 			        confirmButton.addActionListener((ActionEvent) -> {
 			            try {
 							confirmButtonActionPerformed();
-							dispose();
+							
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -251,6 +251,7 @@ public class CompanyForm extends JDialog {
 			    		writerDAO.createNewCompany(streetAddress, city, state, zipCode, 
 			    				unitNumber, homePhone, cellPhone, email, 
 			    				companyName);
+			    		dispose();
 		    				
 			    	}
 			    }

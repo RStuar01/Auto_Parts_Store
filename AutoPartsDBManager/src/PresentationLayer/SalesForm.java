@@ -8,7 +8,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,7 +79,13 @@ public class SalesForm extends JDialog{
 				    private void initComponents() {
 				    	invoiceNumberField = new JTextField();
 				        dateField = new JTextField();
+				        dateField.setText(LocalDate.now().toString());
 				        timeField = new JTextField();
+				        
+				        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss", Locale.US);
+				        LocalTime time = LocalTime.now();
+				        timeField.setText(formatter.format(time).toString());
+				        
 				        customerIDField = new JTextField();
 				        employeeIDField = new JTextField();
 				        cancelButton = new JButton();
@@ -105,7 +115,7 @@ public class SalesForm extends JDialog{
 				        confirmButton.addActionListener((ActionEvent) -> {
 				            try {
 								confirmButtonActionPerformed();
-								dispose();
+								
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -188,6 +198,7 @@ public class SalesForm extends JDialog{
 				    	
 				    	if(dataEntered) {
 				    		writerDAO.createInvoice(date, time, customerID, employeeID);
+				    		dispose();
 				    	}
 				    }
 				    

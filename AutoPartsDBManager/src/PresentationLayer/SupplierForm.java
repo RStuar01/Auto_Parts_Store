@@ -88,7 +88,7 @@ public class SupplierForm extends JDialog {
 		        supplierIDField.setEditable(false);
 		        contactInfoIDField.setEditable(false);
 		        addressIDField.setEditable(false);
-		        companyIDField.setEditable(false);
+		        
 		    }
 		    
 		    private void initComponents() {
@@ -112,7 +112,7 @@ public class SupplierForm extends JDialog {
 		        supplierIDField.setEditable(false);
 		        contactInfoIDField.setEditable(false);
 		        addressIDField.setEditable(false);
-		        companyIDField.setEditable(false);
+		        
 		        
 		        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		       
@@ -157,7 +157,7 @@ public class SupplierForm extends JDialog {
 		        confirmButton.addActionListener((ActionEvent) -> {
 		            try {
 						confirmButtonActionPerformed();
-						dispose();
+						
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

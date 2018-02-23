@@ -97,7 +97,7 @@ public class AccountingPurchaseForm extends JDialog{
 		        confirmButton.addActionListener((ActionEvent) -> {
 		            try {
 						confirmButtonActionPerformed();
-						dispose();
+						
 						
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
@@ -174,6 +174,7 @@ public class AccountingPurchaseForm extends JDialog{
 		    		if(valid) {
 		    			writerDAO.manuallyEnterNewAccountingPurchase(productID, 
 		    				quantityPurchased, dollarValue);
+		    			dispose();
 		    			
 		    			//Notify user that add was successful
 		    			dispose();

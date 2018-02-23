@@ -229,7 +229,7 @@ public class CustomerInfoForm extends JDialog {
 	        }
 	        */
 	    	
-	    	dispose();
+	    	
 	    }
 	    
 	    // Added by Rick
