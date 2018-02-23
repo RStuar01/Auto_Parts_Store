@@ -48,4 +48,10 @@ public interface DataWriter {
 	// copy from writeHelper due to gui changes
 	public void createInvoiceLineItem(String invoiceNumber, String purchasedQuantity,
 			String productID);
+	
+	//New for different gui
+	public boolean checkCompanyExists(String companyID);
+	
+	//New for different gui
+	public boolean checkProductExists(String productID);
 }

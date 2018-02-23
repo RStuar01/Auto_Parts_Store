@@ -258,10 +258,28 @@ public class PartsForm extends JDialog {
 		    	String quantityInStock = verifyEntry(qtyInStockField);
 		    	
 		    	if(dataEntered) {
-		    		writerDAO.manuallyEnterNewPart(description, minYear, maxYear,
+		    		boolean valid = false;
+		    		
+		    		valid = writerDAO.checkCompanyExists(companyID);
+		    		
+		    		if(valid) {
+		    			writerDAO.manageEnteringNewProduct(description, minYear, maxYear,
 		    				make, model, supplierPrice, sellPrice, coreCharge,
 		    				compatibilityNumber, companyID, minStockQuantity,
 		    				maxStockQuantity, warehouseLocation, quantityInStock);
+		    			
+		    			//Write to accounting purchases
+		    			
+		    			
+		    			//Notify user that add was successful
+		    			dispose();
+		    		}
+		    		else {
+		    			System.out.println("Company does not exist");
+		    			
+		    			//Notify user that add was NOT successful
+		    			dispose();
+		    		}
 		    	}
 		    }
 		    

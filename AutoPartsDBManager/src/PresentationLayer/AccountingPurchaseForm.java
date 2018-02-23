@@ -165,8 +165,23 @@ public class AccountingPurchaseForm extends JDialog{
 		    	String dollarValue = verifyEntry(dollarValueField);
 		    	
 		    	if(dataEntered) {
-		    		writerDAO.manuallyEnterNewAccountingPurchase(productID, 
+		    		
+		    		//Check that product exists
+		    		boolean valid = writerDAO.checkProductExists(productID);
+		    		
+		    		if(valid) {
+		    			writerDAO.manuallyEnterNewAccountingPurchase(productID, 
 		    				quantityPurchased, dollarValue);
+		    			
+		    			//Notify user that add was successful
+		    			dispose();
+		    		}
+		    		else {
+		    			System.out.println("Product does not exist");
+		    			
+		    			//Notify user that add was NOT successful
+		    			dispose();
+		    		}
 		    	}
 		    	
 		    }

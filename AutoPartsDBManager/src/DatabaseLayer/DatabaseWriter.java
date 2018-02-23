@@ -156,6 +156,10 @@ public class DatabaseWriter implements WriterDAO {
 		String productID = "";
 		String dollarValue = "0";
 		
+		// NEED TO MAKE SURE supplyPrice, sellPrice, quantityInStock are all decimal
+		//	ALSO minQuantity, maxQuantity, etc - used for calculations in
+		//	obtainDollarValue.
+		
 		writerHelper.enterNewProduct(description, yearMin, yearMax, make, model,
 				supplyPrice, sellPrice, coreCharge, compatNum, companyID,
 				minStockQuantity, maxStockQuantity, location, quantityInStock);
@@ -343,5 +347,74 @@ public class DatabaseWriter implements WriterDAO {
 		}
 				
 		DatabaseWriter.closeConnection(connObj);
+	}
+	
+	public boolean checkCompanyExists(String companyID) {
+		
+		boolean valid = false;
+		ResultSet rs = null;
+		String companyName = "";
+		String companyIDQuery = null;
+		
+		companyIDQuery = "select company_name " +
+				"from company " +
+				"where company_id = '" + companyID + "';";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(companyIDQuery);			
+			while(rs.next()) {
+				companyName = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
+		
+		if(companyName.length() != 0) {
+			valid = true;
+		}
+		return valid;
+	}
+	
+	public boolean checkProductExists(String productID) {
+		
+		boolean valid = false;
+		ResultSet rs = null;
+		String productName = "";
+		String productIDQuery = null;
+		
+		productIDQuery = "select description " +
+				"from product " +
+				"where product = '" + productID + "';";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(productIDQuery);			
+			while(rs.next()) {
+				productName = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
+		
+		if(productName.length() != 0) {
+			valid = true;
+		}
+		return valid;
+		
 	}
 }

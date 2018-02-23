@@ -252,6 +252,7 @@ public class SupplierForm extends JDialog {
 		    // Added by Rick
 		    private void processData() {
 		    	
+		    	boolean valid = false;
 		    	String choice = "Supplier";
 		    	
 		    	String lastName = verifyEntry(lastNameField);
@@ -267,9 +268,24 @@ public class SupplierForm extends JDialog {
 		    	String companyID = verifyEntry(companyNameField);
 		    	
 		    	if(dataEntered) {
-		    		writerDAO.manageNewPersonCreation(choice, lastName, firstName,
-	    				streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
-	    				email, companyID);
+		    		
+		    		valid = writerDAO.checkCompanyExists(companyID);
+		    		System.out.println("Valid: " + valid);
+		    		
+		    		if(valid) {
+		    			writerDAO.manageNewPersonCreation(choice, lastName, firstName,
+		    					streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
+		    					email, companyID);
+		    			
+		    			//Notify user that add was successful
+		    			dispose();
+		    		}
+		    		else {
+		    			System.out.println("Company for this ID number does not exist");
+		    			
+		    			//Notify user that company is not entered
+		    			dispose();
+		    		}
 		    	}
 		    }
 		    
