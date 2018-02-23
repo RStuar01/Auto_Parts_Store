@@ -417,4 +417,72 @@ public class DatabaseWriter implements WriterDAO {
 		return valid;
 		
 	}
+	
+	public boolean checkCustomerExists(String customerID) {
+		
+		boolean valid = false;
+		ResultSet rs = null;
+		String customerName = "";
+		String customerIDQuery = null;
+		
+		customerIDQuery = "select last_name " +
+				"from customer " +
+				"where customer_id = '" + customerID + "';";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(customerIDQuery);			
+			while(rs.next()) {
+				customerName = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
+		
+		if(customerName.length() != 0) {
+			valid = true;
+		}
+		return valid;
+	}
+	
+public boolean checkEmployeeExists(String employeeID) {
+		
+		boolean valid = false;
+		ResultSet rs = null;
+		String employeeName = "";
+		String employeeIDQuery = null;
+		
+		employeeIDQuery = "select last_name " +
+				"from employee " +
+				"where employee_id = '" + employeeID + "';";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(employeeIDQuery);			
+			while(rs.next()) {
+				employeeName = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
+		
+		if(employeeName.length() != 0) {
+			valid = true;
+		}
+		return valid;
+	}
 }

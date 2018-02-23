@@ -54,4 +54,10 @@ public interface DataWriter {
 	
 	//New for different gui
 	public boolean checkProductExists(String productID);
+	
+	//New for different gui
+	public boolean checkCustomerExists(String customerID);
+	
+	//New for different gui
+		public boolean checkEmployeeExists(String employeeID);
 }

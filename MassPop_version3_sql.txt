@@ -1,0 +1,625 @@
+insert into address
+values (default, '1 Wayne Manor Dr.', 'Gotham', 'New York', '12345', '0'); /* CUSTOMERS */
+
+insert into contact_info
+values (default, '111-222-1234', '111-333-1234', 'wayneB@waynemanor.com');
+
+insert into customer
+values (default, 'Wayne', 'Bruce', 1, 1);
+
+
+insert into address
+values (default, '432 Central St.', 'Gotham', 'New York', '12345', '14B');
+
+insert into contact_info
+values (default, '111-222-2345', '111-333-2345', 'gordonJ@gothampd.com');
+
+insert into customer
+values (default, 'Gordon', 'James', 2, 2);
+
+insert into address
+values (default, '111 Uptown St.', 'Gotham', 'New York', '12345', '0');
+
+insert into contact_info
+values (default, '111-222-3456', '111-333-3456', 'bullockH@gothampd.com');
+
+insert into customer
+values (default, 'Bullock', 'Harvey', 3, 3);
+
+insert into address
+values (default, '1 Wayne Manor Dr.', 'Gotham', 'New York', '12345', '0');
+
+insert into contact_info
+values (default, '111-222-4567', '111-333-4567', 'pennyworthA@waynemanor.com');
+
+insert into customer
+values (default, 'Pennyworth', 'Alfred', 4, 4);
+
+
+insert into address
+values (default, '1 Arkham Dr.', 'Gotham', 'New York', '12345', '23A');
+
+insert into contact_info
+values (default, '111-222-5678', '111-333-5678', 'keanB@arkham.com');
+
+insert into customer
+values (default, 'Kean', 'Barbara', 5, 5);
+
+insert into address
+values (default, '123 Main Ave.', 'Gotham', 'New York', '12345', '235B');
+
+insert into contact_info
+values (default, '111-222-6789', '111-333-6789', 'kyleS@kitty.com');
+
+insert into customer
+values (default, 'Kyle', 'Selina', 6, 6);
+
+insert into address
+values (default, '123 E 33rd St.', 'Gotham', 'New York', '12345', '117A');
+
+insert into contact_info
+values (default, '111-222-7890', '111-333-7890', 'allenC@gothampd.com');
+
+insert into customer
+values (default, 'Allen', 'Crispus', 7, 7);
+
+insert into address
+values (default, '142 Lakeside Dr.', 'Gotham', 'New York', '12345', '0');
+
+insert into contact_info
+values (default, '111-222-8901', '111-333-8901', 'thompkinsL@lakeside.com');
+
+insert into customer
+values (default, 'Thompkins', 'Leslie', 8, 8);
+
+insert into address
+values (default, '123 East 3rd St.', 'Gotham', 'New York', '12345', '0'); /* EMPLOYEES */
+
+
+insert into contact_info
+values (default, '111-222-9012', '111-333-9012', 'essenS@gothampd.com');
+
+
+insert into employee
+values (default, 'Essen', 'Sarah', 9, 9);
+
+insert into address
+values (default, '111 South 43rd St.', 'Gotham', 'New York', '12345', '12');
+
+
+insert into contact_info
+values (default, '111-223-1234', '111-334-1234', 'montoyaR@gothampd.com');
+
+
+insert into employee
+values (default, 'Montoya', 'Renee', 10, 10);
+
+
+insert into address
+values (default, '1 Uptown Manor Dr.', 'Gotham', 'New York', '12345', '1');
+
+
+insert into contact_info
+values (default, '111-223-2345', '111-334-2345', 'galvanT@uptownmanor.com');
+
+
+insert into employee
+values (default, 'Galvan', 'Tabitha', 11, 11);
+
+
+insert into address
+values (default, '1 Uptown Manor Dr.', 'Gotham', 'New York', '12345', '1');
+
+
+insert into contact_info
+values (default, '111-223-3456', '111-334-3456', 'gilzeanB@uptownmanor.com');
+
+
+insert into employee
+values (default, 'Gilzean', 'Butch', 12, 12);
+
+insert into address
+values (default, '1 Crazy Way', 'Gotham', 'New York', '12345', '1');
+
+
+insert into contact_info
+values (default, '111-223-4567', '111-334-4567', 'quinH@arkham.com');
+
+
+insert into employee
+values (default, 'Quin', 'Harley', 13, 13);
+
+
+insert into address
+values (default, '123 E. 45th St.', 'Gotham', 'New York', '12345', '11C');
+
+
+insert into contact_info
+values (default, '111-223-5678', '111-334-5678', 'goldC@eastgotham.com');
+
+
+insert into employee
+values (default, 'Gold', 'Cyrus', 14, 14);
+
+insert into address
+values (default, '142 E. 45th St.', 'Gotham', 'New York', '12345', '13C');
+
+
+insert into contact_info
+values (default, '111-223-6789', '111-334-6789', 'grundyS@eastgotham.com');
+
+
+insert into employee
+values (default, 'Grundy', 'Solomon', 15, 15);
+
+
+insert into address
+values (default, '136 S. Gotham Way.', 'Gotham', 'New York', '12345', '44D');
+
+
+insert into contact_info
+values (default, '111-223-7890', '111-334-7890', 'barnesN@southgotham.com');
+
+
+insert into employee
+values (default, 'Barnes', 'Nathaniel', 16, 16);
+
+insert into address
+values (default, '101 Circus Dr.', 'Gotham', 'New York', '12345', '27');
+
+
+insert into contact_info
+values (default, '111-223-8901', '111-334-8901', 'tetchJ@gothambigtop.com');
+
+
+insert into employee
+values (default, 'Tetch', 'Jarvis', 17, 17);
+
+insert into address
+values (default, '1 Eastside Dr.', 'Gotham', 'New York', '12345', '1'); 
+
+
+insert into contact_info
+values (default, '111-223-9012', '111-334-9012', 'pepperIP@gothamgreen.com');
+
+
+insert into customer
+values (default, 'Pepper', 'Ivy', 18, 18);
+
+insert into address
+values (default, '1 East River Dr.', 'Gotham', 'New York', '12345', '1'); 
+
+
+insert into contact_info
+values (default, '111-224-1234', '111-335-1234', 'falconeS@crime.com');
+
+
+insert into customer
+values (default, 'Falcone', 'Sofia', 19, 19);
+
+
+insert into address
+values (default, '1 Iron Way', 'Gotham', 'New York', '12345', '0'); /* COMPANY */
+
+
+insert into contact_info
+values (default, '111-224-2345', '111-335-2345', 'gothamIron@gothamIron.com');
+
+
+insert into company
+values (default, 20, 20, 'Gotham Iron Works Ltd.');
+
+insert into address
+values (default, '1 Dead Way', 'Gotham', 'New York', '12345', '0');
+
+
+insert into contact_info
+values (default, '111-224-3456', '111-335-3456', 'gothamDead@gothamDead.com');
+
+
+insert into company
+values (default, 21, 21, 'Gotham Dead Works Ltd.');
+
+
+insert into address
+values (default, '1 Toyota Dr.', 'Gotham', 'New York', '12345', '0');
+
+
+insert into contact_info
+values (default, '111-224-4567', '111-335-4567', 'toyota@toyota.com');
+
+
+insert into company
+values (default, 22, 22, 'Gotham Toyota');
+
+
+insert into address
+values (default, '1 Mitsubishi Dr.', 'Gotham', 'New York', '12345', '0');
+
+
+insert into contact_info
+values (default, '111-224-5678', '111-335-5678', 'mitsubishi@mitsubishi.com');
+
+
+insert into company
+values (default, 23, 23, 'Gotham Mitsubishi');
+
+insert into address
+values (default, '1 Batmobile Way', 'Gotham', 'New York', '12345', '0');
+
+
+insert into contact_info
+values (default, '111-224-6789', '111-335-6789', 'batmobile@batmobilebuilders.com');
+
+
+insert into company
+values (default, 24, 24, 'Gotham Batmobile');
+
+insert into address
+values (default, '1 Main St.', 'Gotham', 'New York', '12345', '1'); /* SUPPLIER */
+
+
+insert into contact_info
+values (default, '111-224-7890', '111-335-7890', 'cobblepotO@crime.com');
+
+
+insert into supplier
+values (default, 'Cobblepot', 'Oswald', 25, 25, 1);
+
+insert into address
+values (default, '155 E. 99th St.', 'Gotham', 'New York', '12345', '13'); 
+
+
+insert into contact_info
+values (default, '111-224-8901', '111-335-8901', 'nygmaE@riddle.com');
+
+
+insert into supplier
+values (default, 'Nygma', 'Edward', 26, 26, 2);
+
+insert into address
+values (default, '1 E. Lake Rd.', 'Gotham', 'New York', '12345', '0'); 
+insert into contact_info
+values (default, '111-224-9012', '111-335-9012', 'falcomeC@crime.com');
+
+
+insert into supplier
+values (default, 'Falcone', 'Carmine', 27, 27, 3);
+
+insert into address
+values (default, '1 Downtown Lane.', 'Gotham', 'New York', '12345', '3'); 
+insert into contact_info
+values (default, '111-225-1234', '111-336-1234', 'mooneyF@arkham.com');
+
+
+insert into supplier
+values (default, 'Mooney', 'Fish', 28, 28, 4);
+
+insert into address
+values (default, '1 Uptown Dr.', 'Gotham', 'New York', '12345', '1'); 
+
+
+insert into contact_info
+values (default, '111-225-2345', '111-336-2345', 'galavanT@gothamcity.com');
+
+
+insert into supplier
+values (default, 'Galavan', 'Theo', 29, 29, 5);
+
+insert into address
+values (default, '1 Wayne Industries.', 'Gotham', 'New York', '12345', '1'); 
+
+
+insert into contact_info
+values (default, '111-225-3456', '111-336-3456', 'foxL@wayneIndustries.com');
+
+
+insert into supplier
+values (default, 'Fox', 'Lucius', 30, 30, 1);
+
+insert into address
+values (default, '12 Gotham Courthouse.', 'Gotham', 'New York', '12345', '1A'); 
+
+
+insert into contact_info
+values (default, '111-225-4567', '111-336-4567', 'dentH@gothamcity.com');
+
+
+insert into supplier
+values (default, 'Dent', 'Harvey', 31, 31, 2);
+
+insert into address
+values (default, '12 Gotham Dr.', 'Gotham', 'New York', '12345', '17'); 
+
+
+insert into contact_info
+values (default, '111-225-5678', '111-336-5678', 'ghulRa@gotham.com');
+
+
+insert into supplier
+values (default, 'Ghul', 'Ras al', 32, 32, 3);
+
+
+insert into invoice
+values (default, '20180120', '20:01', 1, 1); /* INVOICE */
+
+
+insert into invoice
+values (default, '20180119', '20:01', 2, 2);
+
+
+insert into invoice
+values (default, '20180118', '20:01', 3, 3);
+
+
+insert into invoice
+values (default, '20180117', '20:01', 4, 4);
+
+
+insert into invoice
+values (default, '20180116', '20:01', 5, 5);
+
+
+insert into invoice
+values (default, '20180115', '20:01', 6, 6);
+
+
+insert into invoice
+values (default, '20180120', '20:01', 7, 7);
+
+
+insert into invoice
+values (default, '20180119', '20:01', 8, 8);
+insert into invoice
+values (default, '20180118', '20:01', 9, 9);
+
+
+insert into invoice
+values (default, '20180117', '20:01', 10, 1);
+
+
+insert into invoice
+values (default, '20180116', '20:01', 1, 1);
+
+
+insert into invoice
+values (default, '20180120', '20:01', 2, 2);
+
+
+insert into product /* PRODUCT */
+values (default, 'Starter', '2012', '2014', 'Toyota', 'Corolla', '79.85', '185.99', '40.00', 'St123A', 1, 5, 8, 'A1-5', 8);
+
+
+insert into product
+values (default, 'Starter', '2007', '2013', 'Ford', 'Fiesta', '62.85', '138.99', '42.00', 'St123A', 2, 5, 8, 'A1-6', 8);
+
+
+insert into product
+values (default, 'Starter', '2009', '2010', 'Mitsubishi', 'Lancer', '88.85', '178.99', '49.00', 'St123B', 3, 3, 5, 'A1-7', 5);
+
+
+insert into product
+values (default, 'Alternator', '2009', '2010', 'Mitsubishi', 'Lancer', '108.85', '278.99', '98.00', 'Am123B', 3, 2, 4, 'B1-8', 4);
+
+
+insert into product
+values (default, 'Alternator', '2007', '2010', 'Toyoty', 'Corolla', '78.85', '178.99', '68.00', 'Am123B', 1, 5, 8, 'B2-8', 8);
+
+
+insert into product
+values (default, 'SAE30 Motor Oil', '0', '0', 'None', 'None', '1.85', '4.99', '0', '0', 4, 50, 80, 'C2-1', 80);
+
+
+insert into product
+values (default, 'SAE30 Motor Oil', '0', '0', 'None', 'None', '2.85', '6.99', '0', '0', 5, 50, 80, 'C2-1', 80);
+
+insert into invoice_line_item
+values (default, 1, 1, 1); /* INVOICE LINE ITEM */
+
+
+insert into invoice_line_item
+values (default, 1, 10, 6);
+
+
+insert into invoice_line_item
+values (default, 2, 1, 2); 
+
+
+insert into invoice_line_item
+values (default, 2, 10, 7);
+
+
+insert into invoice_line_item
+values (default, 3, 1, 2); 
+
+
+insert into invoice_line_item
+values (default, 3, 10, 6);
+
+
+insert into invoice_line_item
+values (default, 4, 1, 3); 
+
+
+insert into invoice_line_item
+values (default, 4, 10, 7);
+
+
+insert into invoice_line_item
+values (default, 5, 1, 4); 
+
+
+insert into invoice_line_item
+values (default, 5, 10, 7);
+
+
+insert into invoice_line_item
+values (default, 6, 1, 2); 
+insert into invoice_line_item
+values (default, 6, 10, 7);
+
+
+insert into invoice_line_item
+values (default, 7, 1, 2); 
+
+
+insert into invoice_line_item
+values (default, 7, 10, 7);
+
+
+insert into invoice_line_item
+values (default, 8, 1, 2); 
+
+
+insert into invoice_line_item
+values (default, 8, 10, 7);
+
+
+insert into invoice_line_item
+values (default, 9, 1, 2); 
+insert into invoice_line_item
+values (default, 9, 10, 7);
+
+
+insert into invoice_line_item
+values (default, 10, 1, 2); 
+
+
+insert into invoice_line_item
+values (default, 10, 10, 7);
+
+
+insert into invoice_line_item
+values (default, 11, 1, 2); 
+
+
+insert into invoice_line_item
+values (default, 11, 10, 7);
+
+
+insert into invoice_line_item
+values (default, 12, 1, 2); 
+
+
+insert into invoice_line_item
+values (default, 12, 10, 7);
+
+insert into accounting_purchases /* ACCOUNTING Command 139? */
+values (default, 8,'-638.80', 1);
+insert into accounting_purchases 
+values (default, 8, '-502.80', 2);
+
+
+insert into accounting_purchases 
+values (default, 5, '-444.25', 3);
+
+
+insert into accounting_purchases 
+values (default, 4, '-435.40', 4);
+
+
+insert into accounting_purchases 
+values (default, 8, '-630.80', 5);
+
+
+insert into accounting_purchases 
+values (default, 80, '-148.00', 6);
+
+
+insert into accounting_purchases 
+values (default, 80,  '-228.00', 7);
+
+
+insert into accounting_sales
+ /* SALES MADE */values (default, 1, 1, '185.99', '13.95', 1);
+
+
+insert into accounting_sales
+values (default, 10, 6, '4.99', '3.75', 2);
+
+
+insert into accounting_sales
+values (default, 1, 2, '138.99', '10.43', 3);
+
+
+insert into accounting_sales
+values (default, 10, 7, '6.99', '5.25', 4);
+
+
+insert into accounting_sales
+values (default, 1, 2, '138.99', '10.43', 5);
+
+
+insert into accounting_sales
+values (default, 10, 6, '4.99', '3.75', 6);
+
+
+insert into accounting_sales
+values (default, 1, 3, '178.99', '13.43', 7);
+
+
+insert into accounting_sales
+values (default, 10, 7, '6.99', '5.25', 8);
+
+
+insert into accounting_sales
+values (default, 1, 4, '278.99', '20.93', 9);
+
+
+insert into accounting_sales
+values (default, 10, 7, '6.99', '5.25', 10);
+
+
+insert into accounting_sales
+values (default, 1, 2, '138.99', '10.43', 11);
+
+
+insert into accounting_sales
+values (default, 10, 7, '6.99', '5.25', 12);
+
+
+insert into accounting_sales
+values (default, 1, 2, '138.99', '10.43', 13);
+
+
+insert into accounting_sales
+values (default, 10, 7, '6.99', '5.25', 14);
+
+
+insert into accounting_sales
+values (default, 1, 2, '138.99', '10.43', 15);
+
+
+insert into accounting_sales
+values (default, 10, 7, '6.99', '5.25', 16);
+
+insert into accounting_sales
+values (default, 1, 2, '138.99', '10.43', 17);
+
+
+insert into accounting_sales
+values (default, 10, 7, '6.99', '5.25', 18);
+
+
+insert into accounting_sales
+values (default, 1, 2, '138.99', '10.43', 19);
+
+
+insert into accounting_sales
+values (default, 10, 7, '6.99', '5.25', 20);
+
+
+insert into accounting_sales
+values (default, 1, 2, '138.99', '10.43', 21);
+
+
+insert into accounting_sales
+values (default, 10, 7, '6.99', '5.25', 22);
+
+
+insert into accounting_sales
+values (default, 1, 2, '138.99', '10.43', 23);
+
+
+insert into accounting_sales
+values (default, 10, 7, '6.99', '5.25', 24);
