@@ -93,20 +93,35 @@ public class SupplierForm extends JDialog {
 		    
 		    private void initComponents() {
 		    	supplierIDField = new JTextField();
+		    	 new FocusListner(supplierIDField);
 		        lastNameField = new JTextField();
+		        new FocusListner(lastNameField);
 		        firstNameField = new JTextField();
+		        new FocusListner(firstNameField);
 		        contactInfoIDField = new JTextField();
+		        new FocusListner(contactInfoIDField);
 		        addressIDField = new JTextField();
+		        new FocusListner(addressIDField);
 		        companyIDField = new JTextField();
+		        new FocusListner(companyIDField);
 		        streetAddressField = new JTextField();
+		        new FocusListner(streetAddressField);
 		        cityField = new JTextField();
+		        new FocusListner(cityField);
 		        stateField = new JTextField();
+		        new FocusListner(stateField);
 		        zipCodeField = new JTextField();
+		        new FocusListner(zipCodeField);
 		        unitNumberField = new JTextField();
+		        new FocusListner(unitNumberField);
 		        homePhoneField = new JTextField();
+		        new FocusListner(homePhoneField);
 		        cellPhoneField = new JTextField();
+		        new FocusListner(cellPhoneField);
 		        emailField = new JTextField();
+		        new FocusListner(emailField);
 		        companyNameField = new JTextField();
+		        new FocusListner(companyNameField);
 		        cancelButton = new JButton();
 		        confirmButton = new JButton();
 		        supplierIDField.setEditable(false);

@@ -92,20 +92,35 @@ public class PartsForm extends JDialog {
 		    private void initComponents() {
 		    	
 		    	productIDField = new JTextField();
+		    	 new FocusListner(productIDField);
 			    descriptionField = new JTextField();
+			    new FocusListner(descriptionField);
 			    minYearField = new JTextField();
+			    new FocusListner(minYearField);
 			    maxYearField = new JTextField();
+			    new FocusListner(maxYearField);
 			    makeField = new JTextField();
+			    new FocusListner(makeField);
 			    modelField = new JTextField();
+			    new FocusListner(modelField);
 			    supplierPriceField = new JTextField();
+			    new FocusListner(supplierPriceField);
 			    sellPriceField = new JTextField();
+			    new FocusListner(sellPriceField);
 			    coreChargeField = new JTextField();
+			    new FocusListner(coreChargeField);
 			    compatibilityNumberField = new JTextField();
+			    new FocusListner(compatibilityNumberField);
 			    companyIDField = new JTextField();
+			    new FocusListner(companyIDField);
 			    minStockQtyField = new JTextField();
+			    new FocusListner(minStockQtyField);
 			    maxStockQtyField = new JTextField();
+			    new FocusListner(maxStockQtyField);
 			    warehouseLocationField = new JTextField();
+			    new FocusListner(warehouseLocationField);
 			    qtyInStockField = new JTextField();
+			    new FocusListner(qtyInStockField);
 			    cancelButton = new JButton();
 		        confirmButton = new JButton();
 		        productIDField.setEditable(false);

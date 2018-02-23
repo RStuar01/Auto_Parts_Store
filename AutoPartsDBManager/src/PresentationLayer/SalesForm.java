@@ -78,16 +78,21 @@ public class SalesForm extends JDialog{
 				    
 				    private void initComponents() {
 				    	invoiceNumberField = new JTextField();
+				    	 new FocusListner(invoiceNumberField);
 				        dateField = new JTextField();
+				        
 				        dateField.setText(LocalDate.now().toString());
 				        timeField = new JTextField();
+				        
 				        
 				        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss", Locale.US);
 				        LocalTime time = LocalTime.now();
 				        timeField.setText(formatter.format(time).toString());
 				        
 				        customerIDField = new JTextField();
+				        new FocusListner(customerIDField);
 				        employeeIDField = new JTextField();
+				        new FocusListner(employeeIDField);
 				        cancelButton = new JButton();
 				        confirmButton = new JButton();
 				        invoiceNumberField.setEditable(false);

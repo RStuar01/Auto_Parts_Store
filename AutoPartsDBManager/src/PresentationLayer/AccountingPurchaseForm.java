@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -105,6 +107,62 @@ public class AccountingPurchaseForm extends JDialog{
 					}
 		        });
 		        
+		        /*
+		        purchaseIDField.addFocusListener(new FocusListener() {
+		        	public void focusGained(FocusEvent e) {
+		        		focusEvent(purchaseIDField);
+		        	}
+
+					@Override
+					public void focusLost(FocusEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+		        });	
+		        
+		        productIDField.addFocusListener(new FocusListener() {
+		        	public void focusGained(FocusEvent e) {
+		        		focusEvent(productIDField);
+		        	}
+
+					@Override
+					public void focusLost(FocusEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+		        });	
+		        
+		        purchaseQtyField.addFocusListener(new FocusListener() {
+		        	public void focusGained(FocusEvent e) {
+		        		focusEvent(purchaseQtyField);
+		        	}
+
+					@Override
+					public void focusLost(FocusEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+		        });	
+		        
+		        dollarValueField.addFocusListener(new FocusListener() {
+		        	public void focusGained(FocusEvent e) {
+		        		focusEvent(dollarValueField);
+		        	}
+
+					@Override
+					public void focusLost(FocusEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+		        });	
+		        
+		       */
+		        
+		        new FocusListner(purchaseIDField);
+		        new FocusListner(productIDField);
+		        new FocusListner(purchaseQtyField);
+		        new FocusListner(dollarValueField);
+		        		        
 		        JPanel purchasePanel = new JPanel();
 		        purchasePanel.setLayout(new GridBagLayout());
 		        purchasePanel.add(new JLabel("Purchase ID:"), getConstraints(0, 0, GridBagConstraints.LINE_END));
@@ -294,7 +352,11 @@ public class AccountingPurchaseForm extends JDialog{
 		        }
 		    }
 		
-		   
+		   private void focusEvent(JTextField field)
+		   {
+			   field.setText("");
+			   field.setForeground(Color.BLACK);
+		   }
 
 
 	

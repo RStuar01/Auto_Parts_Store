@@ -72,10 +72,14 @@ public class SalesItemForm extends JDialog{
 			    
 			    private void initComponents(String invoiceNumberInput) {
 			    	invoiceLineItemNumberField = new JTextField();
+			    	 new FocusListner(invoiceLineItemNumberField);
 			        invoiceNumberField = new JTextField();
+			        new FocusListner(invoiceNumberField);
 			        invoiceNumberField.setText(invoiceNumberInput);
 			        purchasedQtyField = new JTextField();
+			        new FocusListner(purchasedQtyField);
 			        productIDField = new JTextField();
+			        new FocusListner(productIDField);
 			        cancelButton = new JButton();
 			        confirmButton = new JButton();
 			        invoiceLineItemNumberField.setEditable(false);

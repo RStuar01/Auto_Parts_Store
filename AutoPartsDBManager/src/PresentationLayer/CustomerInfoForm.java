@@ -87,18 +87,31 @@ public class CustomerInfoForm extends JDialog {
 	    
 	    private void initComponents() {
 	    	customerIDField = new JTextField();
+	    	 new FocusListner(customerIDField);
 	        lastNameField = new JTextField();
+	        new FocusListner(lastNameField);
 	        firstNameField = new JTextField();
+	        new FocusListner(firstNameField);
 	        contactInfoIDField = new JTextField();
+	        new FocusListner(contactInfoIDField);
 	        addressIDField = new JTextField();
+	        new FocusListner(addressIDField);
 	        streetAddressField = new JTextField();
+	        new FocusListner(streetAddressField);
 	        cityField = new JTextField();
+	        new FocusListner(cityField);
 	        stateField = new JTextField();
+	        new FocusListner(stateField);
 	        zipCodeField = new JTextField();
+	        new FocusListner(zipCodeField);
 	        unitNumberField = new JTextField();
+	        new FocusListner(unitNumberField);
 	        homePhoneField = new JTextField();
+	        new FocusListner(homePhoneField);
 	        cellPhoneField = new JTextField();
+	        new FocusListner(cellPhoneField);
 	        emailField = new JTextField();
+	        new FocusListner(emailField);
 	        cancelButton = new JButton();
 	        confirmButton = new JButton();
 	        customerIDField.setEditable(false);
