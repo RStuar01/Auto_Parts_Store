@@ -153,7 +153,7 @@ public class AutoPartsStoreGui {
 		// maybe create invoice and each line item here.
 		// or pass each line item to manageSale and add it there.
 		// WORKS
-		
+		/*
 		String date = "2018-02-03";
 		String time = "20:00";
 		String customerID = "1";
@@ -164,7 +164,7 @@ public class AutoPartsStoreGui {
 		// check to see if reorder is necessary from this method
 		writerDAO.manageSale(date, time, customerID, employeeID, quantityPurchased, 
 				productID);
-		
+		*/
 		
 		// AREA TO READ INFORMATION FROM DB**************************
 		

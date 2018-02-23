@@ -247,6 +247,9 @@ public class EmployeeForm extends JDialog {
 		    		writerDAO.manageNewPersonCreation(choice, lastName, firstName,
 	    				streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
 	    				email, companyID);
+		    		
+		    		//Notify user add was successful
+		    		dispose();
 		    	}
 		    }
 		    

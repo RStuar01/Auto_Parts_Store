@@ -253,6 +253,9 @@ public class CustomerInfoForm extends JDialog {
 	    		writerDAO.manageNewPersonCreation(choice, lastName, firstName,
     				streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
     				email, companyID);
+	    		
+	    		// NOTIFY USER that data written successfully
+	    		dispose();
 	    	}
 	    }
 	    
