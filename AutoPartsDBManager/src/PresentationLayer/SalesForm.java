@@ -197,8 +197,28 @@ public class SalesForm extends JDialog{
 				    	String employeeID = verifyEntry(employeeIDField);
 				    	
 				    	if(dataEntered) {
-				    		writerDAO.createInvoice(date, time, customerID, employeeID);
-				    		dispose();
+				    		
+				    		// check that both customer and employee ID's exist
+				    		boolean validCustomer = false;
+				    		boolean validEmployee = false;
+				    		
+				    		validCustomer = writerDAO.checkCustomerExists(customerID);
+				    		validEmployee = writerDAO.checkEmployeeExists(employeeID);
+				    		
+				    		if(validCustomer && validEmployee) {
+				    			writerDAO.createInvoice(date, time, customerID, employeeID);
+				    			
+				    			// Notify user that addition was successful
+				    			dispose();
+				    		}
+				    		else {
+				    			
+				    			//Notify user that was not successful
+				    			System.out.println("Invoice not created");
+				    			System.out.println("customer: " + validCustomer + 
+				    					" ; Employee: " + validEmployee);
+				    			
+				    		}
 				    	}
 				    }
 				    

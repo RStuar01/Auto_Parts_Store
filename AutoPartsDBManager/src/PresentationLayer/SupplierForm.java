@@ -258,6 +258,7 @@ public class SupplierForm extends JDialog {
 		    	
 		    	String lastName = verifyEntry(lastNameField);
 		    	String firstName = verifyEntry(firstNameField);
+		    	String companyID = verifyEntry(companyIDField);
 		    	String streetAddress = verifyEntry(streetAddressField);
 		    	String city = verifyEntry(cityField);
 		    	String state = verifyEntry(stateField);
@@ -266,7 +267,7 @@ public class SupplierForm extends JDialog {
 		    	String homePhone = verifyEntry(homePhoneField);
 		    	String cellPhone = verifyEntry(cellPhoneField);
 		    	String email = verifyEntry(emailField);
-		    	String companyID = verifyEntry(companyNameField);
+		    	String companyName = verifyEntry(companyNameField);
 		    	
 		    	if(dataEntered) {
 		    		
