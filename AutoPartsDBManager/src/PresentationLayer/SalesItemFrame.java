@@ -60,6 +60,12 @@ public class SalesItemFrame extends JFrame{
 	        JButton addButton = new JButton("Add");
 	        addButton.addActionListener((ActionEvent) -> {
 	            doAddButton();
+	            try {
+					fireDatabaseUpdatedEvent();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	        });
 	    
 	        panel.add(addButton);
@@ -99,7 +105,7 @@ public class SalesItemFrame extends JFrame{
 	    }
 	    
 	    private void doAddButton() {
-	    	SalesItemForm salesItemForm = new SalesItemForm(this, "Add Sales Item", true);
+	    	SalesItemForm salesItemForm = new SalesItemForm(this, "Add Sales Item", true, invoiceNumberInput);
 	        salesItemForm.setLocationRelativeTo(this);
 	        salesItemForm.setVisible(true);
 	    }

@@ -49,16 +49,16 @@ public class SalesItemForm extends JDialog{
 			    
 			    private InvoiceLineItem invoiceLineItem = new InvoiceLineItem();
 			    
-			    public SalesItemForm(java.awt.Frame parent, String title, boolean modal) {
+			    public SalesItemForm(java.awt.Frame parent, String title, boolean modal, String invoiceNumberInput) {
 			        super(parent, title, modal);
-			        initComponents();
+			        initComponents(invoiceNumberInput);
 			        
 			     // Added by Rick
 			        writerDAO = DAOFactory.getWriterDAO();
 			    }
 			    
 			    public SalesItemForm(java.awt.Frame parent, String title, boolean modal, InvoiceLineItem invoiceLineItem) {
-			        this(parent, title, modal);
+			        this(parent, title, modal, title);
 			        this.invoiceLineItem = invoiceLineItem;
 			        confirmButton.setText("Save");
 			        invoiceLineItemNumberField.setText(invoiceLineItem.getInvoiceLineNumber());
@@ -70,9 +70,10 @@ public class SalesItemForm extends JDialog{
 			        
 			        }
 			    
-			    private void initComponents() {
+			    private void initComponents(String invoiceNumberInput) {
 			    	invoiceLineItemNumberField = new JTextField();
 			        invoiceNumberField = new JTextField();
+			        invoiceNumberField.setText(invoiceNumberInput);
 			        purchasedQtyField = new JTextField();
 			        productIDField = new JTextField();
 			        cancelButton = new JButton();
@@ -101,6 +102,7 @@ public class SalesItemForm extends JDialog{
 			        confirmButton.addActionListener((ActionEvent) -> {
 			            try {
 							confirmButtonActionPerformed();
+							dispose();
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

@@ -127,6 +127,22 @@ public class AutoPartsStoreFrame extends JFrame{
         });
     
         panel.add(supplierButton);
+        
+        JButton companyButton = new JButton("Companies");
+        companyButton.addActionListener((ActionEvent) -> {
+            try {
+                doCompanyButton();
+            } catch (DBException ex) {
+                Logger.getLogger(AutoPartsStoreFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(AutoPartsStoreFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        });
+    
+        panel.add(companyButton);
          
         JButton salesButton = new JButton("Sales");
         salesButton.addActionListener((ActionEvent) -> {
@@ -171,6 +187,10 @@ public class AutoPartsStoreFrame extends JFrame{
     private void doSupplierButton() throws DBException, UnsupportedLookAndFeelException, SQLException {
          SupplierFrame supplierFrame = new SupplierFrame();
     }
+    
+    private void doCompanyButton() throws DBException, UnsupportedLookAndFeelException, SQLException {
+       CompanyFrame companyFrame = new CompanyFrame();
+   }
     
     private void doPartsButton() throws UnsupportedLookAndFeelException, DBException, SQLException
     {

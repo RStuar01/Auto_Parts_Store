@@ -12,8 +12,8 @@ public class Company {
 	
 	// Fields
 	private String companyID;
-	//private String addressID;
-	//private String contactInfoID;
+	private String addressID;
+	private String contactInfoID;
 	private String companyName;
 	private String streetAddress;
 	private String city;
@@ -55,7 +55,7 @@ public class Company {
 		return companyID;
 	}
 	
-	/*
+	
 	public void setAddressID(String addressID) {
 		this.addressID = addressID;
 	}
@@ -71,7 +71,7 @@ public class Company {
 	public String getContactInfoID() {
 		return contactInfoID;
 	}
-	*/
+	
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}

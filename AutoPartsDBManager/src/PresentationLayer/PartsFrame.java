@@ -64,6 +64,12 @@ public class PartsFrame  extends JFrame {
         JButton addButton = new JButton("Add");
         addButton.addActionListener((ActionEvent) -> {
             doAddButton();
+            try {
+				fireDatabaseUpdatedEvent();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         });
     
         panel.add(addButton);
@@ -73,6 +79,7 @@ public class PartsFrame  extends JFrame {
         editButton.addActionListener((ActionEvent) -> {
             try {
                 doEditButton();
+                fireDatabaseUpdatedEvent();
             } catch (DBException e) {
                 System.out.println(e);
             } catch (SQLException e) {

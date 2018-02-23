@@ -147,6 +147,7 @@ public class EmployeeForm extends JDialog {
 		        confirmButton.addActionListener((ActionEvent) -> {
 		            try {
 						confirmButtonActionPerformed();
+						dispose();
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

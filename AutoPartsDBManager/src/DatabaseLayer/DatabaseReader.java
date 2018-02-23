@@ -571,6 +571,66 @@ public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemList(String invoic
 	return invoiceLineItems;
 }
 
+public static ArrayList<Company> obtainCompanyList() {
+	
+	
+	String query = "select * from company, address, contact_info "
+			+ "where Address_address_id = address.address_id "
+			+ "and contact_info_contact_info_id = contact_info.contact_info_id";
+	
+	ArrayList<Company> company = new ArrayList<>();
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			String companyID = rs.getString(1);
+			String addressID = rs.getString(2);
+			String contactID = rs.getString(3);
+			String companyName = rs.getString(4);
+			String streetAddress = rs.getString(6);
+			String city = rs.getString(7);
+			String state = rs.getString(8);
+			String zipCode = rs.getString(9);
+			String unitNumber = rs.getString(10);
+			String homePhone = rs.getString(12);
+			String cellPhone = rs.getString(13);
+			String emailAddress = rs.getString(14);
+			
+			
+			Company c = new Company();
+			
+			c.setCompanyID(companyID);
+			c.setAddressID(addressID);
+			c.setContactInfoID(contactID);
+			c.setCompanyName(companyName);
+			c.setStreetAddres(streetAddress);
+			c.setCity(city);
+			c.setState(state);
+			c.setZipCode(zipCode);
+			c.setUnitNumber(unitNumber);
+			c.setPhoneNumber(homePhone);
+			c.setCellPhoneNumber(cellPhone);
+			c.setEmailAddress(emailAddress);
+			
+			company.add(c);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return company;
+}
+
+
+
 public static ArrayList<Supplier> obtainSupplierList() {
 
 	
@@ -1420,6 +1480,64 @@ public static ArrayList<Invoice> obtainInvoiceFilter(String column, String searc
 	DatabaseWriter.closeConnection(connObj);
 			
 	return invoices;
+}
+
+public static ArrayList<Company> obtainCompanyFilter(String column, String search) {
+	
+	
+	String query = "select * from company, address, contact_info "
+			+ "where Address_address_id = address.address_id "
+			+ "and contact_info_contact_info_id = contact_info.contact_info_id and " + column + " = '" + search + "'";
+	
+	ArrayList<Company> company = new ArrayList<>();
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			String companyID = rs.getString(1);
+			String addressID = rs.getString(2);
+			String contactID = rs.getString(3);
+			String companyName = rs.getString(4);
+			String streetAddress = rs.getString(6);
+			String city = rs.getString(7);
+			String state = rs.getString(8);
+			String zipCode = rs.getString(9);
+			String unitNumber = rs.getString(10);
+			String homePhone = rs.getString(12);
+			String cellPhone = rs.getString(13);
+			String emailAddress = rs.getString(14);
+			
+			
+			Company c = new Company();
+			
+			c.setCompanyID(companyID);
+			c.setAddressID(addressID);
+			c.setContactInfoID(contactID);
+			c.setCompanyName(companyName);
+			c.setStreetAddres(streetAddress);
+			c.setCity(city);
+			c.setState(state);
+			c.setZipCode(zipCode);
+			c.setUnitNumber(unitNumber);
+			c.setPhoneNumber(homePhone);
+			c.setCellPhoneNumber(cellPhone);
+			c.setEmailAddress(emailAddress);
+			
+			company.add(c);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return company;
 }
 
 

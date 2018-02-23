@@ -62,48 +62,58 @@ public class AccountingFrame  extends JFrame {
                 
     }
     
-    private JPanel buildButtonPanel() throws DBException {
-        JPanel panel = new JPanel();
+    private JPanel buildButtonPanel() throws DBException 
+	{
+	        JPanel panel = new JPanel();
+	    
+	        JButton addButton = new JButton("Add");
+	        addButton.addActionListener((ActionEvent) -> {
+	            doAddButton();
+	            try {
+					fireDatabaseUpdatedEvent();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        });
+	    
+	        panel.add(addButton);
+	        
+	        JButton editButton = new JButton("Edit");
+	        editButton.setToolTipText("Edit selected customer");
+	        editButton.addActionListener((ActionEvent) -> {
+	            try {
+	                doEditButton();
+	                fireDatabaseUpdatedEvent();
+	            } catch (DBException e) {
+	                System.out.println(e);
+	            } catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        });
+	        panel.add(editButton);
+	        
+	       
+	        JButton helpButton = new JButton("Help");
+	        helpButton.addActionListener((ActionEvent) -> {
+	            doHelpButton();
+	        });
+	    
+	        panel.add(helpButton);
+	         
+	        JButton exitButton = new JButton("Exit");
+	        exitButton.addActionListener((ActionEvent) -> {
+	            dispose();
+	        });
+	    
+	        panel.add(exitButton);
+	        
+	        return panel;
+	
+
+}        
     
-        JButton addButton = new JButton("Add");
-        addButton.addActionListener((ActionEvent) -> {
-            doAddButton();
-        });
-    
-        panel.add(addButton);
-        
-        JButton editButton = new JButton("Edit");
-        editButton.setToolTipText("Edit selected customer");
-        editButton.addActionListener((ActionEvent) -> {
-            try {
-                doEditButton();
-            } catch (DBException e) {
-                System.out.println(e);
-            } catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        });
-        panel.add(editButton);
-        
-       
-        JButton helpButton = new JButton("Help");
-        helpButton.addActionListener((ActionEvent) -> {
-            doHelpButton();
-        });
-    
-        panel.add(helpButton);
-         
-        JButton exitButton = new JButton("Exit");
-        exitButton.addActionListener((ActionEvent) -> {
-            dispose();
-        });
-    
-        panel.add(exitButton);
-        
-        return panel;
-        
-    }
     
         
     private void doAddButton() {

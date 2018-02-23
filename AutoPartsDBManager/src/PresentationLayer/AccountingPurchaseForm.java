@@ -97,6 +97,8 @@ public class AccountingPurchaseForm extends JDialog{
 		        confirmButton.addActionListener((ActionEvent) -> {
 		            try {
 						confirmButtonActionPerformed();
+						dispose();
+						
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -190,25 +192,7 @@ public class AccountingPurchaseForm extends JDialog{
 		    	return dataItem;
 		    }
 		    
-		    /*
-		    private boolean isEmpty()
-		    {
-		        String e = firstNameField.getText();
-		        String lastName = lastNameField.getText();
-		        String email = emailField.getText();
-		        
-		        if (firstName.equals("") || lastName.equals("") || email.equals("") 
-		                || firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) 
-		        {
-		            JOptionPane.showMessageDialog(this, "Please fill in all fields.",
-		                    "Missing Fields", JOptionPane.INFORMATION_MESSAGE);
-		            return false;
-		        }
-		        else
-		            return true;
-		    }
 		    
-		    */
 		    
 		    private boolean validateData() {
 		        
@@ -231,43 +215,7 @@ public class AccountingPurchaseForm extends JDialog{
 		        return valid;
 		    }
 
-		    /*
-		    private boolean customerNotExists(String email)
-		    {
-		        
-		    boolean valid = false;
-		    
-		    List<Customer> customers;
-		    try 
-		    {
-		        customers = CustomerDB.getCustomers();
-		        
-		        if (customers.isEmpty())
-		            return true;
-		        
-		        for (Customer c : customers)
-		            {
-		                if (c.getEmailAddress().equalsIgnoreCase(emailField.getText()))
-		                {
-		                    JOptionPane.showMessageDialog(this, "A customer already has that email address. \nPlease"
-		                               + " enter a different email address.",
-		                     "Invalid Email", JOptionPane.ERROR_MESSAGE);
-		                    emailField.grabFocus();
-		                    valid = false;
-		                }
-		                else
-		                    valid = true;
-		            }
-		    }
-		    catch (DBException e)
-		    {
-		        System.out.println(e);
-		    }
-		 
-		        return valid;
-		    }
-		    
-		    */
+		
 		    
 		    private void setData() {
 		    	
