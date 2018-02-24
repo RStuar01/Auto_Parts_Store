@@ -340,9 +340,12 @@ public class CustomerInfoForm extends JDialog {
 	    		}
 	    		else {
 	    			System.out.println("Editing a cusotmer");
-	    			writerDAO.editCustomer(lastName, firstName,
-	    					streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
-	    					email);
+	    			String customerID = customerIDField.getText();
+	    			String contactID = contactInfoIDField.getText();
+	    			String addressID = addressIDField.getText();
+	    			writerDAO.manageEditingCustomer(customerID, contactID, addressID, lastName,
+	    					firstName, streetAddress, city, state, zipCode, unitNumber, 
+	    					homePhone, cellPhone, email);
 	    		}
 	    		
 	    		// NOTIFY USER that data written successfully

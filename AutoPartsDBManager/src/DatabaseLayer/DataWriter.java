@@ -65,8 +65,8 @@ public interface DataWriter {
 	public void manageEnteringToAccountingSales(String invoiceNumber, 
 			String purchasedQuantity, String productID);
 	
-	public void editCustomer(String lastName, String firstName,
-			String streetAddress, String city, String state, String zipCode, 
-			String unitNumber, String homePhone, String cellPhone, 
-			String email);
+	public void manageEditingCustomer(String customerID, String contactID, String addressID, 
+			String lastName, String firstName, String streetAddress, String city,
+			String state, String zipCode, String unitNumber, String homePhone,
+			String cellPhone, String email);
 }

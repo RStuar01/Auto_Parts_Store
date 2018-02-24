@@ -519,9 +519,15 @@ public boolean checkEmployeeExists(String employeeID) {
 		}
 	}
 	
-	public void editCustomer(String lastName, String firstName, String streetAddress, 
+	public void manageEditingCustomer(String customerID, String contactID, String addressID, 
+			String lastName, String firstName, String streetAddress, 
 			String city, String state, String zipCode, String unitNumber, 
 			String homePhone, String cellPhone, String email) {
 		
+		System.out.println("In editCustomer");
+		
+		writerHelper.editAddress(addressID, streetAddress, city, state, zipCode, unitNumber);
+		writerHelper.editContactInfo(contactID, homePhone, cellPhone, email);
+		writerHelper.editCustomer(customerID, lastName, firstName, contactID, addressID);
 	}
 }
