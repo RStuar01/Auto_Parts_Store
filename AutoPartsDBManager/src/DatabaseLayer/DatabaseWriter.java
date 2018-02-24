@@ -530,8 +530,9 @@ public boolean checkEmployeeExists(String employeeID) {
 		writerHelper.editContactInfo(contactID, homePhone, cellPhone, email);
 		writerHelper.editCustomer(customerID, lastName, firstName, contactID, addressID);
 	}
-<<<<<<< HEAD
 	
+//<<<<<<< HEAD
+	/*
 	public void manageEditingEmployee(String employeeID, String contactID, String addressID, 
 			String lastName, String firstName, String streetAddress, 
 			String city, String state, String zipCode, String unitNumber, 
@@ -539,11 +540,12 @@ public boolean checkEmployeeExists(String employeeID) {
 		
 		System.out.println("In editEmployee");
 =======
+*/
 	public void manageEditingEmployee(String employeeID, String contactID, String addressID,
 			String lastName, String firstName, String streetAddress, String city,
 			String state, String zipCode, String unitNumber, String homePhone,
 			String cellPhone, String email) {
->>>>>>> f6d6664ed8186426b0f4f4041933964d6f75bf16
+//>>>>>>> f6d6664ed8186426b0f4f4041933964d6f75bf16
 		
 		writerHelper.editAddress(addressID, streetAddress, city, state, zipCode, unitNumber);
 		writerHelper.editContactInfo(contactID, homePhone, cellPhone, email);
