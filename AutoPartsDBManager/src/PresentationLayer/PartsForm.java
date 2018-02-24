@@ -109,6 +109,7 @@ public class PartsForm extends JDialog {
 					}
 				});
 			    minYearField = new JTextField();
+			    minYearField.setName("Minimum Year");
 			    minYearField.addFocusListener(new FocusAdapter() {
 					@Override
 					public void focusGained(FocusEvent arg0) {
@@ -116,6 +117,7 @@ public class PartsForm extends JDialog {
 					}
 				});
 			    maxYearField = new JTextField();
+			    maxYearField.setName("Maximum Year");
 			    maxYearField.addFocusListener(new FocusAdapter() {
 					@Override
 					public void focusGained(FocusEvent arg0) {
@@ -137,6 +139,7 @@ public class PartsForm extends JDialog {
 					}
 				});
 			    supplierPriceField = new JTextField();
+			    supplierPriceField.setName("Supplier Price");
 			    supplierPriceField.addFocusListener(new FocusAdapter() {
 					@Override
 					public void focusGained(FocusEvent arg0) {
@@ -144,6 +147,7 @@ public class PartsForm extends JDialog {
 					}
 				});
 			    sellPriceField = new JTextField();
+			    sellPriceField.setName("Sell Price");
 			    sellPriceField.addFocusListener(new FocusAdapter() {
 					@Override
 					public void focusGained(FocusEvent arg0) {
@@ -151,6 +155,7 @@ public class PartsForm extends JDialog {
 					}
 				});
 			    coreChargeField = new JTextField();
+			    coreChargeField.setName("Core Charge");
 			    coreChargeField.addFocusListener(new FocusAdapter() {
 					@Override
 					public void focusGained(FocusEvent arg0) {
@@ -172,6 +177,7 @@ public class PartsForm extends JDialog {
 					}
 				});
 			    minStockQtyField = new JTextField();
+			    minStockQtyField.setName("Minimum Quantity Stock");
 			    minStockQtyField.addFocusListener(new FocusAdapter() {
 					@Override
 					public void focusGained(FocusEvent arg0) {
@@ -179,6 +185,7 @@ public class PartsForm extends JDialog {
 					}
 				});
 			    maxStockQtyField = new JTextField();
+			    maxStockQtyField.setName("Maximum Quantity Stock");
 			    maxStockQtyField.addFocusListener(new FocusAdapter() {
 					@Override
 					public void focusGained(FocusEvent arg0) {
@@ -193,6 +200,7 @@ public class PartsForm extends JDialog {
 					}
 				});
 			    qtyInStockField = new JTextField();
+			    qtyInStockField.setName("Quantity in Stock");
 			    qtyInStockField.addFocusListener(new FocusAdapter() {
 					@Override
 					public void focusGained(FocusEvent arg0) {
@@ -358,7 +366,14 @@ public class PartsForm extends JDialog {
 		    	String warehouseLocation = verifyEntry(warehouseLocationField);
 		    	String quantityInStock = verifyEntry(qtyInStockField);
 		    	
-		    	if(dataEntered) {
+		    	if(dataEntered  && ValidateInteger.validateInteger(minYearField, this) 
+		    			&& ValidateInteger.validateInteger(maxYearField, this) && 
+		    			ValidateDouble.validateDouble(supplierPriceField, this) &&
+		    			ValidateDouble.validateDouble(sellPriceField, this) && 
+		    			ValidateDouble.validateDouble(coreChargeField, this) && 
+		    			ValidateInteger.validateInteger(minStockQtyField, this) &&
+		    			ValidateInteger.validateInteger(maxStockQtyField, this) &&
+		    			ValidateInteger.validateInteger(qtyInStockField, this)) {
 		    		boolean valid = false;
 		    		
 		    		valid = writerDAO.checkCompanyExists(companyID);

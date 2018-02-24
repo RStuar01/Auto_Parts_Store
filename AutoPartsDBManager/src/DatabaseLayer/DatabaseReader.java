@@ -1568,5 +1568,30 @@ public String obtainInvoiceNumber(String input) {
 	return invoiceNumber;
 }
 
+public static String getQtyInStock(Integer productID) {
+	
+	String query = "SELECT quantity_in_stock from product where product = " + productID;
+	
+	String qtyInStock = "";
+	
+	Statement stmt = null;
+	
+	connObj = DatabaseWriter.getDBConnection();
+	
+	try {
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			qtyInStock = rs.getString(1);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+	
+	return qtyInStock;
+}
 
 }

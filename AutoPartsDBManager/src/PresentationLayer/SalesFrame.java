@@ -143,7 +143,11 @@ public class SalesFrame extends JFrame {
             {
     	
     	String invoiceNumber = (String) salesTable.getValueAt(salesTable.getSelectedRow(), 0);
-    	SalesItemFrame salesItemFrame = new SalesItemFrame(invoiceNumber);
+    	String date = (String) salesTable.getValueAt(salesTable.getSelectedRow(), 1);
+    	String time = (String) salesTable.getValueAt(salesTable.getSelectedRow(), 2);
+    	String customerID = (String) salesTable.getValueAt(salesTable.getSelectedRow(), 3);
+    	String employeeID = (String) salesTable.getValueAt(salesTable.getSelectedRow(), 4);
+    	SalesItemFrame salesItemFrame = new SalesItemFrame(invoiceNumber, date, time, customerID, employeeID);
         salesItemFrame.setLocationRelativeTo(this);
         salesItemFrame.setVisible(true);
             }

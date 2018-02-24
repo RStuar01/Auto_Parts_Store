@@ -9,9 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,11 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import DatabaseLayer.DAOFactory;
-import DatabaseLayer.DatabaseWriter;
-import DatabaseLayer.WriterDAO;
 import BusinessLayer.AccountingPurchases;
-import BusinessLayer.Customer;
+import DatabaseLayer.DAOFactory;
+import DatabaseLayer.WriterDAO;
 
 public class AccountingPurchaseForm extends JDialog{
 	 
@@ -78,6 +74,9 @@ public class AccountingPurchaseForm extends JDialog{
 		        cancelButton = new JButton();
 		        confirmButton = new JButton();
 		        purchaseIDField.setEditable(false);
+		        
+		        purchaseQtyField.setName("Purchase Quantity");
+		        dollarValueField.setName("Dollar Value");
 		        
 		        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		       
@@ -178,6 +177,9 @@ public class AccountingPurchaseForm extends JDialog{
 		    private void confirmButtonActionPerformed() throws SQLException {
 		        
 		    	// Added by Rick
+		    	
+		    	
+		    	
 		    	processData();
 		    	
 		    	if(dataEntered) {
@@ -188,18 +190,7 @@ public class AccountingPurchaseForm extends JDialog{
 		    	}
 		    	
 		    	dataEntered = true;
-		    	/*
-		    	if (validateData()) {
-		            setData();
-		            if (confirmButton.getText().equals("Add")) {
-		                doAdd();
-		            }
-		            else 
-		            {
-		                doEdit();
-		            }
-		        }
-		        */
+		    	
 		    }
 		    
 		    // Added by Rick
@@ -209,7 +200,10 @@ public class AccountingPurchaseForm extends JDialog{
 		    	String quantityPurchased = verifyEntry(purchaseQtyField);
 		    	String dollarValue = verifyEntry(dollarValueField);
 		    	
-		    	if(dataEntered) {
+		    
+		    	
+		    	if(dataEntered && ValidateInteger.validateInteger(purchaseQtyField, this) 
+		    			&& ValidateDouble.validateDouble(dollarValueField, this)) {
 		    		
 		    		//Check that product exists
 		    		boolean valid = writerDAO.checkProductExists(productID);

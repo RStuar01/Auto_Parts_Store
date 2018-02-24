@@ -28,11 +28,15 @@ public class SalesItemFrame extends JFrame{
 	    private JTable salesItemTable;
 	    private SalesItemTableModel salesItemTableModel;
 	    private String invoiceNumberInput;
+	    private String date;
+	    private String time;
+	    private String customerID;
+	    private String employeeID;
 	    
 	    private JTextField searchField;
 	    private JComboBox searchCombo;
 	    
-	    public SalesItemFrame(String invoiceNumberInput) throws UnsupportedLookAndFeelException, DBException, SQLException {
+	    public SalesItemFrame(String invoiceNumberInput, String date, String time, String customerID, String employeeID) throws UnsupportedLookAndFeelException, DBException, SQLException {
 	        try {
 	            UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
 	        }
@@ -41,6 +45,10 @@ public class SalesItemFrame extends JFrame{
 	            System.out.println(e);
 	        }
 	        this.invoiceNumberInput = invoiceNumberInput;
+	        this.date = date;
+	        this.time = time;
+	        this.customerID = customerID;
+	        this.employeeID = employeeID;
 	        setTitle("Invoice Detail");
 	        setSize(768, 384);
 	        setLocationByPlatform(true);
@@ -105,7 +113,7 @@ public class SalesItemFrame extends JFrame{
 	    }
 	    
 	    private void doAddButton() {
-	    	SalesItemForm salesItemForm = new SalesItemForm(this, "Add Sales Item", true, invoiceNumberInput);
+	    	SalesItemForm salesItemForm = new SalesItemForm(this, "Add Sales Item", true, invoiceNumberInput, date, time, customerID, employeeID);
 	        salesItemForm.setLocationRelativeTo(this);
 	        salesItemForm.setVisible(true);
 	    }

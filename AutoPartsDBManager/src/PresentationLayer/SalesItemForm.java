@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import DatabaseLayer.DAOFactory;
+import DatabaseLayer.DatabaseReader;
 import DatabaseLayer.DatabaseWriter;
 import DatabaseLayer.WriterDAO;
 import BusinessLayer.AccountingPurchases;
@@ -48,14 +49,22 @@ public class SalesItemForm extends JDialog{
 			    
 			    //Added by Rick
 			    private String invoiceNumber = "";
+			    private String date = "";
+			    private String time = "";
+			    private String customerID = "";
+			    private String employeeID = "";
 			    private boolean dataEntered = true;
 			    private static WriterDAO writerDAO;
 			    
 			    private InvoiceLineItem invoiceLineItem = new InvoiceLineItem();
 			    
-			    public SalesItemForm(java.awt.Frame parent, String title, boolean modal, String invoiceNumberInput) {
+			    public SalesItemForm(java.awt.Frame parent, String title, boolean modal, String invoiceNumberInput, String date, String time, String customerID, String employeeID) {
 			        super(parent, title, modal);
 			        invoiceNumber = invoiceNumberInput;
+			        this.date = date;
+			        this.time = time;
+			        this.customerID = customerID;
+			        this.employeeID = employeeID;
 			        initComponents(invoiceNumberInput);
 			        
 			     // Added by Rick
@@ -63,7 +72,7 @@ public class SalesItemForm extends JDialog{
 			    }
 			    
 			    public SalesItemForm(java.awt.Frame parent, String title, boolean modal, InvoiceLineItem invoiceLineItem) {
-			        this(parent, title, modal, title);
+			        this(parent, title, modal, title, title, title, title, title);
 			        this.invoiceLineItem = invoiceLineItem;
 			        confirmButton.setText("Save");
 			        invoiceLineItemNumberField.setText(invoiceLineItem.getInvoiceLineNumber());
@@ -92,6 +101,7 @@ public class SalesItemForm extends JDialog{
 					});
 			        invoiceNumberField.setText(invoiceNumberInput);
 			        purchasedQtyField = new JTextField();
+			        purchasedQtyField.setName("Purchased Quantity");
 			        purchasedQtyField.addFocusListener(new FocusAdapter() {
 						@Override
 						public void focusGained(FocusEvent arg0) {
@@ -178,6 +188,8 @@ public class SalesItemForm extends JDialog{
 			    	// Added by Rick
 			    	processData();
 			    	
+			    	
+			    	
 			    	if(dataEntered) {
 			    		
 			    		//Write to the DB
@@ -209,9 +221,24 @@ public class SalesItemForm extends JDialog{
 			    	String purchasedQuantity = verifyEntry(purchasedQtyField);
 			    	String productID = verifyEntry(productIDField);
 			    	
-			    	if(dataEntered) {
+			    	String qtyInStockString = DatabaseReader.getQtyInStock(Integer.parseInt(productIDField.getText()));
+			    	Integer qtyInStock = Integer.parseInt(qtyInStockString);
+			    	
+			    	boolean inStock = false;
+			    	
+			    	if (Integer.parseInt(purchasedQtyField.getText()) <= qtyInStock && ValidateInteger.validateInteger(purchasedQtyField, this))
+			    		inStock = true;
+			    	else
+			    	{
+			    		inStock = false;
+			    		JOptionPane.showMessageDialog(this, "Quantity Listed for that Item is not in Stock.");
+			    	}
+			    	
+			    	
+			    	if(dataEntered  && ValidateInteger.validateInteger(purchasedQtyField, this) && inStock) {
 			    		writerDAO.createInvoiceLineItem(invoiceNumber, purchasedQuantity,
 			    				productID);
+			    		writerDAO.manageSale(date, time, customerID, employeeID, purchasedQtyField.getText(), productIDField.getText());
 			    		dispose();
 			    	}
 			    	

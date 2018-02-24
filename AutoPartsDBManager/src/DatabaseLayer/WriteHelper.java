@@ -771,8 +771,11 @@ public class WriteHelper {
 		
 		String update = null;
 		
+		String currentQtyInStock = DatabaseReader.getQtyInStock(Integer.parseInt(productID));
+		Integer newQtyInStock = Integer.parseInt(currentQtyInStock) - Integer.parseInt(quantityPurchased);
+		
 		update = "UPDATE product "
-				+ "SET quantity_in_stock = quantity_in_stock - " + quantityPurchased
+				+ "SET quantity_in_stock = " + newQtyInStock.toString()
 				+ " WHERE product = " + productID + ";";
 		
 		Statement stmt = null;
