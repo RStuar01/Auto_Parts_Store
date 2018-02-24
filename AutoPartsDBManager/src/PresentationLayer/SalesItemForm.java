@@ -221,6 +221,7 @@ public class SalesItemForm extends JDialog{
 			    	String purchasedQuantity = verifyEntry(purchasedQtyField);
 			    	String productID = verifyEntry(productIDField);
 			    	
+
 			    	String qtyInStockString = DatabaseReader.getQtyInStock(Integer.parseInt(productIDField.getText()));
 			    	Integer qtyInStock = Integer.parseInt(qtyInStockString);
 			    	
@@ -236,10 +237,19 @@ public class SalesItemForm extends JDialog{
 			    	
 			    	
 			    	if(dataEntered  && ValidateInteger.validateInteger(purchasedQtyField, this) && inStock) {
-			    		writerDAO.createInvoiceLineItem(invoiceNumber, purchasedQuantity,
+			    		
+			    		writerDAO.createInvoiceLineItem(invoiceNumber, purchasedQuantity, productID);
+
+			    	System.out.println("In SalesItemForm - processData");
+			    	System.out.println("dataEntered: " + dataEntered);
+			    	if(dataEntered  && ValidateInteger.validateInteger(purchasedQtyField, this) && inStock) {
+			    		
+			    		writerDAO.manageEnteringToAccountingSales(invoiceNumber, purchasedQuantity,
+
 			    				productID);
-			    		writerDAO.manageSale(date, time, customerID, employeeID, purchasedQtyField.getText(), productIDField.getText());
+			    		//writerDAO.manageSale(date, time, customerID, employeeID, purchasedQtyField.getText(), productIDField.getText());
 			    		dispose();
+			    	}
 			    	}
 			    	
 			    }

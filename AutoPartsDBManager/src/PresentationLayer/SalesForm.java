@@ -219,6 +219,9 @@ public class SalesForm extends JDialog{
 				    	String customerID = verifyEntry(customerIDField);
 				    	String employeeID = verifyEntry(employeeIDField);
 				    	
+				    	
+				    	System.out.println("In SalesForm - processData");
+				    	System.out.println("dataEntered: " + dataEntered);
 				    	if(dataEntered) {
 				    		
 				    		// check that both customer and employee ID's exist

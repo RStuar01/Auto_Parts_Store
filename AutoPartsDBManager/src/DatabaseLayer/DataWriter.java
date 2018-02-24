@@ -59,5 +59,9 @@ public interface DataWriter {
 	public boolean checkCustomerExists(String customerID);
 	
 	//New for different gui
-		public boolean checkEmployeeExists(String employeeID);
+	public boolean checkEmployeeExists(String employeeID);
+		
+	//New for different gui
+	public void manageEnteringToAccountingSales(String invoiceNumber, 
+			String purchasedQuantity, String productID);
 }

@@ -328,6 +328,8 @@ public class DatabaseWriter implements WriterDAO {
 		
 		String newInvoiceLineItemUpdate = null;
 		
+		System.out.println("In DBWriter - createInvoiceLineItem");
+		
 		newInvoiceLineItemUpdate = "insert into invoice_line_item " +
 				"(invoice_line_number, invoice_invoice_number, quantity_purchased, " +
 				"product_product) " +
@@ -484,5 +486,36 @@ public boolean checkEmployeeExists(String employeeID) {
 			valid = true;
 		}
 		return valid;
+	}
+
+	public void manageEnteringToAccountingSales(String invoiceNumber, 
+		String purchasedQuantity, String productID) {
+		
+		String lineID = "";
+		String sellPrice = "";
+		String dollarValue = "";
+		String salesTax = "";
+		boolean reorderProduct = false;
+		
+		createInvoiceLineItem(invoiceNumber, purchasedQuantity,
+				productID);
+		lineID = writerHelper.obtainInvoiceLineID(invoiceNumber, purchasedQuantity,
+				productID);
+		
+		sellPrice = writerHelper.obtainSellPrice(productID);
+		dollarValue = writerHelper.obtainDollarValue(purchasedQuantity, sellPrice);
+		salesTax = writerHelper.obtainSalesTax(dollarValue);
+		
+		writerHelper.enterAccountingSales(lineID, purchasedQuantity, productID, dollarValue,
+				salesTax);
+		writerHelper.updateQuantityInStock(productID, purchasedQuantity);
+		
+		// check if reorder necessary
+		reorderProduct = writerHelper.checkReorderNecessity(productID);
+		System.out.println("Need to reorder: " + reorderProduct);
+		
+		if(reorderProduct) {
+			writerHelper.createOrderForProduct(productID);
+		}
 	}
 }
