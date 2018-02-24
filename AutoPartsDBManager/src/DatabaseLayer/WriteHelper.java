@@ -572,6 +572,8 @@ public class WriteHelper {
 		
 		String newAccountingSaleUpdate = null;
 		
+		System.out.println("In accounting sales");
+		
 		newAccountingSaleUpdate = "insert into accounting_sales " +
 				"(accounting_sales_record_id, sold_quantity, product_product, " +
 				"dollar_value, sales_tax_acquired, invoice_line_item_invoice_line_number) " +
@@ -583,6 +585,7 @@ public class WriteHelper {
 		connObj = DatabaseWriter.getDBConnection();
 								
 		try {
+			System.out.println("In acc sales try");
 			stmt = connObj.createStatement();
 			stmt.executeUpdate(newAccountingSaleUpdate);
 		}
@@ -871,5 +874,39 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 		
 		return supplyPrice;
+	}
+	
+	public String obtainInvoiceLineID(String invoiceNumber, String purchasedQuantity,
+			String productID) {
+		
+		String lineNumber = "";
+		
+		String query = null;
+		ResultSet rs = null;
+		
+		query = "SELECT invoice_line_number "
+				+ "FROM invoice_line_item "
+				+ "WHERE invoice_invoice_number = '" + invoiceNumber 
+				+ "' AND quantity_purchased = '" + purchasedQuantity 
+				+ "' AND product_product = '" + productID + "';";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(query);			
+			while(rs.next()) {
+				lineNumber = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		DatabaseWriter.closeConnection(connObj);
+		
+		return lineNumber;
 	}
 }

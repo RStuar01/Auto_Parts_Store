@@ -209,8 +209,11 @@ public class SalesItemForm extends JDialog{
 			    	String purchasedQuantity = verifyEntry(purchasedQtyField);
 			    	String productID = verifyEntry(productIDField);
 			    	
+			    	System.out.println("In SalesItemForm - processData");
+			    	System.out.println("dataEntered: " + dataEntered);
 			    	if(dataEntered) {
-			    		writerDAO.createInvoiceLineItem(invoiceNumber, purchasedQuantity,
+			    		
+			    		writerDAO.manageEnteringToAccountingSales(invoiceNumber, purchasedQuantity,
 			    				productID);
 			    		dispose();
 			    	}
