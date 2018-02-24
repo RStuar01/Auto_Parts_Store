@@ -314,67 +314,51 @@ public class CustomerInfoForm extends JDialog {
 	    }
 	    
 	    // Added by Rick
-	    private void processData() {
-	    	
-	    	String choice = "Customer";
-	    	String companyID = "";
-	    	
-	    	String lastName = verifyEntry(lastNameField);
-	    	String firstName = verifyEntry(firstNameField);
-	    	String streetAddress = verifyEntry(streetAddressField);
-	    	String city = verifyEntry(cityField);
-	    	String state = verifyEntry(stateField);
-	    	String zipCode = verifyEntry(zipCodeField);
-	    	String unitNumber = verifyEntry(unitNumberField);
-	    	String homePhone = verifyEntry(homePhoneField);
-	    	String cellPhone = verifyEntry(cellPhoneField);
-	    	String email = verifyEntry(emailField);
-	    	
-
-	    	if(dataEntered) {
-	    		
-	    		if (confirmButton.getText().equals("Add")) {
-	    			writerDAO.manageNewPersonCreation(choice, lastName, firstName,
-	    					streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
-	    					email, companyID);
-	    			System.out.println("Adding a new customer");
-	    		}
-	    		else {
-	    			System.out.println("Editing a cusotmer");
-	    			String customerID = customerIDField.getText();
-	    			String contactID = contactInfoIDField.getText();
-	    			String addressID = addressIDField.getText();
-	    			writerDAO.manageEditingCustomer(customerID, contactID, addressID, lastName,
-	    					firstName, streetAddress, city, state, zipCode, unitNumber, 
-	    					homePhone, cellPhone, email);
-	    		}
-
-	    	
-	    	String phoneNumRegexStr =  "^\\(*\\+*[1-9]{0,3}\\)*-*[1-9]{0,3}[-. /]*\\(*[2-9]\\d{2}\\)*[-. /]*\\d{3}[-. /]*\\d{4} *e*x*t*\\.* *\\d{0,4}$";
-	    	boolean homePhoneCheck = homePhone.matches(phoneNumRegexStr);
-	    	boolean cellPhoneCheck = cellPhone.matches(phoneNumRegexStr);
-	    	
-	    	if(!homePhone.matches(phoneNumRegexStr))
-	    		JOptionPane.showMessageDialog(this, "Invalid Home Phone Entered.  Please enter phone number"
-	    				+ "in ###-###-#### format.",
-	                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
-	    	
-	    	if(!cellPhone.matches(phoneNumRegexStr))
-	    		JOptionPane.showMessageDialog(this, "Invalid Cell Phone Entered.  Please enter phone number"
-	    				+ "in ###-###-#### format.",
-	                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
-	    	
-	    	if(dataEntered && homePhoneCheck && cellPhoneCheck) {
-	    		writerDAO.manageNewPersonCreation(choice, lastName, firstName,
-    				streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
-    				email, companyID);
-
-	    		
-	    		// NOTIFY USER that data written successfully
-	    		dispose();
-	    	}
-	    	}
-	    }
+private void processData() {
+            
+            String choice = "Customer";
+            String companyID = "";
+            
+            String lastName = verifyEntry(lastNameField);
+            String firstName = verifyEntry(firstNameField);
+            String streetAddress = verifyEntry(streetAddressField);
+            String city = verifyEntry(cityField);
+            String state = verifyEntry(stateField);
+            String zipCode = verifyEntry(zipCodeField);
+            String unitNumber = verifyEntry(unitNumberField);
+            String homePhone = verifyEntry(homePhoneField);
+            String cellPhone = verifyEntry(cellPhoneField);
+            String email = verifyEntry(emailField);
+            
+            
+            String phoneNumRegexStr =  "^\\(*\\+*[1-9]{0,3}\\)*-*[1-9]{0,3}[-. /]*\\(*[2-9]\\d{2}\\)*[-. /]*\\d{3}[-. /]*\\d{4} *e*x*t*\\.* *\\d{0,4}$";
+            boolean homePhoneCheck = homePhone.matches(phoneNumRegexStr);
+            boolean cellPhoneCheck = cellPhone.matches(phoneNumRegexStr);
+            
+            if(!homePhone.matches(phoneNumRegexStr))
+                JOptionPane.showMessageDialog(this, "Invalid Home Phone Entered.  Please enter phone number"
+                        + "in ###-###-#### format.",
+                        "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
+            
+            if(!cellPhone.matches(phoneNumRegexStr))
+                JOptionPane.showMessageDialog(this, "Invalid Cell Phone Entered.  Please enter phone number"
+                        + "in ###-###-#### format.",
+                        "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
+            
+            
+            System.out.println("DataEntered: " + dataEntered);
+            System.out.println("homePhoneCheck: " + homePhoneCheck);
+            System.out.println("cellPhoneCheck: " + cellPhoneCheck);
+            
+            if(dataEntered && homePhoneCheck && cellPhoneCheck) {
+                writerDAO.manageNewPersonCreation(choice, lastName, firstName,
+                    streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
+                    email, companyID);
+                
+                // NOTIFY USER that data written successfully
+                dispose();
+            }
+        }
 	    
 	    // Added by Rick
 	    private String verifyEntry(JTextField name) {
