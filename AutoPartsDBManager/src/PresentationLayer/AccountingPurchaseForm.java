@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.sql.SQLException;
@@ -107,62 +108,38 @@ public class AccountingPurchaseForm extends JDialog{
 					}
 		        });
 		        
-		        /*
-		        purchaseIDField.addFocusListener(new FocusListener() {
-		        	public void focusGained(FocusEvent e) {
-		        		focusEvent(purchaseIDField);
-		        	}
-
+		        
+		        purchaseIDField.addFocusListener(new FocusAdapter() {
 					@Override
-					public void focusLost(FocusEvent arg0) {
-						// TODO Auto-generated method stub
-						
+					public void focusGained(FocusEvent arg0) {
+						checkField(purchaseIDField);
 					}
-		        });	
-		        
-		        productIDField.addFocusListener(new FocusListener() {
-		        	public void focusGained(FocusEvent e) {
-		        		focusEvent(productIDField);
-		        	}
-
+				});
+			
+		        productIDField.addFocusListener(new FocusAdapter() {
 					@Override
-					public void focusLost(FocusEvent arg0) {
-						// TODO Auto-generated method stub
-						
+					public void focusGained(FocusEvent arg0) {
+						checkField(productIDField);
 					}
-		        });	
+				});
 		        
-		        purchaseQtyField.addFocusListener(new FocusListener() {
-		        	public void focusGained(FocusEvent e) {
-		        		focusEvent(purchaseQtyField);
-		        	}
-
+		        purchaseQtyField.addFocusListener(new FocusAdapter() {
 					@Override
-					public void focusLost(FocusEvent arg0) {
-						// TODO Auto-generated method stub
-						
+					public void focusGained(FocusEvent arg0) {
+						checkField(purchaseQtyField);
 					}
-		        });	
+				});
 		        
-		        dollarValueField.addFocusListener(new FocusListener() {
-		        	public void focusGained(FocusEvent e) {
-		        		focusEvent(dollarValueField);
-		        	}
-
+		        dollarValueField.addFocusListener(new FocusAdapter() {
 					@Override
-					public void focusLost(FocusEvent arg0) {
-						// TODO Auto-generated method stub
-						
+					public void focusGained(FocusEvent arg0) {
+						checkField(dollarValueField);
 					}
-		        });	
+				});
 		        
-		       */
+		       
 		        
-		        new FocusListner(purchaseIDField);
-		        new FocusListner(productIDField);
-		        new FocusListner(purchaseQtyField);
-		        new FocusListner(dollarValueField);
-		        		        
+		               
 		        JPanel purchasePanel = new JPanel();
 		        purchasePanel.setLayout(new GridBagLayout());
 		        purchasePanel.add(new JLabel("Purchase ID:"), getConstraints(0, 0, GridBagConstraints.LINE_END));
@@ -203,6 +180,14 @@ public class AccountingPurchaseForm extends JDialog{
 		    	// Added by Rick
 		    	processData();
 		    	
+		    	if(dataEntered) {
+		    		
+		    		//Write to the DB
+		    		System.out.println("All data entered!");
+		    		
+		    	}
+		    	
+		    	dataEntered = true;
 		    	/*
 		    	if (validateData()) {
 		            setData();
@@ -358,7 +343,16 @@ public class AccountingPurchaseForm extends JDialog{
 			   field.setForeground(Color.BLACK);
 		   }
 
-
+		   /**
+			 * Checks that the Text Field held the Data Missing message before resetting the color.
+			 * @param name					JTextField name to be checked.
+			 */
+			private void checkField(JTextField name) {			
+				if(name.getText().equals("Data Missing")) {  
+					name.setText("");
+					name.setForeground(Color.BLACK);
+				}
+			}
 	
 
 

@@ -7,6 +7,9 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -78,7 +81,12 @@ public class SalesForm extends JDialog{
 				    
 				    private void initComponents() {
 				    	invoiceNumberField = new JTextField();
-				    	 new FocusListner(invoiceNumberField);
+				    	invoiceNumberField.addFocusListener(new FocusAdapter() {
+							@Override
+							public void focusGained(FocusEvent arg0) {
+								checkField(invoiceNumberField);
+							}
+						});
 				        dateField = new JTextField();
 				        
 				        dateField.setText(LocalDate.now().toString());
@@ -90,9 +98,19 @@ public class SalesForm extends JDialog{
 				        timeField.setText(formatter.format(time).toString());
 				        
 				        customerIDField = new JTextField();
-				        new FocusListner(customerIDField);
+				        customerIDField.addFocusListener(new FocusAdapter() {
+							@Override
+							public void focusGained(FocusEvent arg0) {
+								checkField(customerIDField);
+							}
+						});
 				        employeeIDField = new JTextField();
-				        new FocusListner(employeeIDField);
+				        employeeIDField.addFocusListener(new FocusAdapter() {
+							@Override
+							public void focusGained(FocusEvent arg0) {
+								checkField(employeeIDField);
+							}
+						});
 				        cancelButton = new JButton();
 				        confirmButton = new JButton();
 				        invoiceNumberField.setEditable(false);
@@ -393,7 +411,16 @@ public class SalesForm extends JDialog{
 				        
 				        }
 				    }
-				
+				    /**
+					 * Checks that the Text Field held the Data Missing message before resetting the color.
+					 * @param name					JTextField name to be checked.
+					 */
+					private void checkField(JTextField name) {			
+						if(name.getText().equals("Data Missing")) {  
+							name.setText("");
+							name.setForeground(Color.BLACK);
+						}
+					}
 				   
 
 

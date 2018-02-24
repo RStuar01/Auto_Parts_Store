@@ -7,6 +7,9 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -44,6 +47,7 @@ public class SalesItemForm extends JDialog{
 			    private JButton cancelButton;
 			    
 			    //Added by Rick
+			    private String invoiceNumber = "";
 			    private boolean dataEntered = true;
 			    private static WriterDAO writerDAO;
 			    
@@ -51,6 +55,7 @@ public class SalesItemForm extends JDialog{
 			    
 			    public SalesItemForm(java.awt.Frame parent, String title, boolean modal, String invoiceNumberInput) {
 			        super(parent, title, modal);
+			        invoiceNumber = invoiceNumberInput;
 			        initComponents(invoiceNumberInput);
 			        
 			     // Added by Rick
@@ -72,14 +77,34 @@ public class SalesItemForm extends JDialog{
 			    
 			    private void initComponents(String invoiceNumberInput) {
 			    	invoiceLineItemNumberField = new JTextField();
-			    	 new FocusListner(invoiceLineItemNumberField);
+			    	invoiceLineItemNumberField.addFocusListener(new FocusAdapter() {
+						@Override
+						public void focusGained(FocusEvent arg0) {
+							checkField(invoiceLineItemNumberField);
+						}
+					});
 			        invoiceNumberField = new JTextField();
-			        new FocusListner(invoiceNumberField);
+			        invoiceNumberField.addFocusListener(new FocusAdapter() {
+						@Override
+						public void focusGained(FocusEvent arg0) {
+							checkField(invoiceNumberField);
+						}
+					});
 			        invoiceNumberField.setText(invoiceNumberInput);
 			        purchasedQtyField = new JTextField();
-			        new FocusListner(purchasedQtyField);
+			        purchasedQtyField.addFocusListener(new FocusAdapter() {
+						@Override
+						public void focusGained(FocusEvent arg0) {
+							checkField(purchasedQtyField);
+						}
+					});
 			        productIDField = new JTextField();
-			        new FocusListner(productIDField);
+			        productIDField.addFocusListener(new FocusAdapter() {
+						@Override
+						public void focusGained(FocusEvent arg0) {
+							checkField(productIDField);
+						}
+					});
 			        cancelButton = new JButton();
 			        confirmButton = new JButton();
 			        invoiceLineItemNumberField.setEditable(false);
@@ -180,7 +205,7 @@ public class SalesItemForm extends JDialog{
 			    //Added by Rick
 			    private void processData() {
 			    	
-			    	String invoiceNumber = "68";
+			    	//String invoiceNumber = "";
 			    	String purchasedQuantity = verifyEntry(purchasedQtyField);
 			    	String productID = verifyEntry(productIDField);
 			    	
@@ -352,7 +377,16 @@ public class SalesItemForm extends JDialog{
 			        }
 			    }
 			
-			   
+			    /**
+				 * Checks that the Text Field held the Data Missing message before resetting the color.
+				 * @param name					JTextField name to be checked.
+				 */
+				private void checkField(JTextField name) {			
+					if(name.getText().equals("Data Missing")) {  
+						name.setText("");
+						name.setForeground(Color.BLACK);
+					}
+				}   
 
 
 		

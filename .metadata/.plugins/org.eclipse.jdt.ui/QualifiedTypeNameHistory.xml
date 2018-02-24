@@ -2,4 +2,6 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="BusinessLayer.AccountingPurchases"/>
 <fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="java.awt.event.FocusAdapter"/>
+<fullyQualifiedTypeName name="java.awt.event.FocusEvent"/>
 </qualifiedTypeNameHistroy>

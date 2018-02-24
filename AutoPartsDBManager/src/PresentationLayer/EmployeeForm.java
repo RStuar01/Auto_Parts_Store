@@ -8,6 +8,9 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -90,31 +93,96 @@ public class EmployeeForm extends JDialog {
 		    
 		    private void initComponents() {
 		    	employeeIDField = new JTextField();
-		    	 new FocusListner(employeeIDField);
+		    	employeeIDField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(employeeIDField);
+					}
+				});
 		        lastNameField = new JTextField();
-		        new FocusListner(lastNameField);
+		        lastNameField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(lastNameField);
+					}
+				});
 		        firstNameField = new JTextField();
-		        new FocusListner(firstNameField);
+		        firstNameField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(firstNameField);
+					}
+				});
 		        contactInfoIDField = new JTextField();
-		        new FocusListner(contactInfoIDField);
+		        contactInfoIDField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(contactInfoIDField);
+					}
+				});
 		        addressIDField = new JTextField();
-		        new FocusListner(addressIDField);
+		        addressIDField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(addressIDField);
+					}
+				});
 		        streetAddressField = new JTextField();
-		        new FocusListner(streetAddressField);
+		        streetAddressField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(streetAddressField);
+					}
+				});
 		        cityField = new JTextField();
-		        new FocusListner(cityField);
+		        cityField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(cityField);
+					}
+				});
 		        stateField = new JTextField();
-		        new FocusListner(stateField);
+		        stateField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(stateField);
+					}
+				});
 		        zipCodeField = new JTextField();
-		        new FocusListner(zipCodeField);
+		        zipCodeField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(zipCodeField);
+					}
+				});
 		        unitNumberField = new JTextField();
-		        new FocusListner(unitNumberField);
+		        unitNumberField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(unitNumberField);
+					}
+				});
 		        homePhoneField = new JTextField();
-		        new FocusListner(homePhoneField);
+		        homePhoneField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(homePhoneField);
+					}
+				});
 		        cellPhoneField = new JTextField();
-		        new FocusListner(cellPhoneField);
+		        cellPhoneField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(cellPhoneField);
+					}
+				});
 		        emailField = new JTextField();
-		        new FocusListner(emailField);
+		        emailField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(emailField);
+					}
+				});
 		        cancelButton = new JButton();
 		        confirmButton = new JButton();
 		        employeeIDField.setEditable(false);
@@ -225,6 +293,14 @@ public class EmployeeForm extends JDialog {
 		    	// Changed by Rick
 		    	processData();
 		    	
+		    	if(dataEntered) {
+		    		
+		    		//Write to the DB
+		    		System.out.println("All data entered!");
+		    		
+		    	}
+		    	
+		    	dataEntered = true;
 		    	/*
 		    	if (validateData()) {
 		            setData();
@@ -457,7 +533,16 @@ public class EmployeeForm extends JDialog {
 		        }
 		    }
 		
-		   
+		    /**
+			 * Checks that the Text Field held the Data Missing message before resetting the color.
+			 * @param name					JTextField name to be checked.
+			 */
+			private void checkField(JTextField name) {			
+				if(name.getText().equals("Data Missing")) {  
+					name.setText("");
+					name.setForeground(Color.BLACK);
+				}
+			} 
 
 
 	

@@ -7,6 +7,9 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -92,35 +95,110 @@ public class PartsForm extends JDialog {
 		    private void initComponents() {
 		    	
 		    	productIDField = new JTextField();
-		    	 new FocusListner(productIDField);
+		    	productIDField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(productIDField);
+					}
+				});
 			    descriptionField = new JTextField();
-			    new FocusListner(descriptionField);
+			    descriptionField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(descriptionField);
+					}
+				});
 			    minYearField = new JTextField();
-			    new FocusListner(minYearField);
+			    minYearField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(minYearField);
+					}
+				});
 			    maxYearField = new JTextField();
-			    new FocusListner(maxYearField);
+			    maxYearField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField( maxYearField);
+					}
+				});
 			    makeField = new JTextField();
-			    new FocusListner(makeField);
+			    makeField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(makeField);
+					}
+				});
 			    modelField = new JTextField();
-			    new FocusListner(modelField);
+			    modelField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(modelField);
+					}
+				});
 			    supplierPriceField = new JTextField();
-			    new FocusListner(supplierPriceField);
+			    supplierPriceField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(supplierPriceField);
+					}
+				});
 			    sellPriceField = new JTextField();
-			    new FocusListner(sellPriceField);
+			    sellPriceField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(sellPriceField);
+					}
+				});
 			    coreChargeField = new JTextField();
-			    new FocusListner(coreChargeField);
+			    coreChargeField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(coreChargeField);
+					}
+				});
 			    compatibilityNumberField = new JTextField();
-			    new FocusListner(compatibilityNumberField);
+			    compatibilityNumberField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(compatibilityNumberField);
+					}
+				});
 			    companyIDField = new JTextField();
-			    new FocusListner(companyIDField);
+			    companyIDField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(companyIDField);
+					}
+				});
 			    minStockQtyField = new JTextField();
-			    new FocusListner(minStockQtyField);
+			    minStockQtyField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(minStockQtyField);
+					}
+				});
 			    maxStockQtyField = new JTextField();
-			    new FocusListner(maxStockQtyField);
+			    maxStockQtyField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(maxStockQtyField);
+					}
+				});
 			    warehouseLocationField = new JTextField();
-			    new FocusListner(warehouseLocationField);
+			    warehouseLocationField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(warehouseLocationField);
+					}
+				});
 			    qtyInStockField = new JTextField();
-			    new FocusListner(qtyInStockField);
+			    qtyInStockField.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent arg0) {
+						checkField(qtyInStockField);
+					}
+				});
 			    cancelButton = new JButton();
 		        confirmButton = new JButton();
 		        productIDField.setEditable(false);
@@ -238,7 +316,14 @@ public class PartsForm extends JDialog {
 		    	// Added by Rick
 		    	processData();
 		    	
+		    	if(dataEntered) {
+		    		
+		    		//Write to the DB
+		    		System.out.println("All data entered!");
+		    		
+		    	}
 		    	
+		    	dataEntered = true;
 		    	
 		    	// Modified by Rick
 		    	/*
@@ -482,7 +567,16 @@ public class PartsForm extends JDialog {
 		        }
 		    }
 		
-		   
+		    /**
+			 * Checks that the Text Field held the Data Missing message before resetting the color.
+			 * @param name					JTextField name to be checked.
+			 */
+			private void checkField(JTextField name) {			
+				if(name.getText().equals("Data Missing")) {  
+					name.setText("");
+					name.setForeground(Color.BLACK);
+				}
+			} 
 
 
 	
