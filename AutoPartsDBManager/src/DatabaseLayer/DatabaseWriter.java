@@ -518,4 +518,10 @@ public boolean checkEmployeeExists(String employeeID) {
 			writerHelper.createOrderForProduct(productID);
 		}
 	}
+	
+	public void editCustomer(String lastName, String firstName, String streetAddress, 
+			String city, String state, String zipCode, String unitNumber, 
+			String homePhone, String cellPhone, String email) {
+		
+	}
 }

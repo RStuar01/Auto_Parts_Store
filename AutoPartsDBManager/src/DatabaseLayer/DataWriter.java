@@ -64,4 +64,9 @@ public interface DataWriter {
 	//New for different gui
 	public void manageEnteringToAccountingSales(String invoiceNumber, 
 			String purchasedQuantity, String productID);
+	
+	public void editCustomer(String lastName, String firstName,
+			String streetAddress, String city, String state, String zipCode, 
+			String unitNumber, String homePhone, String cellPhone, 
+			String email);
 }

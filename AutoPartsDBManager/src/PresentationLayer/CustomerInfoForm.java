@@ -331,9 +331,19 @@ public class CustomerInfoForm extends JDialog {
 	    	String email = verifyEntry(emailField);
 	    	
 	    	if(dataEntered) {
-	    		writerDAO.manageNewPersonCreation(choice, lastName, firstName,
-    				streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
-    				email, companyID);
+	    		
+	    		if (confirmButton.getText().equals("Add")) {
+	    			writerDAO.manageNewPersonCreation(choice, lastName, firstName,
+	    					streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
+	    					email, companyID);
+	    			System.out.println("Adding a new customer");
+	    		}
+	    		else {
+	    			System.out.println("Editing a cusotmer");
+	    			writerDAO.editCustomer(lastName, firstName,
+	    					streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
+	    					email);
+	    		}
 	    		
 	    		// NOTIFY USER that data written successfully
 	    		dispose();
