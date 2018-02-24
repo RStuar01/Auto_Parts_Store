@@ -243,6 +243,11 @@ public class CustomerInformationFrame extends JFrame {
 	   }
 	   else
 		   customerTableModel.refresh(column, searchField.getText());
+	   if(customerTableModel.resultChecker(column, searchField.getText()).isEmpty()) {
+	   		JOptionPane.showMessageDialog(this, "Customer does not exist.  Please try another search.", 
+	                    "Search Input does not Exist.", JOptionPane.INFORMATION_MESSAGE);
+	   		customerTableModel.reset();
+	   		}
    }
 }
 

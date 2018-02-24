@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Customer;
 import BusinessLayer.Invoice;
 import BusinessLayer.InvoiceLineItem;
@@ -69,6 +70,13 @@ public class SalesItemTableModel extends AbstractTableModel {
 					    public void refresh(String column, String search){
 					        invoiceLineItems = DatabaseReader.obtainInvoiceLineItemFilter(invoiceNumberInput, column, search);
 					        fireTableDataChanged();
+					    }
+					    
+					    public List<InvoiceLineItem> resultChecker(String column, String search) {
+					    	
+					    	List<InvoiceLineItem> lineItem = DatabaseReader.obtainInvoiceLineItemFilter(invoiceNumberInput, column, search);
+					    	
+					    	return lineItem;
 					    }
 					    
 					    public void reset(){

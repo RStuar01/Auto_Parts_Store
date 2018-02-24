@@ -233,6 +233,11 @@ public class CompanyFrame extends JFrame{
 			   companyTableModel.reset();
 		   else
 			   companyTableModel.refresh(column, searchField.getText());
+		   	if(companyTableModel.resultChecker(column, searchField.getText()).isEmpty()) {
+	 	   		JOptionPane.showMessageDialog(this, "Company does not exist.  Please try another search.", 
+	 	                    "Search Input does not Exist.", JOptionPane.INFORMATION_MESSAGE);
+	 	   		companyTableModel.reset();
+	 	   		}
 	   }
 	
 
