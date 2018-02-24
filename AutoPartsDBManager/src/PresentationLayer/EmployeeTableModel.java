@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Customer;
 import BusinessLayer.Employee;
 import DatabaseLayer.DatabaseReader;
@@ -83,6 +84,13 @@ public class EmployeeTableModel extends AbstractTableModel{
 		    public void refresh(String column, String search){
 		    	employees = DatabaseReader.obtainEmployeeFilter(column, search);
 		        fireTableDataChanged();
+		    }
+		    
+		    public List<Employee> resultChecker(String column, String search) {
+		    	
+		    	List<Employee> employeess = DatabaseReader.obtainEmployeeFilter(column, search);
+		    	
+		    	return employeess;
 		    }
 		    
 		    public void reset(){

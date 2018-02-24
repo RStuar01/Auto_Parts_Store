@@ -248,6 +248,11 @@ public class SupplierFrame  extends JFrame {
 		   supplierTableModel.reset();
 	   else
 		   supplierTableModel.refresh(column, searchField.getText());
+	   if(supplierTableModel.resultChecker(column, searchField.getText()).isEmpty()) {
+	   		JOptionPane.showMessageDialog(this, "Supplier does not exist.  Please try another search.", 
+	                    "Search Input does not Exist.", JOptionPane.INFORMATION_MESSAGE);
+	   		supplierTableModel.reset();
+	   		}
    }
 }
 

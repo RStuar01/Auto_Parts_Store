@@ -219,6 +219,11 @@ public class SalesItemFrame extends JFrame{
 	 		  salesItemTableModel.reset();
 	 	   else
 	 		  salesItemTableModel.refresh(column, searchField.getText());
+	 	  if(salesItemTableModel.resultChecker(column, searchField.getText()).isEmpty()) {
+	 	   		JOptionPane.showMessageDialog(this, "Invoice Line does not exist.  Please try another search.", 
+	 	                    "Search Input does not Exist.", JOptionPane.INFORMATION_MESSAGE);
+	 	   		salesItemTableModel.reset();
+	 	   		}
 	    }
 
 }

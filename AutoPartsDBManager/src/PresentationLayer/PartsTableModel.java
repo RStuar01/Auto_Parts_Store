@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Customer;
 import BusinessLayer.Product;
 import BusinessLayer.Supplier;
@@ -88,6 +89,13 @@ public class PartsTableModel extends AbstractTableModel{
 			    public void refresh(String column, String search){
 			        products = DatabaseReader.obtainProductFilter(column, search);
 			        fireTableDataChanged();
+			    }
+			    
+			    public List<Product> resultChecker(String column, String search) {
+			    	
+			    	List<Product> products = DatabaseReader.obtainProductFilter(column, search);
+			    	
+			    	return products;
 			    }
 			    
 			    public void reset(){

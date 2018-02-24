@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
+import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Customer;
 import DatabaseLayer.DatabaseReader;
 
@@ -85,6 +86,13 @@ public class CustomerTableModel extends AbstractTableModel {
 	        customers = DatabaseReader.obtainCustomerFilter(column, search);
 	       
 	        fireTableDataChanged();
+	    }
+	    
+	    public List<Customer> resultChecker(String column, String search) {
+	    	
+	    	List<Customer> customer = DatabaseReader.obtainCustomerFilter(column, search);
+	    	
+	    	return customer;
 	    }
 	    
 	    public void reset(){

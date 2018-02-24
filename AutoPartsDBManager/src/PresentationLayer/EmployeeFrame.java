@@ -235,6 +235,11 @@ public class EmployeeFrame extends JFrame {
 			   employeeTableModel.reset();
 		   else
 			   employeeTableModel.refresh(column, searchField.getText());
+		   if(employeeTableModel.resultChecker(column, searchField.getText()).isEmpty()) {
+	 	   		JOptionPane.showMessageDialog(this, "Employee does not exist.  Please try another search.", 
+	 	                    "Search Input does not Exist.", JOptionPane.INFORMATION_MESSAGE);
+	 	   		employeeTableModel.reset();
+	 	   		}
 	   }
 	
 

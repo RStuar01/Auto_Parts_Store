@@ -248,6 +248,11 @@ public class PartsFrame  extends JFrame {
  		   productTableModel.reset();
  	   else
  		   productTableModel.refresh(column, searchField.getText());
+ 	  if(productTableModel.resultChecker(column, searchField.getText()).isEmpty()) {
+	   		JOptionPane.showMessageDialog(this, "Product does not exist.  Please try another search.", 
+	                    "Search Input does not Exist.", JOptionPane.INFORMATION_MESSAGE);
+	   		productTableModel.reset();
+	   		}
     }
 }
 
