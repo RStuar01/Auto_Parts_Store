@@ -299,6 +299,6 @@ public class AutoPartsStoreGui {
 	// Changed to static
 	private static void initialize() {
 		
-		System.out.println("In main - initialize");
+		//System.out.println("In main - initialize");
 	}
 }
