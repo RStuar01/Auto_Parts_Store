@@ -79,6 +79,7 @@ public class AccountingFrame  extends JFrame {
 	    
 	        panel.add(addButton);
 	        
+	        /*
 	        JButton editButton = new JButton("Edit");
 	        editButton.setToolTipText("Edit selected customer");
 	        editButton.addActionListener((ActionEvent) -> {
@@ -94,7 +95,8 @@ public class AccountingFrame  extends JFrame {
 	        });
 	        panel.add(editButton);
 	        
-	       
+	       */
+	        
 	        JButton helpButton = new JButton("Help");
 	        helpButton.addActionListener((ActionEvent) -> {
 	            doHelpButton();
@@ -142,7 +144,7 @@ public class AccountingFrame  extends JFrame {
     private void doHelpButton()
     {
     	JOptionPane.showMessageDialog(this, "Press the 'Add' button to add a Purchase. \n"
-                + "Press the 'Edit' button after selecting a purchase to edit their name. \n"
+                
                 + "Press the 'Exit' button to exit the program.", 
                     "Help Window", JOptionPane.INFORMATION_MESSAGE);
     }

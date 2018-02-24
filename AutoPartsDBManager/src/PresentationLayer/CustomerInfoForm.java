@@ -364,11 +364,12 @@ public class CustomerInfoForm extends JDialog {
 	    					homePhone, cellPhone, email);
 	    			dispose();
 	    		}
-
-	    	
-	    	
+	    		
+	    		dispose();
+	   
 	    	}
 	    }
+
 
 	    // Added by Rick
 	    private String verifyEntry(JTextField name) {

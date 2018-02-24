@@ -350,6 +350,7 @@ public class EmployeeForm extends JDialog {
 		                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
 		    	
 		    	if(dataEntered && homePhoneCheck && cellPhoneCheck) {
+
 		    		
 		    		if (confirmButton.getText().equals("Add")) {
 		    			writerDAO.manageNewPersonCreation(choice, lastName, firstName,
