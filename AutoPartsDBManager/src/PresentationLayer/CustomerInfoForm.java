@@ -330,6 +330,25 @@ public class CustomerInfoForm extends JDialog {
 	    	String cellPhone = verifyEntry(cellPhoneField);
 	    	String email = verifyEntry(emailField);
 	    	
+
+	    	if(dataEntered) {
+	    		
+	    		if (confirmButton.getText().equals("Add")) {
+	    			writerDAO.manageNewPersonCreation(choice, lastName, firstName,
+	    					streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
+	    					email, companyID);
+	    			System.out.println("Adding a new customer");
+	    		}
+	    		else {
+	    			System.out.println("Editing a cusotmer");
+	    			String customerID = customerIDField.getText();
+	    			String contactID = contactInfoIDField.getText();
+	    			String addressID = addressIDField.getText();
+	    			writerDAO.manageEditingCustomer(customerID, contactID, addressID, lastName,
+	    					firstName, streetAddress, city, state, zipCode, unitNumber, 
+	    					homePhone, cellPhone, email);
+	    		}
+
 	    	
 	    	String phoneNumRegexStr =  "^\\(*\\+*[1-9]{0,3}\\)*-*[1-9]{0,3}[-. /]*\\(*[2-9]\\d{2}\\)*[-. /]*\\d{3}[-. /]*\\d{4} *e*x*t*\\.* *\\d{0,4}$";
 	    	boolean homePhoneCheck = homePhone.matches(phoneNumRegexStr);
@@ -349,9 +368,11 @@ public class CustomerInfoForm extends JDialog {
 	    		writerDAO.manageNewPersonCreation(choice, lastName, firstName,
     				streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
     				email, companyID);
+
 	    		
 	    		// NOTIFY USER that data written successfully
 	    		dispose();
+	    	}
 	    	}
 	    }
 	    

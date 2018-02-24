@@ -912,4 +912,80 @@ public class WriteHelper {
 		
 		return lineNumber;
 	}
+	
+	public void editAddress(String addressID, String streetAddress, String city,
+			String state, String zipCode, String unitNumber) {
+		
+		String update = null;
+		Statement stmt = null;
+		
+		update = "UPDATE address "
+				+ "SET street_address = '" + streetAddress + "', "
+				+ "city = '" + city + "', state = '" + state + "', zip_code = '"
+				+ zipCode + "', unit_number = '" + unitNumber
+				+ "' WHERE address_id = " + addressID + ";";
+		
+		connObj = DatabaseWriter.getDBConnection();
+		
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(update);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+	}
+	
+	public void editContactInfo(String contactID, String homePhone, String cellPhone,
+			String email) {
+		
+		String update = null;
+		Statement stmt = null;
+		
+		update = "UPDATE contact_info "
+				+ "SET phone_number = '" + homePhone + "', "
+				+ "cell_phone_number = '" + cellPhone + "', "
+				+ "email_address = '" + email
+				+ "' WHERE contact_info_id = " + contactID + ";";
+		
+		connObj = DatabaseWriter.getDBConnection();
+		
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(update);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+	}
+	
+	public void editCustomer(String customerID, String lastName, String firstName,
+			String contactID, String addressID) {
+		
+		String update = null;
+		Statement stmt = null;
+		
+		
+		System.out.println("CustomerID " + customerID);
+		update = "UPDATE customer "
+				+ "SET last_name = '" + lastName + "', "
+				+ "first_name = '" + firstName 
+				+ "' WHERE customer_id = " + customerID + ";";
+		
+		connObj = DatabaseWriter.getDBConnection();
+		
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(update);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+	}
 }

@@ -1594,4 +1594,5 @@ public static String getQtyInStock(Integer productID) {
 	return qtyInStock;
 }
 
+	
 }
