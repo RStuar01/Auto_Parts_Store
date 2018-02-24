@@ -41,6 +41,8 @@ public class CompanyForm extends JDialog {
 			    private static final Pattern EMAIL_PATTERN = 
 			                             Pattern.compile(EMAIL_REGEX);
 			    
+			    
+			    
 			    private JTextField companyIDField;
 			    private JTextField addressIDField;
 			    private JTextField contactIDField;
@@ -323,8 +325,21 @@ public class CompanyForm extends JDialog {
 			    	String cellPhone = verifyEntry(cellPhoneField);
 			    	String email = verifyEntry(emailField);
 			    	
+			    	String phoneNumRegexStr =  "^\\(*\\+*[1-9]{0,3}\\)*-*[1-9]{0,3}[-. /]*\\(*[2-9]\\d{2}\\)*[-. /]*\\d{3}[-. /]*\\d{4} *e*x*t*\\.* *\\d{0,4}$";
+			    	boolean homePhoneCheck = homePhone.matches(phoneNumRegexStr);
+			    	boolean cellPhoneCheck = cellPhone.matches(phoneNumRegexStr);
 			    	
-			    	if(dataEntered) {
+			    	if(!homePhone.matches(phoneNumRegexStr))
+			    		JOptionPane.showMessageDialog(this, "Invalid Home Phone Entered.  Please enter phone number"
+			    				+ "in ###-###-#### format.",
+			                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
+			    	
+			    	if(!cellPhone.matches(phoneNumRegexStr))
+			    		JOptionPane.showMessageDialog(this, "Invalid Cell Phone Entered.  Please enter phone number"
+			    				+ "in ###-###-#### format.",
+			                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
+			    	
+			    	if(dataEntered && homePhoneCheck && cellPhoneCheck) {
 			    		writerDAO.createNewCompany(streetAddress, city, state, zipCode, 
 			    				unitNumber, homePhone, cellPhone, email, 
 			    				companyName);

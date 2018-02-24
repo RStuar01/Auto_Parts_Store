@@ -366,6 +366,26 @@ public class PartsForm extends JDialog {
 		    	String warehouseLocation = verifyEntry(warehouseLocationField);
 		    	String quantityInStock = verifyEntry(qtyInStockField);
 		    	
+		    	Integer minYearInt = Integer.parseInt(minYear);
+		    	Integer maxYearInt = Integer.parseInt(maxYear);
+		    	
+		    	boolean yearRange = minYearInt <= maxYearInt;
+		    	
+		    	if (!yearRange)
+		    		JOptionPane.showMessageDialog(this, "Minimum Year is not less than or equal to Maximum Year.", 
+		     	                    "Year Mismatch", JOptionPane.INFORMATION_MESSAGE);
+		    	
+		    	Integer minStockQtyInt = Integer.parseInt(minStockQuantity);
+		    	Integer maxStockQtyInt = Integer.parseInt(maxStockQuantity);
+		    	
+		    	boolean qtyRange = minStockQtyInt <= maxStockQtyInt;
+		    	
+		    	if (!qtyRange)
+		    		JOptionPane.showMessageDialog(this, "Minimum Stock Quantity is not less "
+		    				+ "than or equal to Maximum Stock Quantity.", 
+		     	                    "Year Mismatch", JOptionPane.INFORMATION_MESSAGE);
+		     	   		
+		    	
 		    	if(dataEntered  && ValidateInteger.validateInteger(minYearField, this) 
 		    			&& ValidateInteger.validateInteger(maxYearField, this) && 
 		    			ValidateDouble.validateDouble(supplierPriceField, this) &&
@@ -373,7 +393,8 @@ public class PartsForm extends JDialog {
 		    			ValidateDouble.validateDouble(coreChargeField, this) && 
 		    			ValidateInteger.validateInteger(minStockQtyField, this) &&
 		    			ValidateInteger.validateInteger(maxStockQtyField, this) &&
-		    			ValidateInteger.validateInteger(qtyInStockField, this)) {
+		    			ValidateInteger.validateInteger(qtyInStockField, this) 
+		    			&& yearRange && qtyRange) {
 		    		boolean valid = false;
 		    		
 		    		valid = writerDAO.checkCompanyExists(companyID);

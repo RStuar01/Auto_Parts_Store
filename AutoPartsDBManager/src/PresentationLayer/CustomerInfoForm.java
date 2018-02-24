@@ -330,6 +330,7 @@ public class CustomerInfoForm extends JDialog {
 	    	String cellPhone = verifyEntry(cellPhoneField);
 	    	String email = verifyEntry(emailField);
 	    	
+
 	    	if(dataEntered) {
 	    		
 	    		if (confirmButton.getText().equals("Add")) {
@@ -347,9 +348,31 @@ public class CustomerInfoForm extends JDialog {
 	    					firstName, streetAddress, city, state, zipCode, unitNumber, 
 	    					homePhone, cellPhone, email);
 	    		}
+
+	    	
+	    	String phoneNumRegexStr =  "^\\(*\\+*[1-9]{0,3}\\)*-*[1-9]{0,3}[-. /]*\\(*[2-9]\\d{2}\\)*[-. /]*\\d{3}[-. /]*\\d{4} *e*x*t*\\.* *\\d{0,4}$";
+	    	boolean homePhoneCheck = homePhone.matches(phoneNumRegexStr);
+	    	boolean cellPhoneCheck = cellPhone.matches(phoneNumRegexStr);
+	    	
+	    	if(!homePhone.matches(phoneNumRegexStr))
+	    		JOptionPane.showMessageDialog(this, "Invalid Home Phone Entered.  Please enter phone number"
+	    				+ "in ###-###-#### format.",
+	                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
+	    	
+	    	if(!cellPhone.matches(phoneNumRegexStr))
+	    		JOptionPane.showMessageDialog(this, "Invalid Cell Phone Entered.  Please enter phone number"
+	    				+ "in ###-###-#### format.",
+	                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
+	    	
+	    	if(dataEntered && homePhoneCheck && cellPhoneCheck) {
+	    		writerDAO.manageNewPersonCreation(choice, lastName, firstName,
+    				streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
+    				email, companyID);
+
 	    		
 	    		// NOTIFY USER that data written successfully
 	    		dispose();
+	    	}
 	    	}
 	    }
 	    

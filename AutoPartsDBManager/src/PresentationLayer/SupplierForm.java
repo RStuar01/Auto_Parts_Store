@@ -362,7 +362,22 @@ public class SupplierForm extends JDialog {
 		    	String email = verifyEntry(emailField);
 		    	String companyName = verifyEntry(companyNameField);
 		    	
-		    	if(dataEntered) {
+		    	
+		    	String phoneNumRegexStr =  "^\\(*\\+*[1-9]{0,3}\\)*-*[1-9]{0,3}[-. /]*\\(*[2-9]\\d{2}\\)*[-. /]*\\d{3}[-. /]*\\d{4} *e*x*t*\\.* *\\d{0,4}$";
+		    	boolean homePhoneCheck = homePhone.matches(phoneNumRegexStr);
+		    	boolean cellPhoneCheck = cellPhone.matches(phoneNumRegexStr);
+		    	
+		    	if(!homePhone.matches(phoneNumRegexStr))
+		    		JOptionPane.showMessageDialog(this, "Invalid Home Phone Entered.  Please enter phone number"
+		    				+ "in ###-###-#### format.",
+		                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
+		    	
+		    	if(!cellPhone.matches(phoneNumRegexStr))
+		    		JOptionPane.showMessageDialog(this, "Invalid Cell Phone Entered.  Please enter phone number"
+		    				+ "in ###-###-#### format.",
+		                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
+		    	
+		    	if(dataEntered && homePhoneCheck && cellPhoneCheck) {
 		    		
 		    		valid = writerDAO.checkCompanyExists(companyID);
 		    		System.out.println("Valid: " + valid);
