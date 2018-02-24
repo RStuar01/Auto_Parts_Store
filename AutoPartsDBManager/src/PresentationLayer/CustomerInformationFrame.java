@@ -237,8 +237,6 @@ public class CustomerInformationFrame extends JFrame {
 	   }
 	   
 	   if(searchField.getText().equals("")) {
-		   JOptionPane.showMessageDialog(this, "Please enter search criteria!",
-                   "Invalid Search", JOptionPane.INFORMATION_MESSAGE);
 		   customerTableModel.reset();
 	   }
 	   else
