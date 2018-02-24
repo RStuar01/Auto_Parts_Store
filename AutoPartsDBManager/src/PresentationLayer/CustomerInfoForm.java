@@ -352,6 +352,7 @@ public class CustomerInfoForm extends JDialog {
 	    					streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
 	    					email, companyID);
 	    			System.out.println("Adding a new customer");
+	    			dispose();
 	    		}
 	    		else {
 	    			System.out.println("Editing a cusotmer");
@@ -361,6 +362,7 @@ public class CustomerInfoForm extends JDialog {
 	    			writerDAO.manageEditingCustomer(customerID, contactID, addressID, lastName,
 	    					firstName, streetAddress, city, state, zipCode, unitNumber, 
 	    					homePhone, cellPhone, email);
+	    			dispose();
 	    		}
 
 	    	
