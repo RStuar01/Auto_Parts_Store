@@ -2,6 +2,8 @@ package PresentationLayer;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 import BusinessLayer.Customer;
@@ -81,6 +83,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	    
 	    public void refresh(String column, String search){
 	        customers = DatabaseReader.obtainCustomerFilter(column, search);
+	       
 	        fireTableDataChanged();
 	    }
 	    
