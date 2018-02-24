@@ -134,7 +134,7 @@ public class CustomerInformationFrame extends JFrame {
     {
     	JOptionPane.showMessageDialog(this, "Press the 'Add' button to add a customer. \n"
                 + "Press the 'Edit' button after selecting a customer to edit their name. \n"
-                + "Press the 'Delete' button after selecting a customer to delete that customer. \n"
+               
                 + "Press the 'Exit' button to exit the program.", 
                     "Help Window", JOptionPane.INFORMATION_MESSAGE);
     }

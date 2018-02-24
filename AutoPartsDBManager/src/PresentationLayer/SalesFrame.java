@@ -97,7 +97,8 @@ public class SalesFrame extends JFrame {
         });
     
         panel.add(addButton);
-        
+       
+        /*
         JButton editButton = new JButton("Edit");
         editButton.setToolTipText("Edit selected customer");
         editButton.addActionListener((ActionEvent) -> {
@@ -113,7 +114,8 @@ public class SalesFrame extends JFrame {
         });
         panel.add(editButton);
         
-                
+        */
+        
         JButton helpButton = new JButton("Help");
         helpButton.addActionListener((ActionEvent) -> {
             doHelpButton();
@@ -180,7 +182,7 @@ public class SalesFrame extends JFrame {
     {
     	JOptionPane.showMessageDialog(this, "Press the 'Select' button after selecting an invoice to see invoice details. \n"
     			+ "Press the 'Add' button to add a invoice. \n"
-                + "Press the 'Edit' button after selecting a invoice to edit their name. \n"
+                
                 + "Press the 'Exit' button to exit the program.", 
                     "Help Window", JOptionPane.INFORMATION_MESSAGE);
     }
