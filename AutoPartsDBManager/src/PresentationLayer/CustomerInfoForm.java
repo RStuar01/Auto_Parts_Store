@@ -315,6 +315,7 @@ public class CustomerInfoForm extends JDialog {
 	    
 	    // Added by Rick
 //<<<<<<< HEAD
+	    /*
 private void processData() {
             
             String choice = "Customer";
@@ -360,8 +361,9 @@ private void processData() {
                 dispose();
             }
         }
+        */
 // removed head
-/*
+
 	    private void processData() {
 	    	
 	    	String choice = "Customer";
@@ -410,22 +412,12 @@ private void processData() {
 	    					homePhone, cellPhone, email);
 	    		}
 
-	    	
-	    	
-	    	
-	    	//if(dataEntered && homePhoneCheck && cellPhoneCheck) {
-	    	//	writerDAO.manageNewPersonCreation(choice, lastName, firstName,
-    		//		streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
-    		//		email, companyID);
-
-	    		
-	    		// NOTIFY USER that data written successfully
 	    		dispose();
 	    //	}
 	    	}
 	    }
->>>>>>> 12fdc0a6efccda2ba9352081ea0dd73fb5f08cbf
-*/
+//>>>>>>> 12fdc0a6efccda2ba9352081ea0dd73fb5f08cbf
+
 
 	    // Added by Rick
 	    private String verifyEntry(JTextField name) {

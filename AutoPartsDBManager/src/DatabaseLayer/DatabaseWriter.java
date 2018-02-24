@@ -530,4 +530,13 @@ public boolean checkEmployeeExists(String employeeID) {
 		writerHelper.editContactInfo(contactID, homePhone, cellPhone, email);
 		writerHelper.editCustomer(customerID, lastName, firstName, contactID, addressID);
 	}
+	public void manageEditingEmployee(String employeeID, String contactID, String addressID,
+			String lastName, String firstName, String streetAddress, String city,
+			String state, String zipCode, String unitNumber, String homePhone,
+			String cellPhone, String email) {
+		
+		writerHelper.editAddress(addressID, streetAddress, city, state, zipCode, unitNumber);
+		writerHelper.editContactInfo(contactID, homePhone, cellPhone, email);
+		writerHelper.editEmployee(employeeID, lastName, firstName, contactID, addressID);
+	}
 }

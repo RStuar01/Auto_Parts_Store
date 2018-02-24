@@ -69,4 +69,9 @@ public interface DataWriter {
 			String lastName, String firstName, String streetAddress, String city,
 			String state, String zipCode, String unitNumber, String homePhone,
 			String cellPhone, String email);
+	
+	public void manageEditingEmployee(String employeeID, String contactID, String addressID,
+			String lastName, String firstName, String streetAddress, String city,
+			String state, String zipCode, String unitNumber, String homePhone,
+			String cellPhone, String email);
 }
