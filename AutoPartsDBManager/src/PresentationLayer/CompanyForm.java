@@ -331,12 +331,12 @@ public class CompanyForm extends JDialog {
 			    	
 			    	if(!homePhone.matches(phoneNumRegexStr))
 			    		JOptionPane.showMessageDialog(this, "Invalid Home Phone Entered.  Please enter phone number"
-			    				+ "in ###-###-#### format.",
+			    				+ "in ###-###-#### x### format.",
 			                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
 			    	
 			    	if(!cellPhone.matches(phoneNumRegexStr))
 			    		JOptionPane.showMessageDialog(this, "Invalid Cell Phone Entered.  Please enter phone number"
-			    				+ "in ###-###-#### format.",
+			    				+ "in ###-###-#### x### format.",
 			                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
 			    	
 			    	if(dataEntered && homePhoneCheck && cellPhoneCheck) {
