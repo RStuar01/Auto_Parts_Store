@@ -66,6 +66,13 @@ public class PurchasesTableModel extends AbstractTableModel{
 					        fireTableDataChanged();
 					    }
 					    
+					    public List<AccountingPurchases> resultChecker(String column, String search) {
+					    	
+					    	List<AccountingPurchases> purchases = DatabaseReader.obtainPurchaseFilter(column, search);
+					    	
+					    	return purchases;
+					    }
+					    
 					    public void reset(){
 					        purchases = DatabaseReader.obtainPurchaseList();
 					        fireTableDataChanged();

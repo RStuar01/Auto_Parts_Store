@@ -219,6 +219,11 @@ public class AccountingFrame  extends JFrame {
  		   purchaseTableModel.reset();
  	   else
  		   purchaseTableModel.refresh(column, searchField.getText());
+ 	   		if(purchaseTableModel.resultChecker(column, searchField.getText()).isEmpty()) {
+ 	   		JOptionPane.showMessageDialog(this, "Purchase does not exist.  Please try another search.", 
+ 	                    "Search Input does not Exist.", JOptionPane.INFORMATION_MESSAGE);
+ 	   		purchaseTableModel.reset();
+ 	   		}
     }
 }
 
