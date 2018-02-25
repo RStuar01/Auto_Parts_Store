@@ -340,10 +340,22 @@ public class CompanyForm extends JDialog {
 			                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
 			    	
 			    	if(dataEntered && homePhoneCheck && cellPhoneCheck) {
-			    		writerDAO.createNewCompany(streetAddress, city, state, zipCode, 
+			    		if(confirmButton.getText().equals("Add")) {
+			    			writerDAO.createNewCompany(streetAddress, city, state, zipCode, 
 			    				unitNumber, homePhone, cellPhone, email, 
 			    				companyName);
-			    		dispose();
+			    			dispose();
+			    		}
+			    		else {
+			    			String companyID = companyIDField.getText();
+			    			String addressID = addressIDField.getText();
+			    			String contactID = contactIDField.getText();
+			    			writerDAO.manageEditingCompany(companyID, addressID, contactID,
+			    					streetAddress, city, state, zipCode, 
+				    				unitNumber, homePhone, cellPhone, email, 
+				    				companyName);
+			    			dispose();
+			    		}
 		    				
 			    	}
 			    }

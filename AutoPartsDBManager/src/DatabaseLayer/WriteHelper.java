@@ -1014,4 +1014,27 @@ public class WriteHelper {
 		
 		DatabaseWriter.closeConnection(connObj);
 	}
+	
+	public void editCompany(String companyID, String companyName) {
+		
+		String update = null;
+		Statement stmt = null;
+		
+		
+		update = "UPDATE company "
+				+ "SET company_name = '" + companyName 
+				+ "' WHERE company_id = " + companyID + ";";
+		
+		connObj = DatabaseWriter.getDBConnection();
+		
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(update);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+	}
 }

@@ -400,12 +400,21 @@ public class PartsForm extends JDialog {
 		    		valid = writerDAO.checkCompanyExists(companyID);
 		    		
 		    		if(valid) {
-		    			writerDAO.manageEnteringNewProduct(description, minYear, maxYear,
-		    				make, model, supplierPrice, sellPrice, coreCharge,
-		    				compatibilityNumber, companyID, minStockQuantity,
-		    				maxStockQuantity, warehouseLocation, quantityInStock);
+		    			if (confirmButton.getText().equals("Add")) {
+		    				writerDAO.manageEnteringNewProduct(description, minYear, maxYear,
+		    						make, model, supplierPrice, sellPrice, coreCharge,
+		    						compatibilityNumber, companyID, minStockQuantity,
+		    						maxStockQuantity, warehouseLocation, quantityInStock);
 		    			
-		    			//Write to accounting purchases
+		    			}
+		    			else {
+		    				String productID = productIDField.getText();
+		    				writerDAO.editProduct(productID, description, minYear, maxYear,
+		    						make, model, supplierPrice, sellPrice, coreCharge,
+		    						compatibilityNumber, companyID, minStockQuantity,
+		    						maxStockQuantity, warehouseLocation, quantityInStock);
+		    				dispose();
+		    			}
 		    			
 		    			
 		    			//Notify user that add was successful
