@@ -220,6 +220,8 @@ public class AccountingPurchaseForm extends JDialog{
 		    			System.out.println("Product does not exist");
 		    			
 		    			//Notify user that add was NOT successful
+		    			JOptionPane.showMessageDialog(this, "Invalid Product ID Entered.",
+			                    "This Product ID does not exist!", JOptionPane.INFORMATION_MESSAGE);
 		    			dispose();
 		    		}
 		    	}
