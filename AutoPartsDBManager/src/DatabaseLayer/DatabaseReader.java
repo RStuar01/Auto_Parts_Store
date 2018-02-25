@@ -1652,34 +1652,9 @@ public static String getQtyInStock(Integer productID) {
 	return qtyInStock;
 }
 
-public static String obtainCompanyID(String input) {
-	
-	
-	String query = "SELECT company_name FROM company where company_id  = '" + input +"'";
-			
-	String companyName = "";
-	
-	Statement stmt = null;
-	
-	connObj =  DatabaseWriter.getDBConnection();
-					
-	try {	
-		stmt = connObj.createStatement();
-		ResultSet rs = stmt.executeQuery(query);
-		while (rs.next()) {
-			companyName = rs.getString(1);
-		}
-	}
-	catch (SQLException e) {
-		System.out.println(e.toString());
-	}
-	
-	DatabaseWriter.closeConnection(connObj);
-			
-	return companyName;
-}
 
-public String obtainCompanyName(String companyID) {
+
+public static String obtainCompanyName(String companyID) {
 	
 	String query = "SELECT company_name FROM company where company_id  = '" 
 			+ companyID +"'";
