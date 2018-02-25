@@ -366,6 +366,11 @@ public class PartsForm extends JDialog {
 		    	String warehouseLocation = verifyEntry(warehouseLocationField);
 		    	String quantityInStock = verifyEntry(qtyInStockField);
 		    	
+		    	ValidateInteger.validateInteger(minYearField, this);
+		    	ValidateInteger.validateInteger(maxYearField, this);
+		    	ValidateInteger.validateInteger(minStockQtyField, this);
+		    	ValidateInteger.validateInteger(maxStockQtyField, this);
+		    	
 		    	Integer minYearInt = Integer.parseInt(minYear);
 		    	Integer maxYearInt = Integer.parseInt(maxYear);
 		    	
@@ -384,7 +389,17 @@ public class PartsForm extends JDialog {
 		    		JOptionPane.showMessageDialog(this, "Minimum Stock Quantity is not less "
 		    				+ "than or equal to Maximum Stock Quantity.", 
 		     	                    "Year Mismatch", JOptionPane.INFORMATION_MESSAGE);
-		     	   		
+		    	boolean valid = false;
+	   	   		
+	    		
+	    		valid = writerDAO.checkCompanyExists(companyID);
+	    		if(!valid)
+	    		{
+	    			System.out.println("Company does not exist");
+	    			JOptionPane.showMessageDialog(this, "Company ID does not exist.", 
+		     	                    "Invalid Company ID", JOptionPane.INFORMATION_MESSAGE);
+	    		}
+	    		
 		    	
 		    	if(dataEntered  && ValidateInteger.validateInteger(minYearField, this) 
 		    			&& ValidateInteger.validateInteger(maxYearField, this) && 
@@ -394,18 +409,14 @@ public class PartsForm extends JDialog {
 		    			ValidateInteger.validateInteger(minStockQtyField, this) &&
 		    			ValidateInteger.validateInteger(maxStockQtyField, this) &&
 		    			ValidateInteger.validateInteger(qtyInStockField, this) 
-		    			&& yearRange && qtyRange) {
-		    		boolean valid = false;
+		    			&& yearRange && qtyRange && valid) {
 		    		
-		    		valid = writerDAO.checkCompanyExists(companyID);
-		    		
-		    		if(valid) {
 		    			if (confirmButton.getText().equals("Add")) {
 		    				writerDAO.manageEnteringNewProduct(description, minYear, maxYear,
 		    						make, model, supplierPrice, sellPrice, coreCharge,
 		    						compatibilityNumber, companyID, minStockQuantity,
 		    						maxStockQuantity, warehouseLocation, quantityInStock);
-		    			
+		    			dispose();
 		    			}
 		    			else {
 		    				String productID = productIDField.getText();
@@ -420,14 +431,11 @@ public class PartsForm extends JDialog {
 		    			//Notify user that add was successful
 		    			dispose();
 		    		}
-		    		else {
-		    			System.out.println("Company does not exist");
+		    		
 		    			
 		    			//Notify user that add was NOT successful
-		    			dispose();
-		    		}
 		    	}
-		    }
+		    
 		    
 		 // Added by Rick
 		    private String verifyEntry(JTextField name) {
