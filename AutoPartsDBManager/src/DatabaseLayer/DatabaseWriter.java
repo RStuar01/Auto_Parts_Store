@@ -558,6 +558,7 @@ public boolean checkEmployeeExists(String employeeID) {
 				+ make + "', model = '" + model + "', supplier_price = '" 
 				+ supplierPrice + "', sell_price = '" + sellPrice + "', core_charge = '"
 				+ coreCharge + "', compatibility_number = '" + compatibilityNumber
+				+ "', company_company_id = '" + companyID
 				+ "', min_quantity_in_stock = '" + minStockQuantity 
 				+ "', max_quantity_in_stock = '" + maxStockQuantity
 				+ "', warehouse_location = '" + warehouseLocation
