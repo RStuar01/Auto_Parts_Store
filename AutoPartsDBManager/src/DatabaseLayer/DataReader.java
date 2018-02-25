@@ -36,6 +36,7 @@ public interface DataReader {
 	
 	// obtainCompanyInformtion
 	public Company obtainCompanyInformation(String companyName);
+	public String obtainCompanyName(String companyID);
 	
 	// obtainInvoiceInformation
 	public ArrayList<Invoice> getInvoices(String customerID);

@@ -28,6 +28,7 @@ import BusinessLayer.Supplier;
 import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
 import DatabaseLayer.DatabaseWriter;
+import DatabaseLayer.ReaderDAO;
 import DatabaseLayer.WriterDAO;
 
 public class SupplierForm extends JDialog {
@@ -59,6 +60,7 @@ public class SupplierForm extends JDialog {
 		    //Added by Rick
 		    private boolean dataEntered = true;
 		    private static WriterDAO writerDAO;
+		    private static ReaderDAO readerDAO;
 		    private String companyID;
 		    
 		    private Supplier supplier = new Supplier();
@@ -69,6 +71,7 @@ public class SupplierForm extends JDialog {
 		        
 		     // Added by Rick
 		        writerDAO = DAOFactory.getWriterDAO();
+		        readerDAO = DAOFactory.getReaderDAO();
 		    }
 		    
 		    public SupplierForm(java.awt.Frame parent, String title, boolean modal, Supplier supplier, String companyID) {
@@ -366,7 +369,7 @@ public class SupplierForm extends JDialog {
 		    	String homePhone = verifyEntry(homePhoneField);
 		    	String cellPhone = verifyEntry(cellPhoneField);
 		    	String email = verifyEntry(emailField);
-		    	String companyName = verifyEntry(companyNameField);
+		    	//String companyName = verifyEntry(companyNameField);
 		    	
 		    	
 		    	String phoneNumRegexStr =  "^\\(*\\+*[1-9]{0,3}\\)*-*[1-9]{0,3}[-. /]*\\(*[2-9]\\d{2}\\)*[-. /]*\\d{3}[-. /]*\\d{4} *e*x*t*\\.* *\\d{0,4}$";
@@ -390,6 +393,11 @@ public class SupplierForm extends JDialog {
 		    		System.out.println("Company for this ID number does not exist");
 	    			JOptionPane.showMessageDialog(this, "Invalid Company ID Entered.",
 		                    "Invalid Company ID", JOptionPane.INFORMATION_MESSAGE);
+		    	}
+		    	else {
+		    		System.out.println("ID: " + companyID);
+		    		String companyName = readerDAO.obtainCompanyName(companyID);
+		    		companyNameField.setText(companyName);
 		    	}
 		    	
 		    	if(dataEntered && homePhoneCheck && cellPhoneCheck && valid) {
