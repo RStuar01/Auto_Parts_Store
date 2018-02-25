@@ -74,4 +74,15 @@ public interface DataWriter {
 			String lastName, String firstName, String streetAddress, String city,
 			String state, String zipCode, String unitNumber, String homePhone,
 			String cellPhone, String email);
+	
+	public void editProduct(String productID, String description, String minYear,
+			String maxYear, String make, String model, String supplierPrice,
+			String sellPrice, String coreCharge, String compatibilityNumber,
+			String companyID, String minStockQuantity, String maxStockQuantity,
+			String warehouseLocation, String quantityInStock);
+	
+	public void manageEditingCompany(String companyID, String addressID, 
+			String contactID, String streetAddress, String city, String state, 
+			String zipCode, String unitNumber, String homePhone, String cellPhone,
+			String email, String companyName);
 }

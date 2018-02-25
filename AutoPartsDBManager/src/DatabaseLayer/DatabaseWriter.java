@@ -551,4 +551,49 @@ public boolean checkEmployeeExists(String employeeID) {
 		writerHelper.editContactInfo(contactID, homePhone, cellPhone, email);
 		writerHelper.editEmployee(employeeID, lastName, firstName, contactID, addressID);
 	}
+	
+	public void editProduct(String productID, String description, String minYear,
+			String maxYear, String make, String model, String supplierPrice,
+			String sellPrice, String coreCharge, String compatibilityNumber,
+			String companyID, String minStockQuantity, String maxStockQuantity,
+			String warehouseLocation, String quantityInStock) {
+		
+		String update = null;
+		Statement stmt = null;
+		
+		update = "UPDATE product "
+				+ "SET description = '" + description + "', year_minimum = '"
+				+ minYear + "', year_maximum = '" + maxYear + "', make = '" 
+				+ make + "', model = '" + model + "', supplier_price = '" 
+				+ supplierPrice + "', sell_price = '" + sellPrice + "', core_charge = '"
+				+ coreCharge + "', compatibility_number = '" + compatibilityNumber
+				+ "', min_quantity_in_stock = '" + minStockQuantity 
+				+ "', max_quantity_in_stock = '" + maxStockQuantity
+				+ "', warehouse_location = '" + warehouseLocation
+				+ "', quantity_in_stock = '" + quantityInStock
+				+ "' WHERE product = " + productID + ";";
+				
+		connObj = DatabaseWriter.getDBConnection();
+		
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(update);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+	}
+	
+	public void manageEditingCompany(String companyID, String addressID, 
+			String contactID, String streetAddress, String city, String state, 
+			String zipCode, String unitNumber, String homePhone, String cellPhone,
+			String email, String companyName) {
+		
+		writerHelper.editAddress(addressID, streetAddress, city, state, zipCode, unitNumber);
+		writerHelper.editContactInfo(contactID, homePhone, cellPhone, email);
+		writerHelper.editCompany(companyID, companyName);
+		
+	}
 }
