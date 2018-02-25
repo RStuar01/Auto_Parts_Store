@@ -369,10 +369,10 @@ public class PartsForm extends JDialog {
 		    	boolean qtyRange = false;
 		    	boolean yearRange= false;
 		    	
-		    	ValidateInteger.validateInteger(minYearField, this);
-		    	ValidateInteger.validateInteger(maxYearField, this);
-		    	ValidateInteger.validateInteger(minStockQtyField, this);
-		    	ValidateInteger.validateInteger(maxStockQtyField, this);
+		    	//ValidateInteger.validateInteger(minYearField, this);
+		    	//ValidateInteger.validateInteger(maxYearField, this);
+		    	//ValidateInteger.validateInteger(minStockQtyField, this);
+		    	//ValidateInteger.validateInteger(maxStockQtyField, this);
 		    	
 		    	try {
 		    	Integer minYearInt = Integer.parseInt(minYear);
@@ -384,7 +384,7 @@ public class PartsForm extends JDialog {
 		    	}
 		    	catch (NumberFormatException ex)
 		    	{
-		    		System.out.println(ex.toString());
+		    		
 		    	}
 		    	
 		    	
@@ -403,7 +403,7 @@ public class PartsForm extends JDialog {
 		    	}
 		    	catch (NumberFormatException ex)
 		    	{
-		    		System.out.println(ex.toString());
+		    		
 		    	}
 		    	boolean valid = false;
 	   	   		
