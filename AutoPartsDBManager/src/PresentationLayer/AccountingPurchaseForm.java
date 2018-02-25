@@ -10,6 +10,7 @@ import java.awt.Insets;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +24,7 @@ import javax.swing.WindowConstants;
 
 import BusinessLayer.AccountingPurchases;
 import DatabaseLayer.DAOFactory;
+import DatabaseLayer.DatabaseReader;
 import DatabaseLayer.WriterDAO;
 
 public class AccountingPurchaseForm extends JDialog{
@@ -74,6 +76,7 @@ public class AccountingPurchaseForm extends JDialog{
 		        cancelButton = new JButton();
 		        confirmButton = new JButton();
 		        purchaseIDField.setEditable(false);
+		        dollarValueField.setEditable(false);
 		        
 		        purchaseQtyField.setName("Purchase Quantity");
 		        dollarValueField.setName("Dollar Value");
@@ -178,7 +181,7 @@ public class AccountingPurchaseForm extends JDialog{
 		        
 		    	// Added by Rick
 		    	
-		    	
+		    
 		    	
 		    	processData();
 		    	
@@ -198,35 +201,45 @@ public class AccountingPurchaseForm extends JDialog{
 		    	
 		    	String productID = verifyEntry(productIDField);
 		    	String quantityPurchased = verifyEntry(purchaseQtyField);
-		    	String dollarValue = verifyEntry(dollarValueField);
+		    	//String dollarValue = verifyEntry(dollarValueField);
 		    	
-		    
+		    	//Check that product exists
+		    	boolean valid = writerDAO.checkProductExists(productID);
 		    	
-		    	if(dataEntered && ValidateInteger.validateInteger(purchaseQtyField, this) 
-		    			&& ValidateDouble.validateDouble(dollarValueField, this)) {
+		    	if(!valid)
+		    	{
+		    		System.out.println("Product does not exist");
+	    			
+	    			//Notify user that add was NOT successful
+	    			JOptionPane.showMessageDialog(this, "Invalid Product ID Entered.",
+		                    "This Product ID does not exist!", JOptionPane.INFORMATION_MESSAGE);
+		    	}
 		    		
-		    		//Check that product exists
-		    		boolean valid = writerDAO.checkProductExists(productID);
+		    	
+		    	if(dataEntered && ValidateInteger.validateInteger(purchaseQtyField, this) && valid) {
 		    		
-		    		if(valid) {
+
+		    			double supplierPrice = Double.parseDouble(DatabaseReader.obtainSupplierPrice(productIDField.getText()));
+				    	int qty = Integer.parseInt(quantityPurchased);
+				    	double total = supplierPrice * qty;
+				    	
+				    	DecimalFormat format = new DecimalFormat(".##");
+				    	String totalString = format.format(total);
+				    	
+				    	dollarValueField.setText(totalString);
+		    			
+		    			
 		    			writerDAO.manuallyEnterNewAccountingPurchase(productID, 
-		    				quantityPurchased, dollarValue);
+		    				quantityPurchased, dollarValueField.getText());
 		    			dispose();
 		    			
 		    			//Notify user that add was successful
 		    			dispose();
 		    		}
-		    		else {
-		    			System.out.println("Product does not exist");
-		    			
-		    			//Notify user that add was NOT successful
-		    			JOptionPane.showMessageDialog(this, "Invalid Product ID Entered.",
-			                    "This Product ID does not exist!", JOptionPane.INFORMATION_MESSAGE);
-		    			dispose();
-		    		}
+		    		
 		    	}
 		    	
-		    }
+		   
 		    
 		    // Added by Rick
 		    private String verifyEntry(JTextField name) {
