@@ -170,7 +170,7 @@ public class DatabaseWriter implements WriterDAO {
 		
 		dollarValue = writerHelper.obtainDollarValue(quantityInStock, supplyPrice);
 		
-		System.out.println("$" + dollarValue);
+		//System.out.println("$" + dollarValue);
 		
 		writerHelper.enterToAccountingPurchases (quantityInStock, dollarValue, productID);
 		
@@ -191,17 +191,17 @@ public class DatabaseWriter implements WriterDAO {
 		writerHelper.createInvoice(date, time, customerID, employeeID);
 		invoiceID = writerHelper.obtainNewInvoiceNumber(date, time, customerID, employeeID);
 		
-		System.out.println("Invoice Number: " + invoiceID);
+		//System.out.println("Invoice Number: " + invoiceID);
 		writerHelper.createInvoiceLineItem(invoiceID, quantityPurchased, productID);
 		lineID = writerHelper.obtainLineItemID(invoiceID, quantityPurchased, productID);
 		sellPrice = writerHelper.obtainSellPrice(productID);
 		dollarValue = writerHelper.obtainDollarValue(quantityPurchased, sellPrice);
 		salesTax = writerHelper.obtainSalesTax(dollarValue);
 		
-		System.out.println("Line ID: " + lineID);
-		System.out.println("Sell Price: $" + sellPrice);
-		System.out.println("Dollar Value: " + dollarValue);
-		System.out.println("Sales Tax: " + salesTax);
+		//System.out.println("Line ID: " + lineID);
+		//System.out.println("Sell Price: $" + sellPrice);
+		//System.out.println("Dollar Value: " + dollarValue);
+		//System.out.println("Sales Tax: " + salesTax);
 		writerHelper.enterAccountingSales(lineID, quantityPurchased, productID, dollarValue,
 				salesTax);
 		writerHelper.updateQuantityInStock(productID, quantityPurchased);
@@ -220,7 +220,7 @@ public class DatabaseWriter implements WriterDAO {
 		
 		boolean exists = false;
 		
-		System.out.println("In the write method");
+		//System.out.println("In the write method");
 		
 		for(Product p: rfidProducts) {
 			exists = writerHelper.verifyProductInDatabase(p);
@@ -328,7 +328,7 @@ public class DatabaseWriter implements WriterDAO {
 		
 		String newInvoiceLineItemUpdate = null;
 		
-		System.out.println("In DBWriter - createInvoiceLineItem");
+		//System.out.println("In DBWriter - createInvoiceLineItem");
 		
 		newInvoiceLineItemUpdate = "insert into invoice_line_item " +
 				"(invoice_line_number, invoice_invoice_number, quantity_purchased, " +
@@ -524,7 +524,7 @@ public boolean checkEmployeeExists(String employeeID) {
 			String city, String state, String zipCode, String unitNumber, 
 			String homePhone, String cellPhone, String email) {
 		
-		System.out.println("In editCustomer");
+		//System.out.println("In editCustomer");
 		
 		writerHelper.editAddress(addressID, streetAddress, city, state, zipCode, unitNumber);
 		writerHelper.editContactInfo(contactID, homePhone, cellPhone, email);

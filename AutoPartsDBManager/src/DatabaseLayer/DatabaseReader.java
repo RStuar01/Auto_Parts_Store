@@ -90,7 +90,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 		
-		System.out.println("DatabaseReader - Connection Established!");			
+		//System.out.println("DatabaseReader - Connection Established!");			
 		DatabaseWriter.closeConnection(connObj);
 			
 		return connection;

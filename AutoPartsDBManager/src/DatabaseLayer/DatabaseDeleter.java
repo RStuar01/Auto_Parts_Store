@@ -70,7 +70,7 @@ public class DatabaseDeleter implements DeleterDAO {
 			System.out.println(e.toString());
 		}
 		
-		System.out.println("DatabaseDeleter - Connection Established!");
+		//System.out.println("DatabaseDeleter - Connection Established!");
 		
 		
 	

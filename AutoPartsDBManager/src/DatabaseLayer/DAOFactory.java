@@ -43,7 +43,12 @@ public class DAOFactory {
 		return dDAO;
 	}
 	
-public static RFIDDAO getRFIDDAO() {
+	/**
+	 * Uses the RFIDDAO interface to return an instance of the RFIDReader class
+	 * @return	rfidTextDAO		an RFID reader object
+	 * Written by Rick Stuart
+	 */
+	public static RFIDDAO getRFIDDAO() {
 		
 		RFIDTextReader rfidTextDAO = new RFIDTextReader();
 		return rfidTextDAO;

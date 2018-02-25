@@ -36,7 +36,7 @@ public class WriteHelper {
 	 */
 	public void writeAddressInformation(String streetAddress, String city, String state, String zipCode,
 			String unitNumber) {
-	
+	System.out.println();
 		String newAddressUpdate = null;
 	
 		newAddressUpdate = "insert into address " +
@@ -360,7 +360,7 @@ public class WriteHelper {
 				
 		DatabaseWriter.closeConnection(connObj);
 		
-		System.out.println("product ID: " + productID);
+		//System.out.println("product ID: " + productID);
 		
 		return productID;
 	}
@@ -559,9 +559,9 @@ public class WriteHelper {
 		
 		double cost = Double.parseDouble(dollarValue);
 		salesTax = cost * 0.075;
-		System.out.println("Unrounded: " + salesTax);
+		//System.out.println("Unrounded: " + salesTax);
 		salesTax = (double) Math.round((salesTax * 100) + 0.5) / 100;
-		System.out.println("Rounded up: " + salesTax);
+		//System.out.println("Rounded up: " + salesTax);
 		tax = String.valueOf(salesTax);
 		
 		return tax;
@@ -572,7 +572,7 @@ public class WriteHelper {
 		
 		String newAccountingSaleUpdate = null;
 		
-		System.out.println("In accounting sales");
+		//System.out.println("In accounting sales");
 		
 		newAccountingSaleUpdate = "insert into accounting_sales " +
 				"(accounting_sales_record_id, sold_quantity, product_product, " +
@@ -585,7 +585,7 @@ public class WriteHelper {
 		connObj = DatabaseWriter.getDBConnection();
 								
 		try {
-			System.out.println("In acc sales try");
+			//System.out.println("In acc sales try");
 			stmt = connObj.createStatement();
 			stmt.executeUpdate(newAccountingSaleUpdate);
 		}
@@ -602,7 +602,7 @@ public class WriteHelper {
 		
 		String productID = p.getProductID();
 		
-		System.out.println("In verifyProducts");
+		//System.out.println("In verifyProducts");
 		readerDAO = DAOFactory.getReaderDAO();
 		Product existingProduct = readerDAO.lookupProduct(productID);
 		
@@ -616,7 +616,7 @@ public class WriteHelper {
 							if(p.getMake().equalsIgnoreCase(existingProduct.getMake())) {
 								if(p.getModel().equalsIgnoreCase(existingProduct.getModel())) {
 									exists = true;
-									System.out.println("Boolean set");
+									//System.out.println("Boolean set");
 								}
 							}
 						}
@@ -625,8 +625,8 @@ public class WriteHelper {
 			}
 		}
 		else {
-			System.out.println("writeHelper.VerifyProductInDatabase");
-			System.out.println("Product is null - does not match existing product!");
+			//System.out.println("writeHelper.VerifyProductInDatabase");
+			//System.out.println("Product is null - does not match existing product!");
 		}
 		
 		return exists;
@@ -644,12 +644,12 @@ public class WriteHelper {
 		int quantityAccepted = 0;
 		int quantityRejected = 0;
 		
-		System.out.println("Writing product");
+		//System.out.println("Writing product");
 		String update = null;
 		 
-		System.out.println("Quantity arriving: " + product.getQuantityInStock());
+		//System.out.println("Quantity arriving: " + product.getQuantityInStock());
 		oldQuantity = readerDAO.getQuantityInStock(productID);
-		System.out.println("oldQuantity = " + oldQuantity);
+		//System.out.println("oldQuantity = " + oldQuantity);
 		
 		quantityArriving = product.getQuantityInStock();
 		productID = product.getProductID();
@@ -660,14 +660,14 @@ public class WriteHelper {
 		maxQuantity = Integer.parseInt(maxQuantityInStock);
 		
 		if(newQuantity > maxQuantity) {
-			System.out.println("Quantity exceeds max quantity!");
-			System.out.println("Maximum quantity allowed: " + maxQuantity);
+			//System.out.println("Quantity exceeds max quantity!");
+			//System.out.println("Maximum quantity allowed: " + maxQuantity);
 			quantityAccepted = maxQuantity - Integer.parseInt(oldQuantity);
 			newQuantity = quantityAccepted + Integer.parseInt(oldQuantity);
 			quantityRejected = Integer.parseInt(quantityArriving) - quantityAccepted;
 			
-			System.out.println("quantity accepted: " + quantityAccepted);
-			System.out.println("quantity rejected: " + quantityRejected);
+			//System.out.println("quantity accepted: " + quantityAccepted);
+			//System.out.println("quantity rejected: " + quantityRejected);
 			
 			
 		}
@@ -691,9 +691,9 @@ public class WriteHelper {
 			// copied from line 167 DatabaseWriter // strings
 			String quantityReceived = Integer.toString(quantityAccepted);
 			supplyPrice = product.getSupplierPrice();
-			System.out.println("SupplierPrice: " + supplyPrice);
+			//System.out.println("SupplierPrice: " + supplyPrice);
 			dollarValue = obtainDollarValue(quantityReceived, supplyPrice);
-			System.out.println("Dollar Value: " + dollarValue);
+			//System.out.println("Dollar Value: " + dollarValue);
 			enterToAccountingPurchases (quantityReceived, dollarValue, productID);
 				
 		DatabaseWriter.closeConnection(connObj);
@@ -752,8 +752,8 @@ public class WriteHelper {
 			while(rs.next()) {
 				quantityInStock = rs.getInt(1);
 				minQuantity = rs.getInt(2);
-				System.out.println("In Stock: " + quantityInStock);
-				System.out.println("Max: " + minQuantity);
+				//System.out.println("In Stock: " + quantityInStock);
+				//System.out.println("Max: " + minQuantity);
 				if(minQuantity >= quantityInStock) {
 					reorder = true;
 				}
@@ -970,7 +970,7 @@ public class WriteHelper {
 		Statement stmt = null;
 		
 		
-		System.out.println("CustomerID " + customerID);
+		//System.out.println("CustomerID " + customerID);
 		update = "UPDATE customer "
 				+ "SET last_name = '" + lastName + "', "
 				+ "first_name = '" + firstName 
@@ -996,7 +996,7 @@ public class WriteHelper {
 		Statement stmt = null;
 		
 		
-		System.out.println("EmployeeID " + employeeID);
+		//System.out.println("EmployeeID " + employeeID);
 		update = "UPDATE employee "
 				+ "SET last_name = '" + lastName + "', "
 				+ "first_name = '" + firstName 
@@ -1045,7 +1045,7 @@ public class WriteHelper {
 		Statement stmt = null;
 		
 		
-		System.out.println("SupplierID " + supplierID);
+		//System.out.println("SupplierID " + supplierID);
 		update = "UPDATE supplier "
 				+ "SET last_name = '" + lastName + "', "
 				+ "first_name = '" + firstName 
