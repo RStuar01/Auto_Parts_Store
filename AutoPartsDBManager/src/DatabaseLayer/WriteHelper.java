@@ -770,12 +770,36 @@ public class WriteHelper {
 		return reorder;
 	}
 	
-	public void updateQuantityInStock(String productID, String quantityPurchased) {
+	public void updateQuantityInStock(String productID, String quantitySold) {
 		
 		String update = null;
 		
 		String currentQtyInStock = DatabaseReader.getQtyInStock(Integer.parseInt(productID));
-		Integer newQtyInStock = Integer.parseInt(currentQtyInStock) - Integer.parseInt(quantityPurchased);
+		Integer newQtyInStock = Integer.parseInt(currentQtyInStock) - Integer.parseInt(quantitySold);
+		
+		update = "UPDATE product "
+				+ "SET quantity_in_stock = " + newQtyInStock.toString()
+				+ " WHERE product = " + productID + ";";
+		
+		Statement stmt = null;
+		
+		connObj = DatabaseWriter.getDBConnection();
+								
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(update);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+	}
+	
+	public void updateQuantityInStockPurchase(String productID, String quantityPurchased) {
+		
+		String update = null;
+		
+		String currentQtyInStock = DatabaseReader.getQtyInStock(Integer.parseInt(productID));
+		Integer newQtyInStock = Integer.parseInt(currentQtyInStock) + Integer.parseInt(quantityPurchased);
 		
 		update = "UPDATE product "
 				+ "SET quantity_in_stock = " + newQtyInStock.toString()

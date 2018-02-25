@@ -1705,4 +1705,34 @@ public String obtainCompanyName(String companyID) {
 			
 	return companyName;
 }
+
+public static String obtainSupplierPrice(String productID) {
+	
+	Integer productIDInt = Integer.parseInt(productID);
+	
+	String query = "SELECT supplier_price FROM product where product  = '" 
+			+ productIDInt +"'";
+	
+	String supplierPrice = "";
+	
+	Statement stmt = null;
+	
+	connObj =  DatabaseWriter.getDBConnection();
+					
+	try {	
+		stmt = connObj.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+			supplierPrice = rs.getString(1);
+		}
+	}
+	catch (SQLException e) {
+		System.out.println(e.toString());
+	}
+	
+	DatabaseWriter.closeConnection(connObj);
+			
+	return supplierPrice;
+}
+
 }

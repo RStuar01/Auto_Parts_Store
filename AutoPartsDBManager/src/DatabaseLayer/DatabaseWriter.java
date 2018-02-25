@@ -259,6 +259,7 @@ public class DatabaseWriter implements WriterDAO {
 		try {
 			stmt = connObj.createStatement();
 			stmt.executeUpdate(newPurchaseUpdate);
+			writerHelper.updateQuantityInStockPurchase(productID, quantityPurchased);
 		}
 		catch (SQLException e) {
 			System.out.println(e.toString());
