@@ -1,0 +1,58 @@
+CHECKING sat eve 7 pm
+Login – WORKS
+Auto Parts Store
+	Customer Information
+		Blank edit/ help / exit -works
+	Add Customer – WORKS
+	Edit existing -WORKS
+	
+	Employee Information
+		Blank edit / help / exit -works
+	Add employee – WORKS
+	Edit existing – WORKS
+	
+	Purchases
+		Blank edit/ help/ exit works
+				ADD – bad product ID	- NO MESSAGE
+				But maintains Ref Int
+		Add – with good productid – WORKS
+			HOWEVER – should gray out purchase price and pull from DB
+
+Part 
+	Blank edit / help / exit - work
+			Add – numberFormatException when used a letter
+			Line 369 - Integer minYearInt = Integer.parseInt(minYear);
+			Line 370 - Integer maxYearInt = Integer.parseInt(maxYear);
+			Integer minStockQtyInt = Integer.parseInt(minStockQuantity);
+		    	Integer maxStockQtyInt = Integer.parseInt(maxStockQuantity);
+		If all numbers are digits – but companyID does not exist – NO MESSAGE
+IF good companyID and other data – WORKS
+Edit – WORKS with good data
+NOTE: updates purchases
+
+Supplier
+	If try to add with invalid companyID – NO MESSAGE
+	Add with good ID - WORKS
+
+Sales
+	Blank search / select/ help/ exit all WORK
+	Add – if invalid customerID or employeeID – NO MESSAGE
+	Bad add – does not dipose() – invalid customer or employee ID’s
+	Add – with valid ID’s - WORKS
+	
+SELECT invoice
+	Help window still shows ‘Edit’
+	If bad productid – frame does not dispose
+	If good productid – WORKS
+	
+Company
+	Blank search/ edit/ help/ exit -WORK
+	Add – WORKS with good data
+	Edit – WORKS
+	
+
+
+
+just finished supplier edit.  Also made the company name not editable and auto filled as the company ID changes
+what else?
+
