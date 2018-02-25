@@ -1037,4 +1037,31 @@ public class WriteHelper {
 		
 		DatabaseWriter.closeConnection(connObj);
 	}
+	
+	public void editSupplier(String supplierID, String lastName, String firstName,
+			String contactID, String addressID, String companyID) {
+		
+		String update = null;
+		Statement stmt = null;
+		
+		
+		System.out.println("SupplierID " + supplierID);
+		update = "UPDATE supplier "
+				+ "SET last_name = '" + lastName + "', "
+				+ "first_name = '" + firstName 
+				+ "', company_company_id = '" + companyID
+				+ "' WHERE supplier_id = " + supplierID + ";";
+		
+		connObj = DatabaseWriter.getDBConnection();
+		
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(update);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
+		}
+		
+		DatabaseWriter.closeConnection(connObj);
+	}
 }

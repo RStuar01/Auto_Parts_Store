@@ -26,6 +26,7 @@ import javax.swing.WindowConstants;
 import BusinessLayer.Customer;
 import BusinessLayer.Supplier;
 import DatabaseLayer.DAOFactory;
+import DatabaseLayer.DatabaseReader;
 import DatabaseLayer.DatabaseWriter;
 import DatabaseLayer.WriterDAO;
 
@@ -58,6 +59,7 @@ public class SupplierForm extends JDialog {
 		    //Added by Rick
 		    private boolean dataEntered = true;
 		    private static WriterDAO writerDAO;
+		    private String companyID;
 		    
 		    private Supplier supplier = new Supplier();
 		    
@@ -69,9 +71,10 @@ public class SupplierForm extends JDialog {
 		        writerDAO = DAOFactory.getWriterDAO();
 		    }
 		    
-		    public SupplierForm(java.awt.Frame parent, String title, boolean modal, Supplier supplier) {
+		    public SupplierForm(java.awt.Frame parent, String title, boolean modal, Supplier supplier, String companyID) {
 		        this(parent, title, modal);
 		        this.supplier = supplier;
+		        this.companyID = companyID;
 		        confirmButton.setText("Save");
 		        supplierIDField.setText(supplier.getSupplierID());
 		        lastNameField.setText(supplier.getLastName());
@@ -87,10 +90,11 @@ public class SupplierForm extends JDialog {
 		        homePhoneField.setText(supplier.getPhoneNumber());
 		        cellPhoneField.setText(supplier.getCellPhoneNumber());
 		        emailField.setText(supplier.getEmailAddress());
-		        companyNameField.setText(supplier.getCompanyName());
+		        companyNameField.setText(DatabaseReader.obtainCompanyID(companyID));
 		        supplierIDField.setEditable(false);
 		        contactInfoIDField.setEditable(false);
 		        addressIDField.setEditable(false);
+		        companyNameField.setEditable(false);
 		        
 		    }
 		    
@@ -194,6 +198,8 @@ public class SupplierForm extends JDialog {
 					}
 				});
 		        companyNameField = new JTextField();
+		        companyNameField.setEditable(false);
+		        
 		        companyNameField.addFocusListener(new FocusAdapter() {
 					@Override
 					public void focusGained(FocusEvent arg0) {
@@ -377,27 +383,42 @@ public class SupplierForm extends JDialog {
 		    				+ "in ###-###-#### x### format.",
 		                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
 		    	
-		    	if(dataEntered && homePhoneCheck && cellPhoneCheck) {
+		    	
+		    	valid = writerDAO.checkCompanyExists(companyID);
+		    	if(!valid)
+		    	{
+		    		System.out.println("Company for this ID number does not exist");
+	    			JOptionPane.showMessageDialog(this, "Invalid Company ID Entered.",
+		                    "Invalid Company ID", JOptionPane.INFORMATION_MESSAGE);
+		    	}
+		    	
+		    	if(dataEntered && homePhoneCheck && cellPhoneCheck && valid) {
 		    		
-		    		valid = writerDAO.checkCompanyExists(companyID);
 		    		System.out.println("Valid: " + valid);
 		    		
-		    		if(valid) {
-		    			writerDAO.manageNewPersonCreation(choice, lastName, firstName,
-		    					streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
-		    					email, companyID);
-		    			
-		    			//Notify user that add was successful
-		    			dispose();
-		    		}
-		    		else {
-		    			System.out.println("Company for this ID number does not exist");
-		    			
-		    			//Notify user that company is not entered
-		    			dispose();
-		    		}
+		    			if (confirmButton.getText().equals("Add")) {
+			    			writerDAO.manageNewPersonCreation(choice, lastName, firstName,
+			    					streetAddress, city, state, zipCode, unitNumber, homePhone, cellPhone, 
+			    					email, companyID);
+			    			System.out.println("Adding a new supplier");
+			    			dispose();
+			    		}
+			    		else {
+			    			System.out.println("Editing a supplier");
+			    			String employeeID = supplierIDField.getText();
+			    			String contactID = contactInfoIDField.getText();
+			    			String addressID = addressIDField.getText();
+			    			((DatabaseWriter) writerDAO).manageEditingSupplier(employeeID, contactID, addressID,
+			    					companyID, lastName,
+			    					firstName, streetAddress, city, state, zipCode, unitNumber, 
+			    					homePhone, cellPhone, email);
+			    			dispose();
+			    		}
+			    				    	
+		    		
 		    	}
-		    }
+		    	}
+		    
 		    
 		 // Added by Rick
 		    private String verifyEntry(JTextField name) {
