@@ -227,9 +227,18 @@ public class SalesForm extends JDialog{
 				    		// check that both customer and employee ID's exist
 				    		boolean validCustomer = false;
 				    		boolean validEmployee = false;
-				    		
+				    						    		
 				    		validCustomer = writerDAO.checkCustomerExists(customerID);
 				    		validEmployee = writerDAO.checkEmployeeExists(employeeID);
+				    		
+
+				    		if(!validCustomer)
+				    			JOptionPane.showMessageDialog(this, "Invalid Customer ID Entered.  Please enter a valid customer ID.",
+					                    "Invalid Customer ID", JOptionPane.INFORMATION_MESSAGE);
+				    		
+				    		if(!validEmployee)
+				    			JOptionPane.showMessageDialog(this, "Invalid Employee ID Entered.  Please enter a valid employee ID.",
+					                    "Invalid Employee ID", JOptionPane.INFORMATION_MESSAGE);
 				    		
 				    		if(validCustomer && validEmployee) {
 				    			writerDAO.createInvoice(date, time, customerID, employeeID);
