@@ -93,7 +93,7 @@ public class SupplierForm extends JDialog {
 		        homePhoneField.setText(supplier.getPhoneNumber());
 		        cellPhoneField.setText(supplier.getCellPhoneNumber());
 		        emailField.setText(supplier.getEmailAddress());
-		        companyNameField.setText(DatabaseReader.obtainCompanyName(companyID));
+		        companyNameField.setText(readerDAO.obtainCompanyName(companyID));
 		        supplierIDField.setEditable(false);
 		        contactInfoIDField.setEditable(false);
 		        addressIDField.setEditable(false);
