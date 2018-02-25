@@ -124,7 +124,7 @@ public class SupplierFrame  extends JFrame {
         }
         else
         {
-        	String companyID = (String) supplierTable.getValueAt(supplierTable.getSelectedRow(), 0);
+        	String companyID = (String) supplierTable.getValueAt(supplierTable.getSelectedRow(), 5);
             BusinessLayer.Supplier supplier = supplierTableModel.getSuppliers(selectedRow);
             SupplierForm supplierForm = new SupplierForm(this, "Edit Supplier", true, supplier, companyID);
             supplierForm.setLocationRelativeTo(this);
