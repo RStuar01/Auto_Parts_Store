@@ -139,7 +139,7 @@ public class SalesItemFrame extends JFrame{
 	    private void doHelpButton()
 	    {
 	    	JOptionPane.showMessageDialog(this, "Press the 'Add' button to add a sales item. \n"
-	                + "Press the 'Edit' button after selecting a sales item to edit their name. \n" 
+	                
 	                + "Press the 'Exit' button to exit the program.", 
 	                    "Help Window", JOptionPane.INFORMATION_MESSAGE);
 	    }
