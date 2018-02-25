@@ -366,29 +366,45 @@ public class PartsForm extends JDialog {
 		    	String warehouseLocation = verifyEntry(warehouseLocationField);
 		    	String quantityInStock = verifyEntry(qtyInStockField);
 		    	
+		    	boolean qtyRange = false;
+		    	boolean yearRange= false;
+		    	
 		    	ValidateInteger.validateInteger(minYearField, this);
 		    	ValidateInteger.validateInteger(maxYearField, this);
 		    	ValidateInteger.validateInteger(minStockQtyField, this);
 		    	ValidateInteger.validateInteger(maxStockQtyField, this);
 		    	
+		    	try {
 		    	Integer minYearInt = Integer.parseInt(minYear);
 		    	Integer maxYearInt = Integer.parseInt(maxYear);
-		    	
-		    	boolean yearRange = minYearInt <= maxYearInt;
-		    	
+		    	yearRange = minYearInt <= maxYearInt;
 		    	if (!yearRange)
 		    		JOptionPane.showMessageDialog(this, "Minimum Year is not less than or equal to Maximum Year.", 
 		     	                    "Year Mismatch", JOptionPane.INFORMATION_MESSAGE);
+		    	}
+		    	catch (NumberFormatException ex)
+		    	{
+		    		System.out.println(ex.toString());
+		    	}
 		    	
+		    	
+		    	
+		    	
+		    	try {
 		    	Integer minStockQtyInt = Integer.parseInt(minStockQuantity);
 		    	Integer maxStockQtyInt = Integer.parseInt(maxStockQuantity);
 		    	
-		    	boolean qtyRange = minStockQtyInt <= maxStockQtyInt;
+		    	qtyRange = minStockQtyInt <= maxStockQtyInt;
 		    	
 		    	if (!qtyRange)
 		    		JOptionPane.showMessageDialog(this, "Minimum Stock Quantity is not less "
 		    				+ "than or equal to Maximum Stock Quantity.", 
 		     	                    "Year Mismatch", JOptionPane.INFORMATION_MESSAGE);
+		    	}
+		    	catch (NumberFormatException ex)
+		    	{
+		    		System.out.println(ex.toString());
+		    	}
 		    	boolean valid = false;
 	   	   		
 	    		
