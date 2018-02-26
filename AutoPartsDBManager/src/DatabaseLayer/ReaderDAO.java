@@ -8,5 +8,5 @@ package DatabaseLayer;
  * @created Saturday, 1,20,2018
  */
 public interface ReaderDAO extends DataReader {
-
+	public String obtainCompanyName(String companyID);
 }

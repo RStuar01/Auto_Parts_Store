@@ -1654,7 +1654,7 @@ public static String getQtyInStock(Integer productID) {
 
 
 
-public static String obtainCompanyName(String companyID) {
+public String obtainCompanyName(String companyID) {
 	
 	String query = "SELECT company_name FROM company where company_id  = '" 
 			+ companyID +"'";

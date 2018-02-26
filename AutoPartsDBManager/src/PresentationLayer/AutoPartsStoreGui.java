@@ -28,7 +28,7 @@ public class AutoPartsStoreGui {
 	// They may need to be changed back later
 	private static WriterDAO writerDAO;
 	private static ReaderDAO readerDAO;
-	private static DeleterDAO deleterDAO;
+	//private static DeleterDAO deleterDAO;
 	private static RFIDDAO rfidDAO;
 	
 	private static String choice = "";
@@ -59,7 +59,7 @@ public class AutoPartsStoreGui {
 		initialize();
 		writerDAO = DAOFactory.getWriterDAO();
 		readerDAO = DAOFactory.getReaderDAO();
-		deleterDAO = DAOFactory.getDeleterDAO();
+		//deleterDAO = DAOFactory.getDeleterDAO();
 		rfidDAO = DAOFactory.getRFIDDAO();
 		
 		// read any incoming products

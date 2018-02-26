@@ -32,17 +32,19 @@ public class DAOFactory {
 		return rDAO;
 	}
 	
+	
 	/**
 	 * Uses the DeleterDAO interface to return an instance of the DatabaseDeleter class.
 	 * @return  dDAO	a deleter data access object.
 	 * Written by Rick Stuart
 	 */
+	/*
 	public static DeleterDAO getDeleterDAO() {
 		
 		DatabaseDeleter dDAO = new DatabaseDeleter();
 		return dDAO;
 	}
-	
+	*/
 	/**
 	 * Uses the RFIDDAO interface to return an instance of the RFIDReader class
 	 * @return	rfidTextDAO		an RFID reader object
