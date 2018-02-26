@@ -1,18 +1,9 @@
 package PresentationLayer;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-//package autopartsstoregui;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.ScrollPane;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -26,17 +17,29 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import BusinessLayer.Customer;
-import DatabaseLayer.DatabaseReader;
 
-
+/**
+ * Extends JFrame to build a frame for customers purchasing.
+ * Calls several methods to build the frame.
+ * Written by Michael Meesseman
+ */
 public class CustomerInformationFrame extends JFrame {
-    private JTable customerTable;
+    
+	//table initalization
+	private JTable customerTable;
     private CustomerTableModel customerTableModel;
     
+    //search field initialized.
     private JTextField searchField;
     private JComboBox searchCombo;
     
-    public CustomerInformationFrame() throws UnsupportedLookAndFeelException, SQLException, DBException {
+    /**
+     * Constructor to build the frame.
+     * @exception UnsupportedLookAndFeelException	Handles multiple operating system configs.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
+    public CustomerInformationFrame() throws UnsupportedLookAndFeelException, SQLException {
         try {
             UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
         }
@@ -57,9 +60,16 @@ public class CustomerInformationFrame extends JFrame {
                 
     }
     
-    private JPanel buildButtonPanel() throws DBException {
+    /**
+     * Method to build the Button Panel.
+     * @return panel	this is the button panel that goes to the SOUTH of the frame.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
+    private JPanel buildButtonPanel() throws SQLException {
         JPanel panel = new JPanel();
     
+        //add button
         JButton addButton = new JButton("Add");
         addButton.addActionListener((ActionEvent) -> {
             doAddButton();
@@ -73,14 +83,13 @@ public class CustomerInformationFrame extends JFrame {
     
         panel.add(addButton);
         
+        //edit button
         JButton editButton = new JButton("Edit");
         editButton.setToolTipText("Edit selected customer");
         editButton.addActionListener((ActionEvent) -> {
             try {
                 doEditButton();
                 fireDatabaseUpdatedEvent();
-            } catch (DBException e) {
-                System.out.println(e);
             } catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -88,7 +97,7 @@ public class CustomerInformationFrame extends JFrame {
         });
         panel.add(editButton);
         
-        
+        // help button
         
         JButton helpButton = new JButton("Help");
         helpButton.addActionListener((ActionEvent) -> {
@@ -97,6 +106,8 @@ public class CustomerInformationFrame extends JFrame {
     
         panel.add(helpButton);
          
+        
+        //exit button
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener((ActionEvent) -> {
             dispose();
@@ -108,13 +119,22 @@ public class CustomerInformationFrame extends JFrame {
         
     }
     
+    /**
+     * Method executes when add button is pressed
+     * Written by Michael Meesseman
+     */ 
     private void doAddButton() {
     	CustomerInfoForm customerForm = new CustomerInfoForm(this, "Add Customer", true);
         customerForm.setLocationRelativeTo(this);
         customerForm.setVisible(true);
     }
     
-    private void doEditButton() throws DBException, SQLException {
+    /**
+     * Method executes when edit button is pressed
+     * * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */ 
+    private void doEditButton() throws SQLException {
     	int selectedRow = customerTable.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "No Customer is currently "
@@ -129,7 +149,10 @@ public class CustomerInformationFrame extends JFrame {
         }
     }
     
-   
+    /**
+     * Method executes when help button is pressed.
+     * Written by Michael Meesseman
+     */
     private void doHelpButton()
     {
     	JOptionPane.showMessageDialog(this, "Press the 'Add' button to add a customer. \n"
@@ -139,10 +162,21 @@ public class CustomerInformationFrame extends JFrame {
                     "Help Window", JOptionPane.INFORMATION_MESSAGE);
     }
     
+    /**
+     * Method to refresh the table from the database.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
     public void fireDatabaseUpdatedEvent() throws SQLException {
     	customerTableModel.databaseUpdated();
     }
        
+    /**
+     * Method to build the frame table that goes in center.
+     * @return table	JTable to populate database results
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
    private JTable buildCustomerTable() throws SQLException {
         customerTableModel = new CustomerTableModel();
         JTable table = new JTable((javax.swing.table.TableModel) customerTableModel);
@@ -151,8 +185,14 @@ public class CustomerInformationFrame extends JFrame {
         return table;
    }
    
+   /**
+    * Method to build the search panel.
+    * @return panel	panel which populates the NORTH end of frame.
+    * Written by Michael Meesseman
+    */
    private JPanel buildSearchPanel() {
 	   
+	// drop down box fields
 	   String[] fields = {"Customer ID", "Last Name", 
 	    		"First Name", "Contact Info ID", "Address ID", "Street Address", 
 	    		"City", "State", "Zip Code", "Unit Number", "Home Phone", "Cell Phone", 
@@ -160,6 +200,7 @@ public class CustomerInformationFrame extends JFrame {
 	   
 	   JPanel panel = new JPanel();
 	   
+	 //text field initialize
 	   searchField = new JTextField();
 	   Dimension longField = new Dimension(300, 20);
        searchField.setPreferredSize(longField);
@@ -167,9 +208,12 @@ public class CustomerInformationFrame extends JFrame {
        
        panel.add(searchField);
        
+    // combo box initialize
        searchCombo = new JComboBox(fields);
        panel.add(searchCombo);
        
+       
+       //search button
        JButton searchButton = new JButton("Search");
        searchButton.addActionListener((ActionEvent) -> {
            try {
@@ -185,10 +229,16 @@ public class CustomerInformationFrame extends JFrame {
 	   return panel;
    }
    
+   /**
+    * Method executes when search button is pressed
+    * @exception SQLException	exception for database queries.
+    * Written by Michael Meesseman
+    */
    private void doSearchButton() throws SQLException {
 	   
 	   String column;
 	   
+	// switch to set search parameter to database field name.
 	   switch(searchCombo.getSelectedIndex())
 	   {
 	   case 0:
@@ -236,6 +286,9 @@ public class CustomerInformationFrame extends JFrame {
 		   
 	   }
 	   
+	// empty search field refreshes table to all entries.
+ 	   // otherwise database is filled with query results from database.
+ 	   // if search result does not return a result a dialog box notifies the user. 
 	   if(searchField.getText().equals("")) {
 		   customerTableModel.reset();
 	   }

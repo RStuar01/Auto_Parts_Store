@@ -2,45 +2,76 @@ package PresentationLayer;
 
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
 
-import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Company;
-import BusinessLayer.Customer;
-import BusinessLayer.Supplier;
 import DatabaseLayer.DatabaseReader;
 
+
+/**
+ * Extends AbstartTableModel to build a table for companies Frame.
+ * Written by Michael Meesseman
+ */
 public class CompanyTableModel extends AbstractTableModel{
 	
 	
-	
+				//return list for some methods initialized
 			    private List<Company> companies;
 			    
+			    //table column names
 			    private final String[] COLUMN_NAMES = {"Company ID", "Address ID", "Contact Info ID", 
 			    		"Company Name", "Street Address", "City", "State", "Zip Code", 
 			    		"Unit Number", "Home Phone", "Cell Phone", "Email Address"};
 			    
+			    /**
+			     * Constructor to build the table.  Pulls into list from database.
+			     * @exception SQLException	exception for database queries.
+			     * Written by Michael Meesseman
+			     */
 			    public CompanyTableModel() throws SQLException{
 			        companies = DatabaseReader.obtainCompanyList();
 			
 			    }
 			    
 			    @Override 
+			    /**
+			     * Method returns number of rows for table.  REQUIRED.
+			     * @return returns the number of rows
+			     * Written by Michael Meesseman
+			     */
 			    public int getRowCount() {
 			        return companies.size();
 			  
 			    }
 			    
+			    /**
+			     * Method returns number of columns for table.  REQUIRED.
+			     * @return returns the number of columns
+			     * Written by Michael Meesseman
+			     */
 			    @Override
 			    public int getColumnCount() {
 			        return COLUMN_NAMES.length;
 			    }
 			    
+			    /**
+			     * Method returns the column names for the table.  REQUIRED.
+			     * @return returns the column names
+			     * Written by Michael Meesseman
+			     */
 			    @Override
 			    public String getColumnName(int columnIndex) {
 			        return COLUMN_NAMES[columnIndex];
 			    }
 			    
+			    /**
+			     * Method returns data at specifc row and column.  REQUIRED.
+			     * @param rowIndex		row number from table
+			     * @param columnIndex 	column number from table
+			     * @return returns the object being queried.
+			     * Written by Michael Meesseman
+			     */
 			    @Override
 			    public Object getValueAt(int rowIndex, int columnIndex) {
 			        switch (columnIndex) {
@@ -73,21 +104,43 @@ public class CompanyTableModel extends AbstractTableModel{
 			        }
 			    }
 			    
+			    /**
+			     * Method returns selected row object. 
+			     * @return company object of selected row
+			     * Written by Michael Meesseman
+			     */
 			    Company getCompanies(int rowIndex) throws SQLException {
 			        return companies.get(rowIndex);
 			    }
 			    
-			    
+			    /**
+			     * Method updates the table with a fresh database query.
+			     * @exception SQLException	exception for database queries.
+			     * Written by Michael Meesseman
+			     */
 			    void databaseUpdated() throws SQLException{
 			        companies = DatabaseReader.obtainCompanyList();
 					fireTableDataChanged();
 			    }
 			    
+			    /**
+			     * Method updates the table with a filtered database query.
+			     * @param column 	String of the column name to be searched
+			     * @param search	String of text to search for.
+			     * Written by Michael Meesseman
+			     */
 			    public void refresh(String column, String search){
 			        companies = DatabaseReader.obtainCompanyFilter(column, search);
 			        fireTableDataChanged();
 			    }
 			    
+			    /**
+			     * Method is used to see if the database query returned a result.
+			     * @param column 	String of the column name to be searched
+			     * @param search	String of text to search for.
+			     * @return company	returns list of companies to see if a search result was found.
+			     * Written by Michael Meesseman
+			     */
 			    public List<Company> resultChecker(String column, String search) {
 			    	
 			    	List<Company> company = DatabaseReader.obtainCompanyFilter(column, search);
@@ -95,15 +148,15 @@ public class CompanyTableModel extends AbstractTableModel{
 			    	return company;
 			    }
 			    
+			    /**
+			     * Method updates the table with a fresh database query.
+			     * Written by Michael Meesseman
+			     */
 			    public void reset(){
 			        companies = DatabaseReader.obtainCompanyList();
 			        fireTableDataChanged();
 			    }
 			
-
-
-
-
 
 
 }

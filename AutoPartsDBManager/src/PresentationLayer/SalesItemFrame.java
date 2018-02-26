@@ -36,7 +36,7 @@ public class SalesItemFrame extends JFrame{
 	    private JTextField searchField;
 	    private JComboBox searchCombo;
 	    
-	    public SalesItemFrame(String invoiceNumberInput, String date, String time, String customerID, String employeeID) throws UnsupportedLookAndFeelException, DBException, SQLException {
+	    public SalesItemFrame(String invoiceNumberInput, String date, String time, String customerID, String employeeID) throws UnsupportedLookAndFeelException, SQLException {
 	        try {
 	            UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
 	        }
@@ -62,7 +62,7 @@ public class SalesItemFrame extends JFrame{
 	                
 	    }
 	    
-	    private JPanel buildButtonPanel() throws DBException {
+	    private JPanel buildButtonPanel() throws SQLException {
 	        JPanel panel = new JPanel();
 	        
 	        JButton addButton = new JButton("Add");
@@ -151,7 +151,7 @@ public class SalesItemFrame extends JFrame{
 	        ((SalesItemTableModel) salesItemTableModel).databaseUpdated();
 	    }
 	       
-	    private JTable buildSalesTable() throws DBException, SQLException {
+	    private JTable buildSalesTable() throws SQLException {
 	        salesItemTableModel = new SalesItemTableModel(invoiceNumberInput);
 	        JTable table = new JTable((javax.swing.table.TableModel) salesItemTableModel);
 	        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

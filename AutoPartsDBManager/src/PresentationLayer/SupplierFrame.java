@@ -38,7 +38,7 @@ public class SupplierFrame  extends JFrame {
     private JTextField searchField;
     private JComboBox searchCombo;
     
-    public SupplierFrame() throws UnsupportedLookAndFeelException, DBException, SQLException {
+    public SupplierFrame() throws UnsupportedLookAndFeelException, SQLException {
         try {
             UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
         }
@@ -59,7 +59,7 @@ public class SupplierFrame  extends JFrame {
                 
     }
     
-    private JPanel buildButtonPanel() throws DBException {
+    private JPanel buildButtonPanel() throws SQLException {
         JPanel panel = new JPanel();
     
         JButton addButton = new JButton("Add");
@@ -81,8 +81,6 @@ public class SupplierFrame  extends JFrame {
             try {
                 doEditButton();
                 fireDatabaseUpdatedEvent();
-            } catch (DBException e) {
-                System.out.println(e);
             } catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -116,7 +114,7 @@ public class SupplierFrame  extends JFrame {
         supplierForm.setVisible(true);
     }
     
-    private void doEditButton() throws DBException, SQLException {
+    private void doEditButton() throws SQLException {
     	int selectedRow = supplierTable.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "No Supplier is currently "

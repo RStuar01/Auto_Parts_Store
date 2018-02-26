@@ -1,35 +1,32 @@
 package PresentationLayer;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-//package autopartsstoregui;
 
 import java.awt.BorderLayout;
-import java.awt.ScrollPane;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+
 /**
- *
- * @author Michael
+ * Class for main screen in program.  Extends JFrame
+ * Written by Michael Meesseman
  */
 public class AutoPartsStoreFrame extends JFrame{
  
      
-    
-    public AutoPartsStoreFrame() throws UnsupportedLookAndFeelException, DBException {
+	   /**
+     * Constructor to build the frame when user logs in. 
+     * @exception UnsupportedLookAndFeelException	Handles multiple operating system configs.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
+    public AutoPartsStoreFrame() throws UnsupportedLookAndFeelException, SQLException {
         try {
             UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
         }
@@ -47,31 +44,34 @@ public class AutoPartsStoreFrame extends JFrame{
                 
     }
     
-    private JPanel buildButtonPanel() throws DBException {
+    /**
+     * Method to build the Button Panel.
+     * @return panel	this is the button panel that goes to the SOUTH of the frame.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
+    private JPanel buildButtonPanel() throws SQLException {
         JPanel panel = new JPanel();
     
+        // Customer information button
         JButton customerInfoButton = new JButton("Customer Information");
         customerInfoButton.addActionListener((ActionEvent) -> {
             try {
                 doCustomerInfoButton();
-            } catch (DBException e) {
+            } catch (SQLException e) {
                 System.out.println(e);
             } catch (UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(AutoPartsStoreFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException e) {
-				System.out.println(e.toString());
-				e.printStackTrace();
 			}
         });
     
         panel.add(customerInfoButton);
         
+        // employee information button
         JButton employeeButton = new JButton("Employee");
         employeeButton.addActionListener((ActionEvent) -> {
             try {
                 doEmployeeButton();
-            } catch (DBException e) {
-                System.out.println(e);
             } catch (UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(AutoPartsStoreFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException e) {
@@ -82,12 +82,11 @@ public class AutoPartsStoreFrame extends JFrame{
     
         panel.add(employeeButton);
         
+        // accounting purchases button
         JButton accountingButton = new JButton("Purchases");
         accountingButton.addActionListener((ActionEvent) -> {
             try {
                 doAccountingButton();
-            } catch (DBException e) {
-                System.out.println(e);
             } catch (UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(AutoPartsStoreFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException e) {
@@ -97,12 +96,11 @@ public class AutoPartsStoreFrame extends JFrame{
         });
         panel.add(accountingButton);
         
+        // products button
         JButton partsButton = new JButton("Parts");
         partsButton.addActionListener((ActionEvent) -> {
             try {
                 doPartsButton();
-            } catch (DBException e) {
-                System.out.println(e);
             } catch (UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(AutoPartsStoreFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException e) {
@@ -112,12 +110,11 @@ public class AutoPartsStoreFrame extends JFrame{
         });
         panel.add(partsButton);
         
+        // supplier information button
         JButton supplierButton = new JButton("Suppliers");
         supplierButton.addActionListener((ActionEvent) -> {
             try {
                 doSupplierButton();
-            } catch (DBException ex) {
-                Logger.getLogger(AutoPartsStoreFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(AutoPartsStoreFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException e) {
@@ -128,12 +125,11 @@ public class AutoPartsStoreFrame extends JFrame{
     
         panel.add(supplierButton);
         
+        // company information button
         JButton companyButton = new JButton("Companies");
         companyButton.addActionListener((ActionEvent) -> {
             try {
                 doCompanyButton();
-            } catch (DBException ex) {
-                Logger.getLogger(AutoPartsStoreFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(AutoPartsStoreFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException e) {
@@ -144,12 +140,11 @@ public class AutoPartsStoreFrame extends JFrame{
     
         panel.add(companyButton);
          
+        // sales invoices button
         JButton salesButton = new JButton("Sales");
         salesButton.addActionListener((ActionEvent) -> {
             try {
                 doSalesButton();
-            } catch (DBException e) {
-                System.out.println(e);
             } catch (UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(AutoPartsStoreFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException e) {
@@ -160,7 +155,7 @@ public class AutoPartsStoreFrame extends JFrame{
     
         panel.add(salesButton);
         
-        
+        // exit button. closes program.
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener((ActionEvent) -> {
             System.exit(0);
@@ -172,32 +167,74 @@ public class AutoPartsStoreFrame extends JFrame{
         
     }
     
-    private void doCustomerInfoButton() throws UnsupportedLookAndFeelException, DBException, SQLException {
+    /**
+     * Method executes and opens a customer information window.
+     * @exception UnsupportedLookAndFeelException	Handles multiple operating system configs.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
+    private void doCustomerInfoButton() throws UnsupportedLookAndFeelException, SQLException {
         CustomerInformationFrame custInfoFrame = new CustomerInformationFrame();
     }
     
-    private void doEmployeeButton() throws UnsupportedLookAndFeelException, DBException, SQLException {
+    /**
+     * Method executes and opens a employee information window.
+     * @exception UnsupportedLookAndFeelException	Handles multiple operating system configs.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
+    private void doEmployeeButton() throws UnsupportedLookAndFeelException, SQLException {
         EmployeeFrame employeeFrame = new EmployeeFrame();
     }
     
-    private void doAccountingButton() throws DBException, UnsupportedLookAndFeelException, SQLException {
+    /**
+     * Method executes and opens a accounting purchases window.
+     * @exception UnsupportedLookAndFeelException	Handles multiple operating system configs.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
+    private void doAccountingButton() throws UnsupportedLookAndFeelException, SQLException {
         AccountingFrame accountFrame = new AccountingFrame();
     }
     
-    private void doSupplierButton() throws DBException, UnsupportedLookAndFeelException, SQLException {
+    /**
+     * Method executes and opens a supplier information window.
+     * @exception UnsupportedLookAndFeelException	Handles multiple operating system configs.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
+    private void doSupplierButton() throws UnsupportedLookAndFeelException, SQLException {
          SupplierFrame supplierFrame = new SupplierFrame();
     }
     
-    private void doCompanyButton() throws DBException, UnsupportedLookAndFeelException, SQLException {
+    /**
+     * Method executes and opens a company information window.
+     * @exception UnsupportedLookAndFeelException	Handles multiple operating system configs.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
+    private void doCompanyButton() throws UnsupportedLookAndFeelException, SQLException {
        CompanyFrame companyFrame = new CompanyFrame();
    }
     
-    private void doPartsButton() throws UnsupportedLookAndFeelException, DBException, SQLException
+    /**
+     * Method executes and opens a product information window.
+     * @exception UnsupportedLookAndFeelException	Handles multiple operating system configs.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
+    private void doPartsButton() throws UnsupportedLookAndFeelException, SQLException
     {
         PartsFrame partsFrame = new PartsFrame();
     }
     
-    private void doSalesButton() throws UnsupportedLookAndFeelException, DBException, SQLException
+    /**
+     * Method executes and opens a sales invoice window.
+     * @exception UnsupportedLookAndFeelException	Handles multiple operating system configs.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
+    private void doSalesButton() throws UnsupportedLookAndFeelException, SQLException
     {
         SalesFrame salesFrame = new SalesFrame();
     }

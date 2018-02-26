@@ -1,7 +1,5 @@
 package PresentationLayer;
 
-
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,9 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,18 +19,21 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
 import BusinessLayer.Company;
-import BusinessLayer.Customer;
-import BusinessLayer.Supplier;
 import DatabaseLayer.DAOFactory;
-import DatabaseLayer.DatabaseWriter;
 import DatabaseLayer.WriterDAO;
 
+
+/**
+ * Class extends JDialog for company data entry
+ * Written by Michael Meesseman
+ */
 public class CompanyForm extends JDialog {
 
-		  
+		  		// regex for email validation
 			    private static final String EMAIL_REGEX = 
 			    "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" + 
 			        "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -42,7 +41,7 @@ public class CompanyForm extends JDialog {
 			                             Pattern.compile(EMAIL_REGEX);
 			    
 			    
-			    
+			    // field initialization
 			    private JTextField companyIDField;
 			    private JTextField addressIDField;
 			    private JTextField contactIDField;
@@ -64,6 +63,13 @@ public class CompanyForm extends JDialog {
 			    
 			    private Company company = new Company();
 			    
+			    /**
+			     * Constructor to build dialog box for data entry for new add
+			     * @param parent	this is the frame that called the form
+			     * @param title		title of the form
+			     * @param modal		boolean to block all other input on other windows until current one is closed.
+			     * Written by Michael Meesseman
+			     */
 			    public CompanyForm(java.awt.Frame parent, String title, boolean modal) {
 			        super(parent, title, modal);
 			        initComponents();
@@ -72,6 +78,14 @@ public class CompanyForm extends JDialog {
 			        writerDAO = DAOFactory.getWriterDAO();
 			    }
 			    
+			    /**
+			     * Constructor to build dialog box for data entry for edit
+			     * @param parent	this is the frame that called the form
+			     * @param title		title of the form
+			     * @param modal		boolean to block all other input on other windows until current one is closed.
+			     * @param company	Company object to fill fields for edit.
+			     * Written by Michael Meesseman
+			     */
 			    public CompanyForm(java.awt.Frame parent, String title, boolean modal, Company company) {
 			        this(parent, title, modal);
 			        this.company = company;
@@ -88,12 +102,20 @@ public class CompanyForm extends JDialog {
 			        homePhoneField.setText(company.getPhoneNumber());
 			        cellPhoneField.setText(company.getCellPhoneNumber());
 			        emailField.setText(company.getEmailAddress());
+			        
+			        //fields cannot be edited.
 			        companyIDField.setEditable(false);
 			        addressIDField.setEditable(false);
 			        contactIDField.setEditable(false);
 			        }
 			    
+			    /**
+			     * Method to initialize all components.
+			     * Written by Michael Meesseman
+			     */
 			    private void initComponents() {
+			    	
+			    	//focus listeners to remove red text after validation
 			    	companyIDField = new JTextField();
 			    	companyIDField.addFocusListener(new FocusAdapter() {
 						@Override
@@ -180,12 +202,15 @@ public class CompanyForm extends JDialog {
 					});
 			        cancelButton = new JButton();
 			        confirmButton = new JButton();
+			        
+			        // fields cannot be edited.
 			        companyIDField.setEditable(false);
 			        addressIDField.setEditable(false);
 			        contactIDField.setEditable(false);
 			        
 			        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			       
+			        // sets field size for window size changes.
 			        Dimension longField = new Dimension(300, 20);
 			        companyIDField.setPreferredSize(longField);
 			        companyIDField.setMinimumSize(longField);
@@ -212,11 +237,13 @@ public class CompanyForm extends JDialog {
 			        emailField.setPreferredSize(longField);
 			        emailField.setMinimumSize(longField);
 			        
+			        //cancel button
 			        cancelButton.setText("Cancel");
 			        cancelButton.addActionListener((ActionEvent) -> {
 			            cancelButtonActionPerformed();
 			        });
 			        
+			        //add button
 			        confirmButton.setText("Add");
 			        confirmButton.addActionListener((ActionEvent) -> {
 			            try {
@@ -229,7 +256,7 @@ public class CompanyForm extends JDialog {
 			        });
 			        
 			       
-			        
+			        // grid layout for labels and fields
 			        JPanel supplierPanel = new JPanel();
 			        supplierPanel.setLayout(new GridBagLayout());
 			        supplierPanel.add(new JLabel("Company ID"), getConstraints(0, 0, GridBagConstraints.LINE_END));
@@ -268,6 +295,14 @@ public class CompanyForm extends JDialog {
 			        pack();
 			    }
 			    
+			    /**
+			     * Method for setting grid of labels and fields.
+			     * @param x			x axis
+			     * @param y			y axis
+			     * @param anchor	where the field sits in the grid space ex. LINE_START or LINE_END.
+			     * @return c	GridBagConstraints variable for constraints on the grid.
+			     * Written by Michael Meesseman
+			     */
 			    private GridBagConstraints getConstraints(int x, int y, int anchor) {
 			        GridBagConstraints c = new GridBagConstraints();
 			        c.insets = new Insets(5,5,0,5);
@@ -277,10 +312,19 @@ public class CompanyForm extends JDialog {
 			        return c;
 			    }
 			    
+			    /**
+			     * Method executes when cancel button is pressed.
+			     * Written by Michael Meesseman
+			     */
 			    private void cancelButtonActionPerformed() {
 			        dispose();
 			    }
 			    
+			    /**
+			     * Method executes when add or save button is pressed
+			     * @exception SQLException	exception for database queries.
+			     * Written by Michael Meesseman
+			     */
 			    private void confirmButtonActionPerformed() throws SQLException {
 			        
 			    	// Added by Rick
@@ -295,26 +339,21 @@ public class CompanyForm extends JDialog {
 			    	
 			    	dataEntered = true;
 			    	
-			    	// Modified by Rick
-			    	/*
-			    	if (validateData()) {
-			            setData();
-			            if (confirmButton.getText().equals("Add")) {
-			                doAdd();
-			            }
-			            else 
-			            {
-			                doEdit();
-			            }
-			        }
-			        */
+			    	
 			    }
 			    
 			    // Added by Rick
+			    /**
+			     * Method processes data for the add and save buttons.  
+				 * Method also validates data before adding to the database
+			     * Written by Rick Stuart
+			     */
 			    private void processData() {
 			    	
+			    	//used when writing to database.
 			    	String choice = "Company";
 			    	
+			    	// verifies fields not empty.
 			    	String companyName = verifyEntry(companyNameField);
 			    	String streetAddress = verifyEntry(streetAddressField);
 			    	String city = verifyEntry(cityField);
@@ -325,6 +364,8 @@ public class CompanyForm extends JDialog {
 			    	String cellPhone = verifyEntry(cellPhoneField);
 			    	String email = verifyEntry(emailField);
 			    	
+			    	// regex for phone number validation
+			    	// phone number validation and displays dialogs when invalid. 
 			    	String phoneNumRegexStr =  "^\\(*\\+*[1-9]{0,3}\\)*-*[1-9]{0,3}[-. /]*\\(*[2-9]\\d{2}\\)*[-. /]*\\d{3}[-. /]*\\d{4} *e*x*t*\\.* *\\d{0,4}$";
 			    	boolean homePhoneCheck = homePhone.matches(phoneNumRegexStr);
 			    	boolean cellPhoneCheck = cellPhone.matches(phoneNumRegexStr);
@@ -339,6 +380,7 @@ public class CompanyForm extends JDialog {
 			    				+ "in ###-###-#### x### format.",
 			                    "Invalid Phone Number.", JOptionPane.INFORMATION_MESSAGE);
 			    	
+			    	//validates fields before adding to database
 			    	if(dataEntered && homePhoneCheck && cellPhoneCheck) {
 			    		if(confirmButton.getText().equals("Add")) {
 			    			writerDAO.createNewCompany(streetAddress, city, state, zipCode, 
@@ -347,6 +389,7 @@ public class CompanyForm extends JDialog {
 			    			dispose();
 			    		}
 			    		else {
+			    			//updates during edit.
 			    			String companyID = companyIDField.getText();
 			    			String addressID = addressIDField.getText();
 			    			String contactID = contactIDField.getText();
@@ -361,6 +404,12 @@ public class CompanyForm extends JDialog {
 			    }
 			    
 			 // Added by Rick
+			    /**
+			     * Method validate field is not empty. 
+			     * turns box red and enters text "Data Missing" when a field is empty.
+			     * @param name		Textfield being validated.
+			     * Written by Rick Stuart
+			     */
 			    private String verifyEntry(JTextField name) {
 			    	String dataItem = "";
 			    	boolean valid = true;
@@ -397,107 +446,14 @@ public class CompanyForm extends JDialog {
 			    	return dataItem;
 			    }
 			    
-			    /*
-			    private boolean isEmpty()
-			    {
-			        
-			        String email = emailField.getText();
-			        
-			        if (firstName.equals("") || lastName.equals("") || email.equals("") 
-			                || firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) 
-			        {
-			            JOptionPane.showMessageDialog(this, "Please fill in all fields.",
-			                    "Missing Fields", JOptionPane.INFORMATION_MESSAGE);
-			            return false;
-			        }
-			        else
-			            return true;
-			    }
-			    */
-			    
-			    private boolean validateData() {
-			        
-			        boolean valid = false;
-			        String email = emailField.getText();
-			        
-			        if (confirmButton.getText().equals("Add")) 
-			        {
-			            //if(isEmpty())
-			                if(emailValidator(email)) 
-			                    //if(customerNotExists(email))
-			                        valid = true;
-			        }
-			        else 
-			        {
-			            //if(isEmpty())
-			               //valid = true;
-			        }
-			        
-			        return valid;
-			    }
 
-			
-			    
-			    private void setData() {
-			    	
-			    	String companyID = companyIDField.getText();
-			        String addressID = addressIDField.getText();
-			        String contactID = contactIDField.getText();
-			        String companyName = companyNameField.getText();
-			        String streetAddress = streetAddressField.getText();
-			        String city = cityField.getText();
-			        String state = stateField.getText();
-			        String zipCode = zipCodeField.getText();
-			        String unitNumber = unitNumberField.getText();
-			        String homePhone = homePhoneField.getText();
-			        String cellPhone = cellPhoneField.getText();
-			        String email = emailField.getText();
-			        company.setCompanyID(companyID);
-			        company.setAddressID(addressID);
-			        company.setContactInfoID(contactID);
-			        company.setCompanyName(companyName);
-			        company.setStreetAddres(streetAddress);
-			        company.setCity(city);
-			        company.setState(state);
-			        company.setZipCode(zipCode);
-			        company.setUnitNumber(unitNumber);
-			        company.setPhoneNumber(homePhone);
-			        company.setCellPhoneNumber(cellPhone);
-			        company.setEmailAddress(email);
-			       
-			        
-			    }
-			    
-			    private void doEdit() {
-			        try {
-			            //update customer method
-			            dispose();
-			            fireDatabaseUpdatedEvent();
-			        }
-			        catch (SQLException e)
-			        {
-			           System.out.println(e);
-			        }
-			    }
-			     
-			    private void doAdd() throws SQLException {
-			        try {
-			            //add customer method from DatabaseWriter
-			            dispose();
-			            fireDatabaseUpdatedEvent();
-			        }
-			        catch (SQLException e)
-			        {
-			            System.out.println(e);
-			        }
-			    }
-			    
-			    private void fireDatabaseUpdatedEvent() throws SQLException {
-			        SupplierFrame mainWindow = (SupplierFrame) getOwner();
-			        mainWindow.fireDatabaseUpdatedEvent();
-			    }
-			       
-			    
+			    /**
+			     * Method validates email field has valid address. 
+			     * displays message when invalid email is entered. 
+			     * @param email		String of email being validated.
+			     * @return boolean	boolean value on whether email is good or not.
+			     * Written by Michael Meesseman
+			     */
 			    private boolean emailValidator(String email)
 			    {
 			        if (email == null) 

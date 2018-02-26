@@ -34,7 +34,7 @@ public class LoginFrame extends JFrame {
 	 private JButton loginButton;
 	 private JButton cancelButton;
 	
-	public LoginFrame() throws UnsupportedLookAndFeelException, DBException, SQLException {
+	public LoginFrame() throws UnsupportedLookAndFeelException, SQLException {
         try {
             UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
         }
@@ -54,14 +54,14 @@ public class LoginFrame extends JFrame {
                 
     }
     
-    private JPanel buildButtonPanel() throws DBException {
+    private JPanel buildButtonPanel() throws SQLException {
         JPanel panel = new JPanel();
         
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener((ActionEvent) -> {
             try {
 				doLoginButton();
-			} catch (UnsupportedLookAndFeelException | DBException e) {
+			} catch (UnsupportedLookAndFeelException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -80,7 +80,7 @@ public class LoginFrame extends JFrame {
         
     }
     
-    private void doLoginButton() throws UnsupportedLookAndFeelException, DBException {
+    private void doLoginButton() throws UnsupportedLookAndFeelException, SQLException {
     	// Test login data
     	
      	
@@ -140,7 +140,7 @@ public class LoginFrame extends JFrame {
 				} catch (UnsupportedLookAndFeelException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				} catch (DBException e1) {
+				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
