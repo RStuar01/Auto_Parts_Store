@@ -23,35 +23,33 @@ public interface DataReader {
 	// List methods used to read the database.
 	
 	// obtainCustomerInformation
-	public Customer obtainCustomerInformation(String lastName, String firstName,
-			String phoneNumber);
+	//public Customer obtainCustomerInformation(String lastName, String firstName,
+	//		String phoneNumber);
 	
 	// obtainEmployeeInformation
-	public Employee obtainEmployeeInformation(String lastName, String firstName,
-			String phoneNumber);
+	//public Employee obtainEmployeeInformation(String lastName, String firstName,
+	//		String phoneNumber);
 	
 	// obtainSupplierInformation
-	public Supplier obtainSupplierInformation(String lastName, String firstName,
-			String phoneNumber);
+	//public Supplier obtainSupplierInformation(String lastName, String firstName,
+	//		String phoneNumber);
 	
 	// obtainCompanyInformtion
-	public Company obtainCompanyInformation(String companyName);
-	public static String obtainCompanyName(String companyID) {
-		return null;
-	}
+	//public Company obtainCompanyInformation(String companyName);
+	public String obtainCompanyName(String companyID);
 	
 	// obtainInvoiceInformation
-	public ArrayList<Invoice> getInvoices(String customerID);
+	//public ArrayList<Invoice> obtainInvoices(String customerID);
 	
 	// obtainInvoiceLineItemInformation
-	public ArrayList<InvoiceLineItem> getInvoiceLineItems(String invoiceNumber);
+	//public ArrayList<InvoiceLineItem> obtainInvoiceLineItems(String invoiceNumber);
 	
 	// obtainProductInformation
-	public ArrayList<Product> getCompatibleProducts(String compatibilityNumber);
+	//public ArrayList<Product> obtainCompatibleProducts(String compatibilityNumber);
 	public Product lookupProduct(String productID);
-	public Product lookupProduct(String description, String year, String make,
-			String model);
-	public String getQuantityInStock(String productID);
+	//public Product lookupProduct(String description, String year, String make,
+	//		String model);
+	public String obtainQuantityInStock(String productID);
 	// obtainAccountingPurchasesInformation
 	// obtainAccountingSalesInformation
 	

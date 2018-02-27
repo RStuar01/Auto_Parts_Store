@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 import BusinessLayer.Product;
 
-// List imports
-
 /**
  * Class Name:		DatabaseWriter
  * Description:		This class contains the methods called using data access objects to Write information
@@ -19,26 +17,25 @@ import BusinessLayer.Product;
  * @created Saturday, 1,20,2018
  */
 public class DatabaseWriter implements WriterDAO {
-	private static Connection connObj = null;	// Changed to static for testing
+	private static Connection connObj = null;	
 	private WriteHelper writerHelper = null;
 	
 	/**
 	 * This is the Constructor that is called from the DAOFactory class.
-	 * This method also calls the WriteHelper Constructor to provide an instance of that class.
+	 * This class also calls WriterHelper to obtain an instance of that class.
+	 * Written by Rick Stuart
 	 */
 	public DatabaseWriter() {
 		
 		writerHelper = new WriteHelper();
-		connObj = getDBConnection();
-		//call the RFID reader from here***********
-		closeConnection(connObj);
 	}
 	
 	/**
 	 * This method closes the database connection.
 	 * @param connObj				The connection object.
+	 * Written by Rick Stuart
 	 */
-	static void closeConnection(Connection connObj) {
+	public static void closeConnection(Connection connObj) {
 		
 		if(connObj != null) {
 			try {
@@ -52,8 +49,9 @@ public class DatabaseWriter implements WriterDAO {
 	/**
 	 * This method obtains a connection to the database.
 	 * @return connection			The database connection object.
+	 * Written by Rick Stuart
 	 */
-	static Connection getDBConnection() {
+	public static Connection getDBConnection() {
 		
 		Connection connection = null;
 		
@@ -64,7 +62,6 @@ public class DatabaseWriter implements WriterDAO {
 			throw new RuntimeException(e);
 		}
 		
-		//String url = "jdbc:mysql://localhost:3306/mydb";
 		String url = "jdbc:mysql://localhost:3306/auto_parts_schema";
 		String username = "autouser";
 		String password = "autouser";
@@ -76,34 +73,26 @@ public class DatabaseWriter implements WriterDAO {
 			System.out.println(e.toString());
 		}
 		
-		/*
-		System.out.println("DatabaseWriter - Connection Established!");
-		
-		// check a simple read - REMOVE THIS LATER
-		String query = "SELECT last_name FROM customer WHERE customer_id = 1";
-		Statement stmt = null;
-		String lastName = null;
-		try {	
-			//stmt = connObj.createStatement();
-			stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				lastName = rs.getString(1);
-			}
-		}
-		catch (SQLException e) {
-			System.out.println(e.toString());
-		}
-	
-					
-			System.out.println("The value read from the database is:");
-			System.out.println(lastName);
-		*/
 		return connection;
 	}
 	
-	// Enters a new Customer/Employee/ or Supplier along with their address info and
-	// contact info
+	/**
+	 * This method manages entering the data and creating an object for a new
+	 * 			customer, employee or supplier
+	 * @param	choice		String variable to identify the new person type
+	 * @param	lastName	String to hold last name 
+	 * @param	firstName	String to hold first name
+	 * @param	stAddress	String to hold the street address
+	 * @param	city		String to hold the city name
+	 * @param	state		String to hold the state name
+	 * @param	zipCode		String to hold the zip code
+	 * @param	unitNumber	String to hold the unit number
+	 * @param	phoneNumber	String to hold the phone number
+	 * @param	cellPhone	String to hold the cell phone number
+	 * @param	emailAddress	String to hold the email address
+	 * @param	companyID		String to hold the company ID
+	 * Written by Rick Stuart
+	 */
 	public void manageNewPersonCreation(String choice, String lastName, String firstName,
 			String stAddress, String city, String state, String zipCode, String unitNumber,
 			String phoneNumber, String cellPhone, String emailAddress, String companyID){
@@ -111,11 +100,13 @@ public class DatabaseWriter implements WriterDAO {
 		String addressID = null;
 		String contactInfoID = null;
 		
+		// write new address and contact records, obtain the id's
 		writerHelper.writeAddressInformation(stAddress, city, state, zipCode, unitNumber);
 		addressID = writerHelper.obtainNewAddressID(stAddress, city, state, zipCode, unitNumber);
 		writerHelper.writeContactInformation(phoneNumber, cellPhone, emailAddress);
 		contactInfoID = writerHelper.obtainNewContactInformationID(phoneNumber, cellPhone, emailAddress);
 		
+		// determine type of person to create
 		if(choice == "Customer") {
 			writerHelper.writeCustomerInformation(addressID, contactInfoID, lastName, firstName);
 		}
@@ -123,15 +114,25 @@ public class DatabaseWriter implements WriterDAO {
 			writerHelper.writeEmployeeInformation(addressID, contactInfoID, lastName, firstName);
 		}
 		else if (choice == "Supplier") {
-			//addressID = "38";
-			//contactInfoID = "38";
-			//companyID = "5";
 			writerHelper.writeSupplierInformation(addressID, contactInfoID, lastName, firstName,
 					companyID);
 		}
 	}
 	
-	// Enters a new Company along with address and contact info
+	/**
+	 * This method manages entering a new company along with it's
+	 * 		address and contact information
+	 * @param	stAddress	String to hold the street address
+	 * @param	city		String to hold the city name
+	 * @param	state		String to hold the state name
+	 * @param	zipCode		String to hold the zip code
+	 * @param	unitNumber	String to hold the unit number
+	 * @param	phoneNumber	String to hold the phone number
+	 * @param	cellPhone	String to hold the cell phone number
+	 * @param	emailAddress	String to hold the email address
+	 * @param	companyName		String to hold the company name
+	 * Written by Rick Stuart
+	 */
 	public void createNewCompany(String stAddress, String city, String state,
 			String zipCode, String unitNumber, String phoneNumber, String cellPhone,
 			String emailAddress, String companyName) {
@@ -139,15 +140,35 @@ public class DatabaseWriter implements WriterDAO {
 		String addressID = null;
 		String contactInfoID = null;
 		
+		// write new address and contact information and obtain their ID's
 		writerHelper.writeAddressInformation(stAddress, city, state, zipCode, unitNumber);
 		addressID = writerHelper.obtainNewAddressID(stAddress, city, state, zipCode, unitNumber);
 		writerHelper.writeContactInformation(phoneNumber, cellPhone, emailAddress);
 		contactInfoID = writerHelper.obtainNewContactInformationID(phoneNumber, cellPhone, emailAddress);
+		
+		// write the new company information.
 		writerHelper.writeCompanyInformation(addressID, contactInfoID, companyName);
 	}
 	
-	//NOTE:  this is to enter a new product - the first time it is put in stock
-	// Enters the product, updates accounting_purchases
+	/**
+	 * This method is used to enter a new product to the database, one that does 
+	 * 		not yet exist in the database.
+	 * @param	description				String to describe product
+	 * @param	yearMin					String to specify year range product works for
+	 * @param	yearMax					String to specify year range product works for
+	 * @param	make					String to specify the make product works for
+	 * @param	model					String to specify the model product works for
+	 * @param	supplyPrice				String to specify product cost from supplier
+	 * @param	sellPrice				String to specify product's selling price
+	 * @param	coreCharge				String to specify cost for core charge
+	 * @param	compatNum				String to identify what products are compatible
+	 * @param	companyID				String to specify company ID product is obtained from
+	 * @param	minStockQuantity		String to specify when to reorder product
+	 * @param	maxStockQuantity		String to specify how much to reorder
+	 * @param	location				String to specify location in warehouse
+	 * @param	quantityInStock			String to identify how many items to add to database
+	 * Written by Rick Stuart
+	 */
 	public void manageEnteringNewProduct(String description, String yearMin, String yearMax,
 			String make, String model, String supplyPrice, String sellPrice,
 			String coreCharge, String compatNum, String companyID, String minStockQuantity,
@@ -156,28 +177,33 @@ public class DatabaseWriter implements WriterDAO {
 		String productID = "";
 		String dollarValue = "0";
 		
-		// NEED TO MAKE SURE supplyPrice, sellPrice, quantityInStock are all decimal
-		//	ALSO minQuantity, maxQuantity, etc - used for calculations in
-		//	obtainDollarValue.
-		
+		// write the product to the database
 		writerHelper.enterNewProduct(description, yearMin, yearMax, make, model,
 				supplyPrice, sellPrice, coreCharge, compatNum, companyID,
 				minStockQuantity, maxStockQuantity, location, quantityInStock);
 		
+		// obtain the ID for the product
 		productID = writerHelper.obtainProductID(description, yearMin, yearMax, make, model,
 				supplyPrice, sellPrice, coreCharge, compatNum, companyID,
 				minStockQuantity, maxStockQuantity, location, quantityInStock);
 		
+		// obtain the amount spent on product for accounting
 		dollarValue = writerHelper.obtainDollarValue(quantityInStock, supplyPrice);
-		
-		//System.out.println("$" + dollarValue);
-		
+	
+		// Enter the purchase to accounting purchases
 		writerHelper.enterToAccountingPurchases (quantityInStock, dollarValue, productID);
 		
 	}
 	
-	// Manages a sale - creates the invoice, 1 line item, updates accounting_sales
-	//NEED TO ADAPT FOR MULTIPLE LINE ITEMS
+	/**
+	 * this method manages a sale to a customer
+	 * @param	date				String to write date of sale
+	 * @param	time				String to record time of sale
+	 * @param	customerID			String to specify customer that made the purchase
+	 * @param	employeeID			String to record the employee that made the sale
+	 * @param	productID			string to record the item sold and update inventory
+	 * Written by Rick Stuart
+	 */
 	public void manageSale(String date, String time, String customerID, String employeeID,
 			String quantityPurchased, String productID) {
 		
@@ -188,59 +214,69 @@ public class DatabaseWriter implements WriterDAO {
 		String salesTax = "";
 		Boolean reorderProduct = false;
 		
+		// create a new invoice and obtain it's id
 		writerHelper.createInvoice(date, time, customerID, employeeID);
 		invoiceID = writerHelper.obtainNewInvoiceNumber(date, time, customerID, employeeID);
 		
-		//System.out.println("Invoice Number: " + invoiceID);
+		// create a new line item 
 		writerHelper.createInvoiceLineItem(invoiceID, quantityPurchased, productID);
+		
+		// obtain auto-incremented invoice ID, sale price, total cost and tax collected
 		lineID = writerHelper.obtainLineItemID(invoiceID, quantityPurchased, productID);
 		sellPrice = writerHelper.obtainSellPrice(productID);
 		dollarValue = writerHelper.obtainDollarValue(quantityPurchased, sellPrice);
 		salesTax = writerHelper.obtainSalesTax(dollarValue);
 		
-		//System.out.println("Line ID: " + lineID);
-		//System.out.println("Sell Price: $" + sellPrice);
-		//System.out.println("Dollar Value: " + dollarValue);
-		//System.out.println("Sales Tax: " + salesTax);
+		// Enter the sale to accounting records
 		writerHelper.enterAccountingSales(lineID, quantityPurchased, productID, dollarValue,
 				salesTax);
+		
+		// subtract the number of items sold from inventory
 		writerHelper.updateQuantityInStock(productID, quantityPurchased);
 		
 		// check if reorder necessary
 		reorderProduct = writerHelper.checkReorderNecessity(productID);
-		System.out.println("Need to reorder: " + reorderProduct);
 		
+		// re-order product to manage inventory levels if necessary
 		if(reorderProduct) {
 			writerHelper.createOrderForProduct(productID);
 		}
-		
 	}
 	
+	/**
+	 * This method is used by the RFID reader to record products entering 
+	 * 			the warehouse automatically
+	 * @param	rfidProducts			ArrayList of incoming products
+	 * Written by Rick Stuart
+	 */
 	public void writeIncomingProducts(ArrayList<Product> rfidProducts) {
 		
 		boolean exists = false;
 		
-		//System.out.println("In the write method");
-		
 		for(Product p: rfidProducts) {
+			
+			// determine if product is previously entered to the database
 			exists = writerHelper.verifyProductInDatabase(p);
 			String productID = p.getProductID();
+			
+			// if the product is not new - record the product
 			if(exists) {
 				writerHelper.writeIncomingProduct(p, productID);
-				
-				
-				
-				
-				
 				exists = false;
 			}
-			else {
+			else {	// If product is new - must enter manually
 				System.out.println("Product does not exist in database - enter product!");
 			}
 		}
-		
 	}
 	
+	/**
+	 * This method manages manually entering a new purchase to accounting records
+	 * @param	productID			String to identify the new product
+	 * @param	quantityPurchased	String to record number of items
+	 * @param	dollarValue			String to record total cost for accounting
+	 * Written by Rick Stuart
+	 */
 	public void manuallyEnterNewAccountingPurchase(String productID, 
 			String quantityPurchased, String dollarValue) {
 		
@@ -268,6 +304,24 @@ public class DatabaseWriter implements WriterDAO {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This method manages manually entering a new product to the database records
+	 * @param	description				String to describe product
+	 * @param	yearMin					String to specify year range product works for
+	 * @param	yearMax					String to specify year range product works for
+	 * @param	make					String to specify the make product works for
+	 * @param	model					String to specify the model product works for
+	 * @param	supplyPrice				String to specify product cost from supplier
+	 * @param	sellPrice				String to specify product's selling price
+	 * @param	coreCharge				String to specify cost for core charge
+	 * @param	compatNum				String to identify what products are compatible
+	 * @param	companyID				String to specify company ID product is obtained from
+	 * @param	minStockQuantity		String to specify when to reorder product
+	 * @param	maxStockQuantity		String to specify how much to reorder
+	 * @param	location				String to specify location in warehouse
+	 * @param	quantityInStock			String to identify how many items to add to database
+	 * Written by Rick Stuart
+	 */
 	public void manuallyEnterNewPart(String description, String minYear, String maxYear,
 			String make, String model, String supplierPrice, String sellPrice, 
 			String coreCharge, String compatibilityNumber, String companyID, 
@@ -299,7 +353,14 @@ public class DatabaseWriter implements WriterDAO {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
-	// copy from writeHelper - due to changes in gui
+	/**
+	 * This method creates a single invoice manually
+	 * @param	date				String to write date of sale
+	 * @param	time				String to record time of sale
+	 * @param	customerID			String to specify customer that made the purchase
+	 * @param	employeeID			String to record the employee that made the sale
+	 * Written by Rick Stuart
+	 */
 	public void createInvoice(String date, String time, String customerID, String employeeID) {
 		
 		String newInvoiceUpdate = null;
@@ -324,12 +385,17 @@ public class DatabaseWriter implements WriterDAO {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This method creates a single invoice line item to add to an existing invoice
+	 * @param	invoiceNum				String to hold invoice number the line item belongs too
+	 * @param	quantityPurchased		String to record how many of a single item were sold
+	 * @param	productID				String to identify the product sold
+	 * Written by Rick Stuart
+	 */
 	public void createInvoiceLineItem(String invoiceNum, String quantityPurchased,
 			String productID) {
 		
 		String newInvoiceLineItemUpdate = null;
-		
-		//System.out.println("In DBWriter - createInvoiceLineItem");
 		
 		newInvoiceLineItemUpdate = "insert into invoice_line_item " +
 				"(invoice_line_number, invoice_invoice_number, quantity_purchased, " +
@@ -352,6 +418,11 @@ public class DatabaseWriter implements WriterDAO {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This method is used to verify the manual entry of a company id is valid
+	 * @param 	companyID			String to hold the company ID 
+	 * Written by Rick Stuart
+	 */
 	public boolean checkCompanyExists(String companyID) {
 		
 		boolean valid = false;
@@ -386,6 +457,11 @@ public class DatabaseWriter implements WriterDAO {
 		return valid;
 	}
 	
+	/**
+	 * This method is used to verify that a manually entered product ID is valid
+	 * @param	productID		String to hold the product ID
+	 * Written by Rick Stuart
+	 */
 	public boolean checkProductExists(String productID) {
 		
 		boolean valid = false;
@@ -421,6 +497,11 @@ public class DatabaseWriter implements WriterDAO {
 		
 	}
 	
+	/**
+	 * This method is used to verify the manually entere customer ID is valid
+	 * @param	customerID			String to hold the customer ID
+	 * Written by Rick Stuart
+	 */
 	public boolean checkCustomerExists(String customerID) {
 		
 		boolean valid = false;
@@ -455,7 +536,12 @@ public class DatabaseWriter implements WriterDAO {
 		return valid;
 	}
 	
-public boolean checkEmployeeExists(String employeeID) {
+	/**
+	 * This method is used to verify the manually entere employee ID is valid
+	 * @param	employeeID			String to hold the employee ID
+	 * Written by Rick Stuart
+	 */
+	public boolean checkEmployeeExists(String employeeID) {
 		
 		boolean valid = false;
 		ResultSet rs = null;
@@ -489,6 +575,13 @@ public boolean checkEmployeeExists(String employeeID) {
 		return valid;
 	}
 
+	/**
+	 * This method is used to manage a sale
+	 * @param	invoiceNumber		String to hold the invoice number for the sale
+	 * @param	purchasedQuantity	String to record number of items on line item
+	 * @param	productID			String to identify the product sold
+	 * Written by Rick Stuart
+	 */
 	public void manageEnteringToAccountingSales(String invoiceNumber, 
 		String purchasedQuantity, String productID) {
 		
@@ -498,15 +591,18 @@ public boolean checkEmployeeExists(String employeeID) {
 		String salesTax = "";
 		boolean reorderProduct = false;
 		
+		// Create a new invoice line item and obtain it's line number ID
 		createInvoiceLineItem(invoiceNumber, purchasedQuantity,
 				productID);
 		lineID = writerHelper.obtainInvoiceLineID(invoiceNumber, purchasedQuantity,
 				productID);
 		
+		// obtain price, total value and sales tax for this line item
 		sellPrice = writerHelper.obtainSellPrice(productID);
 		dollarValue = writerHelper.obtainDollarValue(purchasedQuantity, sellPrice);
 		salesTax = writerHelper.obtainSalesTax(dollarValue);
 		
+		// write the sale to accounting records and update quantity in warehouse
 		writerHelper.enterAccountingSales(lineID, purchasedQuantity, productID, dollarValue,
 				salesTax);
 		writerHelper.updateQuantityInStock(productID, purchasedQuantity);
@@ -515,35 +611,87 @@ public boolean checkEmployeeExists(String employeeID) {
 		reorderProduct = writerHelper.checkReorderNecessity(productID);
 		System.out.println("Need to reorder: " + reorderProduct);
 		
+		// create an order for the product if necessary
 		if(reorderProduct) {
 			writerHelper.createOrderForProduct(productID);
 		}
 	}
 	
+	/**
+	 * This method is used to manage editing a customer record
+	 * @param	customerID	String to hold the customer ID
+	 * @param	contactID	String to hold the contactInfo ID
+	 * @param	addressID	String to hold the address ID
+	 * @param	lastName	String to hold last name 
+	 * @param	firstName	String to hold first name
+	 * @param	stAddress	String to hold the street address
+	 * @param	city		String to hold the city name
+	 * @param	state		String to hold the state name
+	 * @param	zipCode		String to hold the zip code
+	 * @param	unitNumber	String to hold the unit number
+	 * @param	phoneNumber	String to hold the phone number
+	 * @param	cellPhone	String to hold the cell phone number
+	 * @param	email		String to hold the email address
+	 * Written by Rick Stuart
+	 */
 	public void manageEditingCustomer(String customerID, String contactID, String addressID, 
 			String lastName, String firstName, String streetAddress, 
 			String city, String state, String zipCode, String unitNumber, 
 			String homePhone, String cellPhone, String email) {
 		
-		//System.out.println("In editCustomer");
-		
+		// write over the existing records to record alterations such as spelling errors
 		writerHelper.editAddress(addressID, streetAddress, city, state, zipCode, unitNumber);
 		writerHelper.editContactInfo(contactID, homePhone, cellPhone, email);
 		writerHelper.editCustomer(customerID, lastName, firstName, contactID, addressID);
 	}
 
-
+	/**
+	 * This method is used to manage editing an employee record
+	 * @param	employeeID	String to hold the customer ID
+	 * @param	contactID	String to hold the contactInfo ID
+	 * @param	addressID	String to hold the address ID
+	 * @param	lastName	String to hold last name 
+	 * @param	firstName	String to hold first name
+	 * @param	stAddress	String to hold the street address
+	 * @param	city		String to hold the city name
+	 * @param	state		String to hold the state name
+	 * @param	zipCode		String to hold the zip code
+	 * @param	unitNumber	String to hold the unit number
+	 * @param	phoneNumber	String to hold the phone number
+	 * @param	cellPhone	String to hold the cell phone number
+	 * @param	email		String to hold the email address
+	 * Written by Rick Stuart
+	 */
 	public void manageEditingEmployee(String employeeID, String contactID, String addressID,
 			String lastName, String firstName, String streetAddress, String city,
 			String state, String zipCode, String unitNumber, String homePhone,
 			String cellPhone, String email) {
 
-		
+		// write over the existing records to record alterations such as spelling errors
 		writerHelper.editAddress(addressID, streetAddress, city, state, zipCode, unitNumber);
 		writerHelper.editContactInfo(contactID, homePhone, cellPhone, email);
 		writerHelper.editEmployee(employeeID, lastName, firstName, contactID, addressID);
 	}
 	
+	/**
+	 * This method is used to edit product information due to data entry errors
+	 * @param	productID				String to identify the product being edited
+	 * @param	description				String to describe product
+	 * @param	minYear					String to specify year range product works for
+	 * @param	maxYear					String to specify year range product works for
+	 * @param	make					String to specify the make product works for
+	 * @param	model					String to specify the model product works for
+	 * @param	supplierPrice				String to specify product cost from supplier
+	 * @param	sellPrice				String to specify product's selling price
+	 * @param	coreCharge				String to specify cost for core charge
+	 * @param	compatibilityNumber		String to identify what products are compatible
+	 * @param	companyID				String to specify company ID product is obtained from
+	 * @param	minStockQuantity		String to specify when to reorder product
+	 * @param	maxStockQuantity		String to specify how much to reorder
+	 * @param	warehouseLocation		String to specify location in warehouse
+	 * @param	quantityInStock			String to identify how many items to add to database
+	 * Written by Rick Stuart
+	 */
 	public void editProduct(String productID, String description, String minYear,
 			String maxYear, String make, String model, String supplierPrice,
 			String sellPrice, String coreCharge, String compatibilityNumber,
@@ -553,6 +701,7 @@ public boolean checkEmployeeExists(String employeeID) {
 		String update = null;
 		Statement stmt = null;
 		
+		// write over the existing record to fix data entry errors
 		update = "UPDATE product "
 				+ "SET description = '" + description + "', year_minimum = '"
 				+ minYear + "', year_maximum = '" + maxYear + "', make = '" 
@@ -579,24 +728,58 @@ public boolean checkEmployeeExists(String employeeID) {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This method is used to edit company information due to data entry errors
+	 * @param	companyID	String to identify the company
+	 * @param	addressID	String to identify the address record number
+	 * @param	contactID	String to identify the contact info record number
+	 * @param	streetAddress	String to hold the street address
+	 * @param	city		String to hold the city name
+	 * @param	state		String to hold the state name
+	 * @param	zipCode		String to hold the zip code
+	 * @param	unitNumber	String to hold the unit number
+	 * @param	homePhone	String to hold the phone number
+	 * @param	cellPhone	String to hold the cell phone number
+	 * @param	email		String to hold the email address
+	 * @param	companyName		String to hold the company name
+	 * Written by Rick Stuart
+	 */
 	public void manageEditingCompany(String companyID, String addressID, 
 			String contactID, String streetAddress, String city, String state, 
 			String zipCode, String unitNumber, String homePhone, String cellPhone,
 			String email, String companyName) {
 		
+		// overwrite the existing records to fix data entry errors
 		writerHelper.editAddress(addressID, streetAddress, city, state, zipCode, unitNumber);
 		writerHelper.editContactInfo(contactID, homePhone, cellPhone, email);
 		writerHelper.editCompany(companyID, companyName);
 		
 	}
 	
-	public void manageEditingSupplier(String supplierID, String contactID, String addressID, 
-			String companyID,
-			String lastName, String firstName, String streetAddress, String city,
-			String state, String zipCode, String unitNumber, String homePhone,
-			String cellPhone, String email) {
+	/**
+	 * This method is used to edit supplier information to fix data entry errors
+	 * @param supplierID		String to hold the supplier record ID number
+	 * @param contactID			String to hold the contact info record ID number
+	 * @param addressID			String to hold the address record ID number
+	 * @param companyID			String to identify the company ID number
+	 * @param lastName			String to hold the last name of supplier
+	 * @param firstName			String to hold the supplier's first name
+	 * @param streetAddress		String to hold the street address
+	 * @param city				String to hold the city name
+	 * @param state				String to hold the state name
+	 * @param zipCode			String to hold the zip code number
+	 * @param unitNumber		String to hold the unit number
+	 * @param homePhone			String to hold the home telephone number
+	 * @param cellPhone			String to hold the cell phone number
+	 * @param email				String to hold the email address
+	 * Written by Rick Stuart
+	 */
+	public void manageEditingSupplier(String supplierID, String contactID, 
+			String addressID, String companyID, String lastName, String firstName, 
+			String streetAddress, String city, String state, String zipCode, 
+			String unitNumber, String homePhone, String cellPhone, String email) {
 
-		
+		// overwrite the existing records to fix data entry errors
 		writerHelper.editAddress(addressID, streetAddress, city, state, zipCode, unitNumber);
 		writerHelper.editContactInfo(contactID, homePhone, cellPhone, email);
 		writerHelper.editSupplier(supplierID, lastName, firstName, contactID, addressID, companyID);

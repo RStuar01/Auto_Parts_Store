@@ -648,7 +648,7 @@ public class WriteHelper {
 		String update = null;
 		 
 		//System.out.println("Quantity arriving: " + product.getQuantityInStock());
-		oldQuantity = readerDAO.getQuantityInStock(productID);
+		oldQuantity = readerDAO.obtainQuantityInStock(productID);
 		//System.out.println("oldQuantity = " + oldQuantity);
 		
 		quantityArriving = product.getQuantityInStock();
