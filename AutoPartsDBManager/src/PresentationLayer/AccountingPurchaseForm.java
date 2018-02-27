@@ -11,8 +11,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -27,14 +25,14 @@ import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
 import DatabaseLayer.WriterDAO;
 
+
+/**
+ * Class extends JDialog for data entry
+ * Written by Michael Meesseman
+ */
 public class AccountingPurchaseForm extends JDialog{
 	 
-		    private static final String EMAIL_REGEX = 
-		    "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" + 
-		        "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-		    private static final Pattern EMAIL_PATTERN = 
-		                             Pattern.compile(EMAIL_REGEX);
-		    
+		    // initialize fields and buttons		    
 		    private JTextField purchaseIDField;
 		    private JTextField productIDField;
 		    private JTextField purchaseQtyField;
@@ -45,17 +43,35 @@ public class AccountingPurchaseForm extends JDialog{
 		  //Added by Rick
 		    private boolean dataEntered = true;
 		    private static WriterDAO writerDAO;
-		    
+		   
 		    private AccountingPurchases purchase = new AccountingPurchases();
 		    
+		    
+		    /**
+		     * Constructor to build dialog box for data entry for new add
+		     * @param parent	this is the frame that called the form
+		     * @param title		title of the form
+		     * @param modal		boolean to block all other input on other windows until current one is closed.
+		     * Written by Michael Meesseman
+		     */
 		    public AccountingPurchaseForm(java.awt.Frame parent, String title, boolean modal) {
 		        super(parent, title, modal);
+		        
+		        //initializes all componets of the form.
 		        initComponents();
 		        
 		        //Added by Rick
 		        writerDAO = DAOFactory.getWriterDAO();
 		    }
 		    
+		    /**
+		     * Constructor to build dialog box for edits.
+			 * @param parent	this is the frame that called the form
+		     * @param title		title of the form
+		     * @param modal		boolean to block all other input on other windows until current one is closed.
+		     * @param purchase	brings in the object of the selected Accounting Purchase
+		     * Written by Michael Meesseman
+		     */
 		    public AccountingPurchaseForm(java.awt.Frame parent, String title, boolean modal, AccountingPurchases purchase) {
 		        this(parent, title, modal);
 		        this.purchase = purchase;
@@ -64,10 +80,16 @@ public class AccountingPurchaseForm extends JDialog{
 		        productIDField.setText(purchase.getProductID());
 		        purchaseQtyField.setText(purchase.getPurchasesQuantity());
 		        dollarValueField.setText(purchase.getDollarValue());
+		        
+		        //fields cannot be edited.
 		        purchaseIDField.setEditable(false);
 		        dollarValueField.setEditable(false);
 		     }
 		    
+		    /**
+		     * Method to initialize all components.
+		     * Written by Michael Meesseman
+		     */
 		    private void initComponents() {
 		    	purchaseIDField = new JTextField();
 		        productIDField = new JTextField();
@@ -75,14 +97,18 @@ public class AccountingPurchaseForm extends JDialog{
 		        dollarValueField = new JTextField();
 		        cancelButton = new JButton();
 		        confirmButton = new JButton();
+		        
+		        // fields cannot be edited.
 		        purchaseIDField.setEditable(false);
 		        dollarValueField.setEditable(false);
 		        
+		        // sets name for telling user which field is wrong during validation. 
 		        purchaseQtyField.setName("Purchase Quantity");
 		        dollarValueField.setName("Dollar Value");
 		        
 		        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		       
+		        // sets field lengths so window size can be adjusted without changing field size. 
 		        Dimension longField = new Dimension(300, 20);
 		        purchaseIDField.setPreferredSize(longField);
 		        purchaseIDField.setMinimumSize(longField);
@@ -93,11 +119,13 @@ public class AccountingPurchaseForm extends JDialog{
 		        dollarValueField.setPreferredSize(longField);
 		        dollarValueField.setMinimumSize(longField);
 		        
+		        // cancel button
 		        cancelButton.setText("Cancel");
 		        cancelButton.addActionListener((ActionEvent) -> {
 		            cancelButtonActionPerformed();
 		        });
 		        
+		        // add button
 		        confirmButton.setText("Add");
 		        confirmButton.addActionListener((ActionEvent) -> {
 		            try {
@@ -110,7 +138,7 @@ public class AccountingPurchaseForm extends JDialog{
 					}
 		        });
 		        
-		        
+		        // focus listeners to reset error fields.
 		        purchaseIDField.addFocusListener(new FocusAdapter() {
 					@Override
 					public void focusGained(FocusEvent arg0) {
@@ -141,7 +169,7 @@ public class AccountingPurchaseForm extends JDialog{
 		        
 		       
 		        
-		               
+		        // builds grid of labels and text fields for data entry.      
 		        JPanel purchasePanel = new JPanel();
 		        purchasePanel.setLayout(new GridBagLayout());
 		        purchasePanel.add(new JLabel("Purchase ID:"), getConstraints(0, 0, GridBagConstraints.LINE_END));
@@ -153,6 +181,7 @@ public class AccountingPurchaseForm extends JDialog{
 		        purchasePanel.add(new JLabel("Dollar Value:"), getConstraints(0, 3, GridBagConstraints.LINE_END));
 		        purchasePanel.add(dollarValueField, getConstraints(1, 3, GridBagConstraints.LINE_START));
 		        
+		        // builds panel
 		        JPanel buttonPanel = new JPanel();
 		        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		        buttonPanel.add(confirmButton);
@@ -164,6 +193,14 @@ public class AccountingPurchaseForm extends JDialog{
 		        pack();
 		    }
 		    
+		    /**
+		     * Method for setting grid of labels and fields.
+		     * @param x			x axis
+		     * @param y			y axis
+		     * @param anchor	where the field sits in the grid space ex. LINE_START or LINE_END.
+		     * @return c	GridBagConstraints variable for constraints on the grid.
+		     * Written by Michael Meesseman
+		     */
 		    private GridBagConstraints getConstraints(int x, int y, int anchor) {
 		        GridBagConstraints c = new GridBagConstraints();
 		        c.insets = new Insets(5,5,0,5);
@@ -173,16 +210,22 @@ public class AccountingPurchaseForm extends JDialog{
 		        return c;
 		    }
 		    
+		    /**
+		     * Method executes when cancel button is pressed.
+		     * Written by Michael Meesseman
+		     */
 		    private void cancelButtonActionPerformed() {
 		        dispose();
 		    }
 		    
+		    /**
+		     * Method executes when add or save button is pressed
+		     * @exception SQLException	exception for database queries.
+		     * Written by Michael Meesseman
+		     */
 		    private void confirmButtonActionPerformed() throws SQLException {
 		        
 		    	// Added by Rick
-		    	
-		    
-		    	
 		    	processData();
 		    	
 		    	if(dataEntered) {
@@ -197,12 +240,19 @@ public class AccountingPurchaseForm extends JDialog{
 		    }
 		    
 		    // Added by Rick
+		    /**
+		     * Method processes data for the add and save buttons.  
+			 * Method also validates data before adding to the database
+		     * Written by Rick Stuart
+		     */
 		    private void processData() {
 		    	
+		    	//verifies fields not empty.
 		    	String productID = verifyEntry(productIDField);
 		    	String quantityPurchased = verifyEntry(purchaseQtyField);
-		    	//String dollarValue = verifyEntry(dollarValueField);
 		    	
+		    	//Moved outside of if statement by Michael Meesseman
+		    	//Needs to be outside so the dialog box does not close before user corrects data errors.
 		    	//Check that product exists
 		    	boolean valid = writerDAO.checkProductExists(productID);
 		    	
@@ -216,19 +266,21 @@ public class AccountingPurchaseForm extends JDialog{
 		    	}
 		    		
 		    	
+		    	//Validated number fields are integers, product ID exists and that fields are not empty.
 		    	if(dataEntered && ValidateInteger.validateInteger(purchaseQtyField, this) && valid) {
 		    		
-
+		    			// calculates total price of purchase
 		    			double supplierPrice = Double.parseDouble(DatabaseReader.obtainSupplierPrice(productIDField.getText()));
 				    	int qty = Integer.parseInt(quantityPurchased);
 				    	double total = supplierPrice * qty;
 				    	
+				    	// formats total to 2 decimal places.
 				    	DecimalFormat format = new DecimalFormat(".##");
 				    	String totalString = format.format(total);
 				    	
 				    	dollarValueField.setText(totalString);
 		    			
-		    			
+		    			// adds fields to database. 
 		    			writerDAO.manuallyEnterNewAccountingPurchase(productID, 
 		    				quantityPurchased, dollarValueField.getText());
 		    			dispose();
@@ -242,6 +294,12 @@ public class AccountingPurchaseForm extends JDialog{
 		   
 		    
 		    // Added by Rick
+		    /**
+		     * Method validate field is not empty. 
+		     * turns box red and enters text "Data Missing" when a field is empty.
+		     * @param name		Textfield being validated.
+		     * Written by Rick Stuart
+		     */
 		    private String verifyEntry(JTextField name) {
 		    	String dataItem = "";
 		    	boolean valid = true;
@@ -260,98 +318,9 @@ public class AccountingPurchaseForm extends JDialog{
 		    	return dataItem;
 		    }
 		    
-		    
-		    
-		    private boolean validateData() {
-		        
-		        boolean valid = false;
-		        //String email = emailField.getText();
-		        
-		        if (confirmButton.getText().equals("Add")) 
-		        {
-		            //if(isEmpty())
-		              //  if(emailValidator(email)) 
-		                    //if(customerNotExists(email))
-		                        valid = true;
-		        }
-		        else 
-		        {
-		           // if(isEmpty())
-		               valid = true;
-		        }
-		        
-		        return valid;
-		    }
-
-		
-		    
-		    private void setData() {
-		    	
-		    	String purchaseID = purchaseIDField.getText();
-		        String productID = productIDField.getText();
-		        String purchaseQty = purchaseQtyField.getText();
-		        String dollarValue = dollarValueField.getText();
-		        purchase.setAccountingPurchasesRecordID(purchaseID);
-		        purchase.setProductID(productID);
-		        purchase.setPurchasesQuantity(purchaseQty);
-		        purchase.setDollarValue(dollarValue);
-		    }
-		    
-		    private void doEdit() {
-		        try {
-		            //update customer method
-		            dispose();
-		            fireDatabaseUpdatedEvent();
-		        }
-		        catch (SQLException e)
-		        {
-		           System.out.println(e);
-		        }
-		    }
 		     
-		    private void doAdd() throws SQLException {
-		        try {
-		            //add customer method from DatabaseWriter
-		            dispose();
-		            fireDatabaseUpdatedEvent();
-		        }
-		        catch (SQLException e)
-		        {
-		            System.out.println(e);
-		        }
-		    }
 		    
-		    private void fireDatabaseUpdatedEvent() throws SQLException {
-		        AccountingFrame mainWindow = (AccountingFrame) getOwner();
-		        mainWindow.fireDatabaseUpdatedEvent();
-		    }
-		       
 		    
-		    private boolean emailValidator(String email)
-		    {
-		        if (email == null) 
-		            return false;        
-		 
-		        Matcher matcher = EMAIL_PATTERN.matcher(email);
-		        if (matcher.matches())
-		            return true;
-		        else
-		        {
-		            JOptionPane.showMessageDialog(this, "Invalid email address entered. \nPlease"
-		                        + " enter an email address in the format of xxxxxxxxxx@xxxxxx.xxx",
-		                    "Invalid Email", JOptionPane.ERROR_MESSAGE);
-		            //emailField.grabFocus();
-		            return false;
-		        
-		        }
-		    }
-		
-		   private void focusEvent(JTextField field)
-		   {
-			   field.setText("");
-			   field.setForeground(Color.BLACK);
-		   }
-
 		   /**
 			 * Checks that the Text Field held the Data Missing message before resetting the color.
 			 * @param name					JTextField name to be checked.

@@ -37,7 +37,7 @@ public class PartsFrame  extends JFrame {
     private JTextField searchField;
     private JComboBox searchCombo;
     
-    public PartsFrame() throws UnsupportedLookAndFeelException, DBException, SQLException {
+    public PartsFrame() throws UnsupportedLookAndFeelException, SQLException {
         try {
             UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
         }
@@ -58,7 +58,7 @@ public class PartsFrame  extends JFrame {
                 
     }
     
-    private JPanel buildButtonPanel() throws DBException {
+    private JPanel buildButtonPanel() throws SQLException {
         JPanel panel = new JPanel();
     
         JButton addButton = new JButton("Add");
@@ -80,8 +80,6 @@ public class PartsFrame  extends JFrame {
             try {
                 doEditButton();
                 fireDatabaseUpdatedEvent();
-            } catch (DBException e) {
-                System.out.println(e);
             } catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -115,7 +113,7 @@ public class PartsFrame  extends JFrame {
         partsForm.setVisible(true);
     }
     
-    private void doEditButton() throws DBException, SQLException {
+    private void doEditButton() throws SQLException {
     	int selectedRow = partTable.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "No Part is currently "
@@ -144,7 +142,7 @@ public class PartsFrame  extends JFrame {
     	productTableModel.databaseUpdated();
     }
        
-    private JTable buildProductTable() throws DBException, SQLException {
+    private JTable buildProductTable() throws SQLException {
         productTableModel = new PartsTableModel();
         JTable table = new JTable((javax.swing.table.TableModel) productTableModel);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

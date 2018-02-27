@@ -42,7 +42,7 @@ public class SalesFrame extends JFrame {
     private JComboBox searchCombo;
     
     
-    public SalesFrame() throws UnsupportedLookAndFeelException, DBException, SQLException {
+    public SalesFrame() throws UnsupportedLookAndFeelException, SQLException {
         try {
             UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
         }
@@ -63,7 +63,7 @@ public class SalesFrame extends JFrame {
                 
     }
     
-    private JPanel buildButtonPanel() throws DBException {
+    private JPanel buildButtonPanel() throws SQLException {
         JPanel panel = new JPanel();
         
         JButton selectButton = new JButton("Select");
@@ -71,9 +71,6 @@ public class SalesFrame extends JFrame {
             try {
 				doSelectButton();
 			} catch (UnsupportedLookAndFeelException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (DBException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SQLException e) {
@@ -134,7 +131,7 @@ public class SalesFrame extends JFrame {
         
     }
     
-    private void doSelectButton() throws UnsupportedLookAndFeelException, DBException, SQLException {
+    private void doSelectButton() throws UnsupportedLookAndFeelException, SQLException {
     	
         	int selectedRow = salesTable.getSelectedRow();
             if (selectedRow == -1) {
@@ -161,7 +158,7 @@ public class SalesFrame extends JFrame {
         salesForm.setVisible(true);
     }
     
-    private void doEditButton() throws DBException, SQLException {
+    private void doEditButton() throws SQLException {
     	int selectedRow = salesTable.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "No invoice is currently "
@@ -192,7 +189,7 @@ public class SalesFrame extends JFrame {
         ((SalesTableModel) salesTableModel).databaseUpdated();
     }
        
-    private JTable buildSalesTable() throws DBException, SQLException {
+    private JTable buildSalesTable() throws SQLException {
         salesTableModel = new SalesTableModel();
         JTable table = new JTable((javax.swing.table.TableModel) salesTableModel);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

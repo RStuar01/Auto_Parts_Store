@@ -43,7 +43,7 @@ public class AutoPartsStoreGui {
      * @param args the command line arguments
 	 * @throws SQLException 
      */
-    public static void main(String[] args) throws DBException, UnsupportedLookAndFeelException, SQLException {
+    public static void main(String[] args) throws UnsupportedLookAndFeelException, SQLException {
         
     
     		

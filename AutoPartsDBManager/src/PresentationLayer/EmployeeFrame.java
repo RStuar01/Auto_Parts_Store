@@ -32,7 +32,7 @@ public class EmployeeFrame extends JFrame {
 	    private JTextField searchField;
 	    private JComboBox searchCombo;
 	    
-	    public EmployeeFrame() throws UnsupportedLookAndFeelException, SQLException, DBException {
+	    public EmployeeFrame() throws UnsupportedLookAndFeelException, SQLException {
 	        try {
 	            UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
 	        }
@@ -53,7 +53,7 @@ public class EmployeeFrame extends JFrame {
 	                
 	    }
 	    
-	    private JPanel buildButtonPanel() throws DBException {
+	    private JPanel buildButtonPanel() throws SQLException {
 	        JPanel panel = new JPanel();
 	    
 	        JButton addButton = new JButton("Add");
@@ -75,8 +75,6 @@ public class EmployeeFrame extends JFrame {
 	            try {
 	                doEditButton();
 	                fireDatabaseUpdatedEvent();
-	            } catch (DBException e) {
-	                System.out.println(e);
 	            } catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -109,7 +107,7 @@ public class EmployeeFrame extends JFrame {
 	        employeeForm.setVisible(true);
 	    }
 	    
-	    private void doEditButton() throws DBException, SQLException {
+	    private void doEditButton() throws SQLException {
 	    	int selectedRow = employeeTable.getSelectedRow();
 	        if (selectedRow == -1) {
 	            JOptionPane.showMessageDialog(this, "No Employee is currently "
