@@ -1,5 +1,6 @@
 package DatabaseLayer;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import BusinessLayer.Product;
@@ -14,6 +15,8 @@ import BusinessLayer.Product;
  */
 public interface DataWriter {
 
+	//public static void closeConnection(Connection connObj);
+	//public static Connection getDBConnection();
 	public void manageNewPersonCreation(String choice, String lastName, String firstName,
 			String stAddress, String city, String state, String zipCode, String unitNumber,
 			String phoneNumber, String cellPhone, String emailAddress, String companyID);
@@ -85,4 +88,9 @@ public interface DataWriter {
 			String contactID, String streetAddress, String city, String state, 
 			String zipCode, String unitNumber, String homePhone, String cellPhone,
 			String email, String companyName);
+	
+	public void manageEditingSupplier(String supplierID, String contactID, 
+			String addressID, String companyID, String lastName, String firstName, 
+			String streetAddress, String city, String state, String zipCode, 
+			String unitNumber, String homePhone, String cellPhone, String email);
 }

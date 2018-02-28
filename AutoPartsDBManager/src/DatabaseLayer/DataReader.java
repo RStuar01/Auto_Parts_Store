@@ -1,7 +1,9 @@
 package DatabaseLayer;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
+import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Company;
 import BusinessLayer.Customer;
 import BusinessLayer.Employee;
@@ -20,37 +22,30 @@ import BusinessLayer.Supplier;
  */
 public interface DataReader {
 
-	// List methods used to read the database.
-	
-	// obtainCustomerInformation
-	//public Customer obtainCustomerInformation(String lastName, String firstName,
-	//		String phoneNumber);
-	
-	// obtainEmployeeInformation
-	//public Employee obtainEmployeeInformation(String lastName, String firstName,
-	//		String phoneNumber);
-	
-	// obtainSupplierInformation
-	//public Supplier obtainSupplierInformation(String lastName, String firstName,
-	//		String phoneNumber);
-	
-	// obtainCompanyInformtion
-	//public Company obtainCompanyInformation(String companyName);
-	public String obtainCompanyName(String companyID);
-	
-	// obtainInvoiceInformation
-	//public ArrayList<Invoice> obtainInvoices(String customerID);
-	
-	// obtainInvoiceLineItemInformation
-	//public ArrayList<InvoiceLineItem> obtainInvoiceLineItems(String invoiceNumber);
-	
-	// obtainProductInformation
-	//public ArrayList<Product> obtainCompatibleProducts(String compatibilityNumber);
+	//public void closeConnection(Connection connObj);
+	//public static Connection getDBConnection();
+	//public static String getQtyInStock(Integer productID);
 	public Product lookupProduct(String productID);
-	//public Product lookupProduct(String description, String year, String make,
-	//		String model);
+	//public static ArrayList<Company> obtainCompanyList();
+	//public static ArrayList<Customer> obtainCustomerList();
+	//public static ArrayList<Employee> obtainEmployeeList();
+	//public static ArrayList<Invoice> obtainInvoiceList();
+	//public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemList(String invoiceNumberInput);
+	//public static String obtainPassword(String username);
+	//public static ArrayList<Customer> obtainCustomerFilter(String column, String search);
+	//public static ArrayList<Employee> obtainEmployeeFilter(String column, String search);
+	//public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemFilter(String invoiceNumberInput,
+	//String column, String search);
+	//public static ArrayList<Invoice> obtainInvoiceFilter(String column, String search);
+	//public static ArrayList<Company> obtainCompanyFilter(String column, String search);
+	//public static ArrayList<Supplier> obtainSupplierFilter(String column, String search);
+	public String obtainCompanyName(String companyID);
+	//public static String obtainSupplierPrice(String productID);
+	//public static ArrayList<Product> obtainProductList();
+	//public static ArrayList<AccountingPurchases> obtainPurchaseList();
+	//public static ArrayList<AccountingPurchases> obtainPurchaseFilter(String column, String search);
+	//public static ArrayList<Product> obtainProductFilter(String column, String search);
+	//public static ArrayList<Supplier> obtainSupplierList();
 	public String obtainQuantityInStock(String productID);
-	// obtainAccountingPurchasesInformation
-	// obtainAccountingSalesInformation
 	
 }

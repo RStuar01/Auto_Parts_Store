@@ -27,16 +27,17 @@ public class WriteHelper {
 	}
 
 	/**
-	 * This method writes the information for a new address record to the database.
+	 * This helper method writes the information for a new address record to the database.
 	 * @param streetAddress			String variable for the street address.
 	 * @param city					String variable for the city.
 	 * @param state					String variable for the state.
 	 * @param zipCode				String variable for the zip code.
 	 * @param unitNumber			String variable for the unit number.
+	 * Written by Rick Stuart
 	 */
-	public void writeAddressInformation(String streetAddress, String city, String state, String zipCode,
-			String unitNumber) {
-	System.out.println();
+	public void writeAddressInformation(String streetAddress, String city, String state, 
+			String zipCode, String unitNumber) {
+	
 		String newAddressUpdate = null;
 	
 		newAddressUpdate = "insert into address " +
@@ -60,16 +61,18 @@ public class WriteHelper {
 	}
 	
 	/**
-	 * This method uses supplied address information to obtain the ID number for an address which was just
-	 * written to the database.
+	 * This helper method uses supplied address information to obtain the ID number 
+	 * 		for an address which was just written to the database.
 	 * @param stAddress				String variable for the street address.
 	 * @param city					String variable for the city.
 	 * @param state					String variable for the state.
 	 * @param zipCode				String variable for the zip code.
 	 * @param unitNumber			String variable for the unit number.
 	 * @return addressID			String variable for the address ID number.
+	 * Written by Rick Stuart
 	 */
-	public String obtainNewAddressID(String stAddress, String city, String state, String zipCode, String unitNumber) {
+	public String obtainNewAddressID(String stAddress, String city, String state, 
+			String zipCode, String unitNumber) {
 		
 		String addressID = null;
 		String query = null;
@@ -109,12 +112,14 @@ public class WriteHelper {
 	}
 	
 	/**
-	 * This method writes a new contact information record to the database.
+	 * This helper method writes a new contact information record to the database.
 	 * @param phoneNumber			String variable for the phone number.
 	 * @param cellPhone				String variable for the cell phone number.
 	 * @param emailAddress			String variable for the email address.
+	 * Written by Rick Stuart
 	 */
-	public void writeContactInformation(String phoneNumber, String cellPhone, String emailAddress) {
+	public void writeContactInformation(String phoneNumber, String cellPhone, 
+			String emailAddress) {
 		
 		String newContactInfoUpdate = null;
 		
@@ -139,14 +144,17 @@ public class WriteHelper {
 	}
 	
 	/**
-	 * This method uses supplied information to locate and obtain the contact information ID number
-	 * which corresponds to the information just written to the database.
+	 * This helper method uses supplied information to locate and obtain the 
+	 * 		contact information ID number which corresponds to the information 
+	 * 		just written to the database.
 	 * @param phoneNumber			String variable for the phone number.
 	 * @param cellPhone				String variable for the cell phone number.
 	 * @param emailAddress			String variable for the email address.
 	 * @return contactInfoID		String variable for the contact info ID number.
+	 * Written by Rick Stuart
 	 */
-	public String obtainNewContactInformationID(String phoneNumber, String cellPhone, String emailAddress) {
+	public String obtainNewContactInformationID(String phoneNumber, String cellPhone, 
+			String emailAddress) {
 		
 		String contactInfoID = null;
 		String query = null;
@@ -178,13 +186,15 @@ public class WriteHelper {
 	}
 	
 	/**
-	 * This method write a new Customer record to the database.
+	 * This helper method writes a new Customer record to the database.
 	 * @param addressID				String variable for the address ID number.
 	 * @param contactInfoID			String variable for the contact information ID number.
 	 * @param lastName				String variable for the Customers last name.
 	 * @param firstName				String variable for the Customers first name.
+	 * Written by Rick Stuart
 	 */
-	public void writeCustomerInformation(String addressID, String contactInfoID, String lastName, String firstName) {
+	public void writeCustomerInformation(String addressID, String contactInfoID, 
+			String lastName, String firstName) {
 		
 		String newCustomerUpdate = null;
 		
@@ -209,13 +219,16 @@ public class WriteHelper {
 	}
 	
 	/**
-	 * This method writes the information for a new Employee record to the database.
+	 * This helper method writes the information for a new Employee record 
+	 * 			to the database.
 	 * @param addressID				String variable for the address ID number.
 	 * @param contactInfoID			String variable for the contact information ID number.
 	 * @param lastName				String variable for the Employees' last name.
 	 * @param firstName				String variable for the Employees' first name.
+	 * Written by Rick Stuart
 	 */
-	public void writeEmployeeInformation(String addressID, String contactInfoID, String lastName, String firstName) {
+	public void writeEmployeeInformation(String addressID, String contactInfoID, 
+			String lastName, String firstName) {
 		
 		String newEmployeeUpdate = null;
 		
@@ -239,8 +252,17 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);		
 	}
 	
-	public void writeSupplierInformation(String addressID, String contactInfoID, String lastName,
-			String firstName, String companyID) {
+	/**
+	 * This helper method writes a supplier record to the database.
+	 * @param addressID				String to hold address record ID number
+	 * @param contactInfoID			String to hold contact info record ID number
+	 * @param lastName				String to hold last name
+	 * @param firstName				String to hold first name
+	 * @param companyID				String to hold company ID number
+	 * Written by Rick Stuart
+	 */
+	public void writeSupplierInformation(String addressID, String contactInfoID, 
+			String lastName, String firstName, String companyID) {
 		
 		String newSupplierUpdate = null;
 		
@@ -265,7 +287,15 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
-	public void writeCompanyInformation(String addressID, String contactInfoID, String companyName) {
+	/**
+	 * This helper method writes a company record to the database.
+	 * @param addressID				String to hold address record ID number
+	 * @param contactInfoID			String to hold contact info record ID number
+	 * @param companyName			String to hold company name
+	 * Written by Rick Stuart
+	 */
+	public void writeCompanyInformation(String addressID, String contactInfoID, 
+			String companyName) {
 		
 		String newCompanyUpdate = null;
 		
@@ -289,6 +319,24 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This helper method writes a new product record to the database.
+	 * @param description			String to hold product description
+	 * @param yearMin				String to define minimum of year range
+	 * @param yearMax				String to define maximum of year range
+	 * @param make					String to define vehicle make
+	 * @param model					String to define vehicle model
+	 * @param supplyPrice			String to specify supplier price of product
+	 * @param sellPrice				String to specify selling price of product
+	 * @param coreCharge			String to define core charge cost
+	 * @param compatNum				String to define part compatibility with other parts
+	 * @param companyID				String to hold company record ID number
+	 * @param minStockQuantity		String to specify ordering quantities
+	 * @param maxStockQuantity		String to specify ordering quantities
+	 * @param location				String to define location in warehouse
+	 * @param quantityInStock		String to set quantity entering building
+	 * Written by Rick Stuart
+	 */
 	public void enterNewProduct(String description, String yearMin, String yearMax,
 			String make, String model, String supplyPrice, String sellPrice,
 			String coreCharge, String compatNum, String companyID,
@@ -323,6 +371,26 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This helper method obtains the record ID number of a product just written
+	 * 			to the database
+	 * @param description			String to hold product description
+	 * @param yearMin				String to define minimum of year range
+	 * @param yearMax				String to define maximum of year range
+	 * @param make					String to define vehicle make
+	 * @param model					String to define vehicle model
+	 * @param supplyPrice			String to specify supplier price of product
+	 * @param sellPrice				String to specify selling price of product
+	 * @param coreCharge			String to define core charge cost
+	 * @param compatNum				String to define part compatibility with other parts
+	 * @param companyID				String to hold company record ID number
+	 * @param minStockQuantity		String to specify ordering quantities
+	 * @param maxStockQuantity		String to specify ordering quantities
+	 * @param location				String to define location in warehouse
+	 * @param quantityInStock		String to set quantity entering building
+	 * @return productID			String to define the record ID number for product
+	 * Written by Rick Stuart
+	 */
 	public String obtainProductID(String description, String yearMin, String yearMax,
 			String make, String model, String supplyPrice, String sellPrice,
 			String coreCharge, String compatNum, String companyID, String minStockQuantity,
@@ -360,11 +428,18 @@ public class WriteHelper {
 				
 		DatabaseWriter.closeConnection(connObj);
 		
-		//System.out.println("product ID: " + productID);
-		
 		return productID;
 	}
 	
+	/**
+	 * This helper method obtains the dollar value based on product purchased 
+	 * 			and number of items purchased.
+	 * @param quantityInStock			String to update inventory
+	 * @param supplyPrice				String to define cost to purchase product
+	 * 									to update accounting purchases records
+	 * @return	dollarValue				String to specify total reorder cost
+	 * Written by Rick Stuart
+	 */
 	public String obtainDollarValue(String quantityInStock, String supplyPrice) {
 		
 		double total = 0;
@@ -380,6 +455,13 @@ public class WriteHelper {
 		return dollarValue;
 	}
 	
+	/**
+	 * This helper method writes a record to accounting purchases
+	 * @param numPurchased		String to specify number of items purchased
+	 * @param dollarValue		String to specify total cost to purchase inventory items
+	 * @param productID			String to specify product ID number
+	 * Written by Rick Stuart
+	 */
 	public void enterToAccountingPurchases(String numPurchased, String dollarValue,
 			String productID) {
 		
@@ -407,6 +489,15 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This helper method creates a new invoice record in the database.
+	 * @param date				String to hold the date the invoice was created
+	 * @param time				String to hold the time the invoice was created
+	 * @param customerID		String to hold the customer record ID number
+	 * @param employeeID		String to hold the employee record ID number that created
+	 * 									the sale
+	 * Written by Rick Stuart
+	 */
 	public void createInvoice(String date, String time, String customerID, String employeeID) {
 		
 		String newInvoiceUpdate = null;
@@ -431,6 +522,16 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This helper method obtains the invoice record ID number for an invoice 
+	 * 			just written to the database.
+	 * @param date				String to hold the date the invoice was created
+	 * @param time				String to hold the time the invoice was created
+	 * @param customerID		String to hold the customer record ID number
+	 * @param employeeID		String to hold the employee record ID number
+	 * @return	invoiceNum		String to specify the invoice record ID number
+	 * Written by Rick Stuart
+	 */
 	public String obtainNewInvoiceNumber(String date, String time, String customerID,
 			String employeeID) {
 		
@@ -464,6 +565,13 @@ public class WriteHelper {
 		return invoiceNum;
 	}
 	
+	/**
+	 * This helper method creates a new invoice line item
+	 * @param invoiceNum			String to hold the invoice number
+	 * @param quantityPurchased		String to specify number of items sold
+	 * @param productID				String to specify product ID number
+	 * Written by Rick Stuart
+	 */
 	public void createInvoiceLineItem(String invoiceNum, String quantityPurchased,
 			String productID) {
 		
@@ -490,6 +598,15 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This helper method obtains the line item record ID of a line item just 
+	 * 			written to the database.
+	 * @param invoiceID				String to hold the invoice record ID number
+	 * @param quantityPurchased		String to specify number of items purchased/sold
+	 * @param productID				String to specify product ID number
+	 * @return	lineID				String to hold the line item record ID number
+	 * Written by Rick Stuart
+	 */
 	public String obtainLineItemID(String invoiceID, String quantityPurchased, String productID) {
 		
 		String lineID = "";
@@ -518,10 +635,15 @@ public class WriteHelper {
 				
 		DatabaseWriter.closeConnection(connObj);
 		
-		
 		return lineID;
 	}
 	
+	/**
+	 * This helper method obtains the customer's cost to purchase the item
+	 * @param productID			String to specify the product ID number
+	 * @return	price			String to specify the selling price of the product
+	 * Written by Rick Stuart
+	 */
 	public String obtainSellPrice(String productID) {
 		
 		String price = "";
@@ -552,6 +674,12 @@ public class WriteHelper {
 		return price;
 	}
 	
+	/**
+	 * This helper method obtains the sales tax to be charged for the line item transaction
+	 * @param dollarValue		String to specify total cost for the line item
+	 * @return	tax				String to specify the sales tax to be charged
+	 * Written by Rick Stuart
+	 */
 	public String obtainSalesTax(String dollarValue) {
 		
 		String tax = "";
@@ -559,20 +687,25 @@ public class WriteHelper {
 		
 		double cost = Double.parseDouble(dollarValue);
 		salesTax = cost * 0.075;
-		//System.out.println("Unrounded: " + salesTax);
 		salesTax = (double) Math.round((salesTax * 100) + 0.5) / 100;
-		//System.out.println("Rounded up: " + salesTax);
 		tax = String.valueOf(salesTax);
 		
 		return tax;
 	}
 	
+	/**
+	 * This helper method writes a new sale to accounting records.
+	 * @param lineID				String to specify the line item record ID number
+	 * @param quantityPurchased		String to specify number of items sold
+	 * @param productID				String to specify the product ID
+	 * @param dollarValue			String to hold the total cost of product sold
+	 * @param salesTax				String to hold the sales tax collected
+	 * Written by Rick Stuart
+	 */
 	public void enterAccountingSales(String lineID, String quantityPurchased,
 			String productID, String dollarValue, String salesTax) {
 		
 		String newAccountingSaleUpdate = null;
-		
-		//System.out.println("In accounting sales");
 		
 		newAccountingSaleUpdate = "insert into accounting_sales " +
 				"(accounting_sales_record_id, sold_quantity, product_product, " +
@@ -596,17 +729,20 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This helper method verifies that a user entere product ID is valid
+	 * @param p				Product object being searched
+	 * @return	exists		boolean to verify if product exists in the database
+	 * Written by Rick Stuart
+	 */
 	public boolean verifyProductInDatabase(Product p) {
 		
 		boolean exists = false;
 		
 		String productID = p.getProductID();
 		
-		//System.out.println("In verifyProducts");
 		readerDAO = DAOFactory.getReaderDAO();
 		Product existingProduct = readerDAO.lookupProduct(productID);
-		
-		
 		
 		if(existingProduct != null) {
 			if(p.getProductID().equalsIgnoreCase(existingProduct.getProductID())) {
@@ -616,7 +752,6 @@ public class WriteHelper {
 							if(p.getMake().equalsIgnoreCase(existingProduct.getMake())) {
 								if(p.getModel().equalsIgnoreCase(existingProduct.getModel())) {
 									exists = true;
-									//System.out.println("Boolean set");
 								}
 							}
 						}
@@ -624,81 +759,115 @@ public class WriteHelper {
 				}
 			}
 		}
-		else {
-			//System.out.println("writeHelper.VerifyProductInDatabase");
-			//System.out.println("Product is null - does not match existing product!");
-		}
 		
 		return exists;
 	}
 	
+	/**
+	 * This method is used with the RFID reader to write incoming products to the database
+	 * @param product		Product object
+	 * @param productID		String to specify product ID
+	 * Written by Rick Stuart
+	 */
 	public void writeIncomingProduct(Product product, String productID) {
 		
-		String quantityArriving = "";
-		String oldQuantity = "";
-		String maxQuantityInStock = "";
-		String supplyPrice = "";
-		String dollarValue = "";
 		int newQuantity = 0;
-		int maxQuantity = 0;
-		int quantityAccepted = 0;
-		int quantityRejected = 0;
 		
-		//System.out.println("Writing product");
 		String update = null;
-		 
-		//System.out.println("Quantity arriving: " + product.getQuantityInStock());
-		oldQuantity = readerDAO.obtainQuantityInStock(productID);
-		//System.out.println("oldQuantity = " + oldQuantity);
 		
-		quantityArriving = product.getQuantityInStock();
-		productID = product.getProductID();
-		newQuantity = Integer.parseInt(oldQuantity) + Integer.parseInt(quantityArriving);
+		newQuantity = determineQuantityToAccept(product, productID);
 		
-		// Need to verify that does not exceed maxQuantity
-		maxQuantityInStock = getMaxQuantityInStock(productID);
-		maxQuantity = Integer.parseInt(maxQuantityInStock);
-		
-		if(newQuantity > maxQuantity) {
-			//System.out.println("Quantity exceeds max quantity!");
-			//System.out.println("Maximum quantity allowed: " + maxQuantity);
-			quantityAccepted = maxQuantity - Integer.parseInt(oldQuantity);
-			newQuantity = quantityAccepted + Integer.parseInt(oldQuantity);
-			quantityRejected = Integer.parseInt(quantityArriving) - quantityAccepted;
+		update = "UPDATE product "
+				+ "SET quantity_in_stock = quantity_in_stock + " + newQuantity
+				+ " WHERE product = " + productID + ";";
 			
-			//System.out.println("quantity accepted: " + quantityAccepted);
-			//System.out.println("quantity rejected: " + quantityRejected);
+		Statement stmt = null;
 			
-			
+		connObj = DatabaseWriter.getDBConnection();
+									
+		try {
+			stmt = connObj.createStatement();
+			stmt.executeUpdate(update);
+		}
+		catch (SQLException e) {
+			System.out.println(e.toString());
 		}
 		
-			update = "UPDATE product "
-					+ "SET quantity_in_stock = " + newQuantity
-					+ " WHERE product = " + productID + ";";
-			
-			Statement stmt = null;
-			
-			connObj = DatabaseWriter.getDBConnection();
-									
-			try {
-				stmt = connObj.createStatement();
-				stmt.executeUpdate(update);
-			}
-			catch (SQLException e) {
-				System.out.println(e.toString());
-			}
-			
-			// copied from line 167 DatabaseWriter // strings
-			String quantityReceived = Integer.toString(quantityAccepted);
-			supplyPrice = product.getSupplierPrice();
-			//System.out.println("SupplierPrice: " + supplyPrice);
-			dollarValue = obtainDollarValue(quantityReceived, supplyPrice);
-			//System.out.println("Dollar Value: " + dollarValue);
-			enterToAccountingPurchases (quantityReceived, dollarValue, productID);
-				
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This helper method determines how many items read by RFID reader to accept
+	 * 		to inventory and calls associated methods to update database
+	 * @param p					Product object entering inventory
+	 * @param productID			String to hold product ID number
+	 * @return	quantityToAccept	Int to specify how many of a product to accept to inventory
+	 * Written by Rick Stuart
+	 */
+	public int determineQuantityToAccept(Product p, String productID) {
+		
+		int quantityToAccept = 0;
+		int sum = 0;
+		int quantityRejected = 0;	//*********needed for writing to .txt file
+		String quantityInStock = "";
+		String quantityArriving = "";
+		String maxQuantityInStock = "";
+		boolean exceedsMax = false;
+		
+		//get old quantity in stock
+		quantityInStock = readerDAO.obtainQuantityInStock(productID);
+		
+		//determine quantity arriving
+		quantityArriving = p.getQuantityInStock();
+		
+		//determine sum
+		sum = Integer.parseInt(quantityInStock) + Integer.parseInt(quantityArriving);
+		
+		//determine max to have
+		maxQuantityInStock = getMaxQuantityInStock(productID);
+		
+		//determine if sum > maxQauntity
+		if(sum > Integer.parseInt(maxQuantityInStock)) {
+			exceedsMax = true;
+		}
+		
+		//if yes, find quantity to accept
+		if(exceedsMax) {
+			
+			// quantity to accept = max - in stock
+			quantityToAccept = Integer.parseInt(maxQuantityInStock) - Integer.parseInt(quantityInStock);
+			
+			// quantity rejected = arriving - accepted
+			quantityRejected = Integer.parseInt(quantityArriving) - quantityToAccept;
+		}
+		else {
+			quantityToAccept = Integer.parseInt(quantityArriving);
+			
+		}
+				
+		// write rejected quantity to a file
+		// writeQuantityRejected()
+		
+		//update purchases	
+		if(quantityToAccept > 0) {
+			String supplyPrice = "";
+			String dollarValue = "";
+			String quantityAccepted = Integer.toString(quantityToAccept);
+			supplyPrice = p.getSupplierPrice();
+			dollarValue = obtainDollarValue(quantityAccepted, supplyPrice);
+			enterToAccountingPurchases(quantityAccepted, dollarValue, productID);
+		}
+		
+		return quantityToAccept;
+	}
+	
+	/**
+	 * This helper method obtains the max number of items of that type that type 
+	 * 			allowed in inventory
+	 * @param productID			String to specify the product ID number
+	 * @return	maxQuantityInStock	String to specify the max number allowed
+	 * Written by Rick Stuart
+	 */
 	public String getMaxQuantityInStock(String productID) {
 		
 		String maxQuantityInStock = "";
@@ -730,6 +899,12 @@ public class WriteHelper {
 		return maxQuantityInStock;
 	}
 	
+	/**
+	 * This helper method checks inventory levels to see if re-ordering is necessary
+	 * @param productID				String to identify the product ID being checked
+	 * @return	reorder				boolean to specify if a re-order is required
+	 * Written by Rick Stuart
+	 */
 	public Boolean checkReorderNecessity(String productID) {
 		
 		Boolean reorder = false;
@@ -752,8 +927,6 @@ public class WriteHelper {
 			while(rs.next()) {
 				quantityInStock = rs.getInt(1);
 				minQuantity = rs.getInt(2);
-				//System.out.println("In Stock: " + quantityInStock);
-				//System.out.println("Max: " + minQuantity);
 				if(minQuantity >= quantityInStock) {
 					reorder = true;
 				}
@@ -765,11 +938,16 @@ public class WriteHelper {
 				
 		DatabaseWriter.closeConnection(connObj);
 		
-		
-		
 		return reorder;
 	}
 	
+	/**
+	 * This helper method updates the quantity in stock in product when a sale is made
+	 * 			to maintain inventory levels
+	 * @param productID			String to specify the product record ID number
+	 * @param quantitySold		String to specify number of items sold
+	 * Written by Rick Stuart
+	 */
 	public void updateQuantityInStock(String productID, String quantitySold) {
 		
 		String update = null;
@@ -794,6 +972,12 @@ public class WriteHelper {
 		}
 	}
 	
+	/**
+	 * This helper method updates quantity levels when new products arrive
+	 * @param productID					String to specify product
+	 * @param quantityPurchased			String to specify number of items to add to inventory
+	 * Written by Rick Stuart
+	 */
 	public void updateQuantityInStockPurchase(String productID, String quantityPurchased) {
 		
 		String update = null;
@@ -818,6 +1002,11 @@ public class WriteHelper {
 		}
 	}
 	
+	/**
+	 * This helper method creates a re-order when inventory level reach minimum
+	 * @param productID				String to specify product to order
+	 * Written by Rick Stuart
+	 */
 	public void createOrderForProduct(String productID) {
 		
 		String quantityToOrder = "";
@@ -837,10 +1026,18 @@ public class WriteHelper {
 		
 		// write the order to accounting_purchases
 		enterToAccountingPurchases(quantityToOrder, dollarValue, productID);
+		
+		// write the order to products.txt
 		System.out.println("Purchase made!");
 		
 	}
 	
+	/**
+	 * This helper method obtains the inventory levels of a product based on product ID
+	 * @param productID				String to specify the product record ID number
+	 * @return	quantityInStock		String to hold the stock level
+	 * Written by Rick Stuart
+	 */
 	public String getQuantityInStock(String productID) {
 		
 		String quantityInStock = "";
@@ -872,6 +1069,13 @@ public class WriteHelper {
 		return quantityInStock;
 	}
 	
+	/**
+	 * This helper method obtains the cost to purchase a product from the supplier
+	 * 			in order to write records to accounting purchases
+	 * @param productID			String to identify the product queried
+	 * @return	supplyPrice		String to specify the cost to obtain the product for resale
+	 * Written by Rick Stuart
+	 */
 	public String obtainSupplyPrice(String productID) {
 		
 		String supplyPrice = "";
@@ -903,6 +1107,15 @@ public class WriteHelper {
 		return supplyPrice;
 	}
 	
+	/**
+	 * The helper method obtains the invoice line item record ID number for a newly
+	 * 			created line item
+	 * @param invoiceNumber			String to hold the invoice ID number for the line item
+	 * @param purchasedQuantity		String to specify the number of items purchased
+	 * @param productID				String to specify the product purchased
+	 * @return	lineNumber			String to hold the line item ID number
+	 * Written by Rick Stuart
+	 */
 	public String obtainInvoiceLineID(String invoiceNumber, String purchasedQuantity,
 			String productID) {
 		
@@ -936,7 +1149,18 @@ public class WriteHelper {
 		
 		return lineNumber;
 	}
-	
+
+	/**
+	 * This helper method updates an address record due to data entry errors or when
+	 * 			an address changes for any object with an address
+	 * @param addressID				String to specify the address record number to update
+	 * @param streetAddress			String to hold the street address
+	 * @param city					String to hold the city name
+	 * @param state					String to hold the state name
+	 * @param zipCode				String to hold the zip code
+	 * @param unitNumber			String to hold the unit number
+	 * Written by Rick Stuart
+	 */
 	public void editAddress(String addressID, String streetAddress, String city,
 			String state, String zipCode, String unitNumber) {
 		
@@ -962,6 +1186,15 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This helper method updates a contact information record 
+	 * 				due to changes or data entry errors
+	 * @param contactID			String to hold the record ID number
+	 * @param homePhone			String to hold the phone number
+	 * @param cellPhone			String to hold the cell phone number
+	 * @param email				String to hold the email address
+	 * Written by Rick Stuart
+	 */
 	public void editContactInfo(String contactID, String homePhone, String cellPhone,
 			String email) {
 		
@@ -987,14 +1220,21 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This helper method updates customer records due to data entry errors
+	 * @param customerID		String to specify the record to update
+	 * @param lastName			String to hold the customer's last name
+	 * @param firstName			String to hold the customer's first name
+	 * @param contactID			String to hold the contact info record ID number
+	 * @param addressID			String to hold the address record ID number
+	 * Written by Rick Stuart
+	 */
 	public void editCustomer(String customerID, String lastName, String firstName,
 			String contactID, String addressID) {
 		
 		String update = null;
 		Statement stmt = null;
 		
-		
-		//System.out.println("CustomerID " + customerID);
 		update = "UPDATE customer "
 				+ "SET last_name = '" + lastName + "', "
 				+ "first_name = '" + firstName 
@@ -1013,14 +1253,22 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This helper method updates an employee's record when changes occur or 
+	 * 				due to data entry errors
+	 * @param employeeID		String to specify the record to update
+	 * @param lastName			String to hold employee's last name
+	 * @param firstName			String to hold employee's first name
+	 * @param contactID			String to specify the contact info record ID number
+	 * @param addressID			String to specify the address record ID number
+	 * Written by Rick Stuart
+	 */
 	public void editEmployee(String employeeID, String lastName, String firstName,
 			String contactID, String addressID) {
 		
 		String update = null;
 		Statement stmt = null;
 		
-		
-		//System.out.println("EmployeeID " + employeeID);
 		update = "UPDATE employee "
 				+ "SET last_name = '" + lastName + "', "
 				+ "first_name = '" + firstName 
@@ -1039,11 +1287,16 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This helper method update a company record due to changes or data entry errors
+	 * @param companyID			String to specify the company record to update
+	 * @param companyName		String to hold the company name
+	 * Written by Rick Stuart
+	 */
 	public void editCompany(String companyID, String companyName) {
 		
 		String update = null;
 		Statement stmt = null;
-		
 		
 		update = "UPDATE company "
 				+ "SET company_name = '" + companyName 
@@ -1062,14 +1315,23 @@ public class WriteHelper {
 		DatabaseWriter.closeConnection(connObj);
 	}
 	
+	/**
+	 * This helper method updates a supplier's information due to changes or data
+	 * 				entry errors
+	 * @param supplierID		String to specify the supplier record to update
+	 * @param lastName			String to hold the supplier's last name
+	 * @param firstName			String to hold the supplier's first name
+	 * @param contactID			String to specify the contact info record ID number
+	 * @param addressID			String to specify the address record ID number
+	 * @param companyID			String to specify the company record ID number
+	 * Written by Rick Stuart
+	 */
 	public void editSupplier(String supplierID, String lastName, String firstName,
 			String contactID, String addressID, String companyID) {
 		
 		String update = null;
 		Statement stmt = null;
 		
-		
-		//System.out.println("SupplierID " + supplierID);
 		update = "UPDATE supplier "
 				+ "SET last_name = '" + lastName + "', "
 				+ "first_name = '" + firstName 
