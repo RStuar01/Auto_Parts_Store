@@ -952,7 +952,7 @@ public class WriteHelper {
 		
 		String update = null;
 		
-		String currentQtyInStock = DatabaseReader.getQtyInStock(Integer.parseInt(productID));
+		String currentQtyInStock = readerDAO.getQtyInStock(Integer.parseInt(productID));
 		Integer newQtyInStock = Integer.parseInt(currentQtyInStock) - Integer.parseInt(quantitySold);
 		
 		update = "UPDATE product "
@@ -982,7 +982,7 @@ public class WriteHelper {
 		
 		String update = null;
 		
-		String currentQtyInStock = DatabaseReader.getQtyInStock(Integer.parseInt(productID));
+		String currentQtyInStock = readerDAO.getQtyInStock(Integer.parseInt(productID));
 		Integer newQtyInStock = Integer.parseInt(currentQtyInStock) + Integer.parseInt(quantityPurchased);
 		
 		update = "UPDATE product "

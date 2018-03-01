@@ -2,6 +2,7 @@ package DatabaseLayer;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Company;
@@ -39,7 +40,7 @@ public interface DataReader {
 	//public static ArrayList<Invoice> obtainInvoiceFilter(String column, String search);
 	//public static ArrayList<Company> obtainCompanyFilter(String column, String search);
 	//public static ArrayList<Supplier> obtainSupplierFilter(String column, String search);
-	public String obtainCompanyName(String companyID);
+	
 	//public static String obtainSupplierPrice(String productID);
 	//public static ArrayList<Product> obtainProductList();
 	//public static ArrayList<AccountingPurchases> obtainPurchaseList();
@@ -47,5 +48,45 @@ public interface DataReader {
 	//public static ArrayList<Product> obtainProductFilter(String column, String search);
 	//public static ArrayList<Supplier> obtainSupplierList();
 	public String obtainQuantityInStock(String productID);
+	
+	public String obtainCompanyName(String companyID);
+
+	public String obtainSupplierPrice(String text);
+
+	public List<Company> obtainCompanyList();
+
+	public List<Company> obtainCompanyFilter(String column, String search);
+
+	public List<Customer> obtainCustomerList();
+
+	public List<Customer> obtainCustomerFilter(String column, String search);
+
+	public List<Employee> obtainEmployeeList();
+
+	public List<Employee> obtainEmployeeFilter(String column, String search);
+
+	public Object obtainPassword(String text);
+
+	public List<Product> obtainProductList();
+
+	public List<Product> obtainProductFilter(String column, String search);
+
+	public List<AccountingPurchases> obtainPurchaseList();
+
+	public List<AccountingPurchases> obtainPurchaseFilter(String column, String search);
+
+	public String getQtyInStock(int parseInt);
+
+	public List<InvoiceLineItem> obtainInvoiceLineItemList(String invoiceNumberInput);
+
+	public List<InvoiceLineItem> obtainInvoiceLineItemFilter(String invoiceNumberInput, String column, String search);
+
+	public List<Invoice> obtainInvoiceList();
+
+	public List<Invoice> obtainInvoiceFilter(String column, String search);
+
+	public List<Supplier> obtainSupplierList();
+
+	public List<Supplier> obtainSupplierFilter(String column, String search);
 	
 }

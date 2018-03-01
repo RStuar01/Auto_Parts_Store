@@ -198,7 +198,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	company		ArrayList of company objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Company> obtainCompanyList() {
+	public ArrayList<Company> obtainCompanyList() {
 	
 		String query = "select * from company, address, contact_info "
 			+ "where Address_address_id = address.address_id "
@@ -258,7 +258,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return customers	ArrayList of customer objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Customer> obtainCustomerList() {
+	public ArrayList<Customer> obtainCustomerList() {
 		
 		String query = "SELECT  * FROM customer, address, contact_info "
 				+ "where customer.contact_info_contact_info_id = contact_info.contact_info_id "
@@ -320,7 +320,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	employees	ArrayList of employee objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Employee> obtainEmployeeList() {
+	public ArrayList<Employee> obtainEmployeeList() {
 	
 		String query = "SELECT  * FROM employee, address, contact_info "
 			+ "where employee.contact_info_contact_info_id = contact_info.contact_info_id "
@@ -381,7 +381,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return invoices		ArrayList of invoice objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Invoice> obtainInvoiceList() {
+	public ArrayList<Invoice> obtainInvoiceList() {
 	
 		String query = "SELECT * FROM invoice";
 		ArrayList<Invoice> invoices = new ArrayList<>();
@@ -424,7 +424,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	invoiceLineItems	ArrayList of lineItem objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemList(String invoiceNumberInput) {
+	public ArrayList<InvoiceLineItem> obtainInvoiceLineItemList(String invoiceNumberInput) {
 	
 		
 		String query = "SELECT * FROM invoice_line_item where invoice_invoice_number = '" + invoiceNumberInput + "'";
@@ -468,7 +468,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	password		String holding the password for login validation
 	 * Written by Michael Meesseman
 	 */
-	public static String obtainPassword(String username) {
+	public String obtainPassword(String username) {
 	
 		String query = "SELECT password FROM login WHERE username = '" + username + "'";
 		String password = "";
@@ -501,7 +501,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	customers	ArrayList of customer objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Customer> obtainCustomerFilter(String column, String search)
+	public ArrayList<Customer> obtainCustomerFilter(String column, String search)
 	{
 		String query = "SELECT  * FROM customer, address, contact_info "
 			+ "where customer.contact_info_contact_info_id = contact_info.contact_info_id "
@@ -565,7 +565,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	employees		ArrayList of employee objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Employee> obtainEmployeeFilter(String column, String search)
+	public ArrayList<Employee> obtainEmployeeFilter(String column, String search)
 	{
 		String query = "SELECT  * FROM employee, address, contact_info "
 			+ "where employee.contact_info_contact_info_id = contact_info.contact_info_id "
@@ -630,7 +630,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	invoiceLineItems		ArrayList of lineItem objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemFilter(String invoiceNumberInput,
+	public ArrayList<InvoiceLineItem> obtainInvoiceLineItemFilter(String invoiceNumberInput,
 		String column, String search) {
 	
 	
@@ -677,7 +677,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	invoices		ArrayList of invoice objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Invoice> obtainInvoiceFilter(String column, String search) {
+	public ArrayList<Invoice> obtainInvoiceFilter(String column, String search) {
 	
 		String query = "SELECT * FROM invoice where " + column + " = '" + search + "'";
 		ArrayList<Invoice> invoices = new ArrayList<>();
@@ -722,7 +722,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	company			ArrayList of company objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Company> obtainCompanyFilter(String column, String search) {
+	public ArrayList<Company> obtainCompanyFilter(String column, String search) {
 	
 		String query = "select * from company, address, contact_info "
 			+ "where Address_address_id = address.address_id "
@@ -785,7 +785,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	supplier		ArrayList of supplier objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Supplier> obtainSupplierFilter(String column, String search) {
+	public ArrayList<Supplier> obtainSupplierFilter(String column, String search) {
 
 		String query = "SELECT * FROM supplier, address, contact_info, company "
 			+ "where supplier.Address_address_id = address.address_id "
@@ -887,7 +887,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return supplierPrice	String holding the suppliers price
 	 * Written by Rick Stuart
 	 */
-	public static String obtainSupplierPrice(String productID) {
+	public String obtainSupplierPrice(String productID) {
 	
 		Integer productIDInt = Integer.parseInt(productID);
 	
@@ -921,7 +921,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	products	ArrayList of product objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Product> obtainProductList() {
+	public ArrayList<Product> obtainProductList() {
 	
 		String query = "SELECT * FROM product";
 		ArrayList<Product> products = new ArrayList<>();
@@ -984,7 +984,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	purchases	ArrayList of purchase objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<AccountingPurchases> obtainPurchaseList() {
+	public ArrayList<AccountingPurchases> obtainPurchaseList() {
 	
 		String query = "SELECT * FROM accounting_purchases";
 		ArrayList<AccountingPurchases> purchases = new ArrayList<>();
@@ -1026,7 +1026,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	purchases		ArrayList of purchase objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<AccountingPurchases> obtainPurchaseFilter(String column, String search)
+	public ArrayList<AccountingPurchases> obtainPurchaseFilter(String column, String search)
 	{
 		String query = "SELECT * FROM accounting_purchases where " + column + " = '" + search + "'";
 	
@@ -1069,7 +1069,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	products		ArrayList of product objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Product> obtainProductFilter(String column, String search) {
+	public ArrayList<Product> obtainProductFilter(String column, String search) {
 	
 		String query = "SELECT * FROM product where " + column + " = '" + search + "'";
 		ArrayList<Product> products = new ArrayList<>();
@@ -1132,7 +1132,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	supplier		ArrayList of supplier objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Supplier> obtainSupplierList() {
+	public ArrayList<Supplier> obtainSupplierList() {
 	
 		String query = "SELECT * FROM supplier, address, contact_info, company "
 			+ "where supplier.Address_address_id = address.address_id "
@@ -1234,4 +1234,12 @@ public class DatabaseReader implements ReaderDAO {
 		
 		return quantity;
 	}
+
+	@Override
+	public String getQtyInStock(int parseInt) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }

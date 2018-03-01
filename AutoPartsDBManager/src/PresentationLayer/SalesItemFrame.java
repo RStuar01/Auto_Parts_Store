@@ -2,10 +2,8 @@ package PresentationLayer;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.ScrollPane;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -17,26 +15,32 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.table.TableModel;
 
-import BusinessLayer.InvoiceLineItem;
-import BusinessLayer.Product;
-
+/**
+ * Extends JFrame to build a frame for sales invoice items tracking.
+ * Calls several methods to build the frame.
+ * Written by Michael Meesseman
+ */
 public class SalesItemFrame extends JFrame{
 	
-	
+	//table initalization
 	    private JTable salesItemTable;
 	    private SalesItemTableModel salesItemTableModel;
-	    private String invoiceNumberInput;
-	    private String date;
-	    private String time;
-	    private String customerID;
-	    private String employeeID;
 	    
+	    // invoice number selection
+	    private String invoiceNumberInput;
+
+	  //search field initialized.
 	    private JTextField searchField;
 	    private JComboBox searchCombo;
 	    
-	    public SalesItemFrame(String invoiceNumberInput, String date, String time, String customerID, String employeeID) throws UnsupportedLookAndFeelException, SQLException {
+	    /**
+	     * Constructor to build the frame.
+	     * @exception UnsupportedLookAndFeelException	Handles multiple operating system configs.
+	     * @exception SQLException	exception for database queries.
+	     * Written by Michael Meesseman
+	     */
+	    public SalesItemFrame(String invoiceNumberInput) throws UnsupportedLookAndFeelException, SQLException {
 	        try {
 	            UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
 	        }
@@ -45,10 +49,7 @@ public class SalesItemFrame extends JFrame{
 	            System.out.println(e);
 	        }
 	        this.invoiceNumberInput = invoiceNumberInput;
-	        this.date = date;
-	        this.time = time;
-	        this.customerID = customerID;
-	        this.employeeID = employeeID;
+
 	        setTitle("Invoice Detail");
 	        setSize(768, 384);
 	        setLocationByPlatform(true);
@@ -62,9 +63,16 @@ public class SalesItemFrame extends JFrame{
 	                
 	    }
 	    
+	    /**
+	     * Method to build the Button Panel.
+	     * @return panel	this is the button panel that goes to the SOUTH of the frame.
+	     * @exception SQLException	exception for database queries.
+	     * Written by Michael Meesseman
+	     */
 	    private JPanel buildButtonPanel() throws SQLException {
 	        JPanel panel = new JPanel();
 	        
+	        //add button
 	        JButton addButton = new JButton("Add");
 	        addButton.addActionListener((ActionEvent) -> {
 	            doAddButton();
@@ -77,23 +85,8 @@ public class SalesItemFrame extends JFrame{
 	        });
 	    
 	        panel.add(addButton);
-	       /* 
-	        JButton editButton = new JButton("Edit");
-	        editButton.setToolTipText("Edit selected Sales Line");
-	        editButton.addActionListener((ActionEvent) -> {
-	            try {
-	                doEditButton();
-	            } catch (DBException e) {
-	                System.out.println(e);
-	            } catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	        });
-	        panel.add(editButton);
-	        
-	        */
-	        
+	      
+	        //help button
 	        JButton helpButton = new JButton("Help");
 	        helpButton.addActionListener((ActionEvent) -> {
 	            doHelpButton();
@@ -101,6 +94,7 @@ public class SalesItemFrame extends JFrame{
 	    
 	        panel.add(helpButton);
 	         
+	        //exit button
 	        JButton exitButton = new JButton("Exit");
 	        exitButton.addActionListener((ActionEvent) -> {
 	            dispose();
@@ -112,30 +106,20 @@ public class SalesItemFrame extends JFrame{
 	        
 	    }
 	    
+	    /**
+	     * Method executes when add button is pressed
+	     * Written by Michael Meesseman
+	     */
 	    private void doAddButton() {
-	    	SalesItemForm salesItemForm = new SalesItemForm(this, "Add Sales Item", true, invoiceNumberInput, date, time, customerID, employeeID);
+	    	SalesItemForm salesItemForm = new SalesItemForm(this, "Add Sales Item", true, invoiceNumberInput);
 	        salesItemForm.setLocationRelativeTo(this);
 	        salesItemForm.setVisible(true);
 	    }
 	    
-	    /*
-	    private void doEditButton() throws DBException, SQLException {
-	    	int selectedRow = salesItemTable.getSelectedRow();
-	        if (selectedRow == -1) {
-	            JOptionPane.showMessageDialog(this, "No Sales Item is currently "
-	                    + "selected.", "No Sales Item selected", JOptionPane.ERROR_MESSAGE);
-	        }
-	        else
-	        {
-	            InvoiceLineItem invoiceLineItems = salesItemTableModel.getInvoiceLineItem(selectedRow);
-	            SalesItemForm salesItemForm = new SalesItemForm(this, "Edit Product", true, invoiceLineItems);
-	            salesItemForm.setLocationRelativeTo(this);
-	            salesItemForm.setVisible(true);
-	        }
-	    }
-	    
-	    */
-	    
+	    /**
+	     * Method executes when help button is pressed.
+	     * Written by Michael Meesseman
+	     */
 	    private void doHelpButton()
 	    {
 	    	JOptionPane.showMessageDialog(this, "Press the 'Add' button to add a sales item. \n"
@@ -145,12 +129,22 @@ public class SalesItemFrame extends JFrame{
 	    }
 	    
 	   
-	    
+	    /**
+	     * Method to refresh the table from the database.
+	     * @exception SQLException	exception for database queries.
+	     * Written by Michael Meesseman
+	     */
 	    public void fireDatabaseUpdatedEvent() throws SQLException
 	    {
 	        ((SalesItemTableModel) salesItemTableModel).databaseUpdated();
 	    }
 	       
+	    /**
+	     * Method to build the frame table that goes in center.
+	     * @return table	JTable to populate database results
+	     * @exception SQLException	exception for database queries.
+	     * Written by Michael Meesseman
+	     */
 	    private JTable buildSalesTable() throws SQLException {
 	        salesItemTableModel = new SalesItemTableModel(invoiceNumberInput);
 	        JTable table = new JTable((javax.swing.table.TableModel) salesItemTableModel);
@@ -159,13 +153,20 @@ public class SalesItemFrame extends JFrame{
 	        return table;
 	    }
 	
+	    /**
+		    * Method to build the search panel.
+		    * @return panel	panel which populates the NORTH end of frame.
+		    * Written by Michael Meesseman
+		    */
 	    private JPanel buildSearchPanel() {
 	 	   
+	    	// drop down box fields
 	 	   String[] fields = {"Invoice Line Number", "Invoice Number", 
 				  	"Quantity Purchased", "Product ID"};
 	 	   
 	 	   JPanel panel = new JPanel();
 	 	   
+	 	//text field initialize
 	 	   searchField = new JTextField();
 	 	   Dimension longField = new Dimension(300, 20);
 	        searchField.setPreferredSize(longField);
@@ -173,9 +174,11 @@ public class SalesItemFrame extends JFrame{
 	        
 	        panel.add(searchField);
 	        
+	        // combo box initialize
 	        searchCombo = new JComboBox(fields);
 	        panel.add(searchCombo);
 	        
+	        //search button
 	        JButton searchButton = new JButton("Search");
 	        searchButton.addActionListener((ActionEvent) -> {
 	            try {
@@ -191,10 +194,16 @@ public class SalesItemFrame extends JFrame{
 	 	   return panel;
 	    }
 	    
+	    /**
+		    * Method executes when search button is pressed
+		    * @exception SQLException	exception for database queries.
+		    * Written by Michael Meesseman
+		    */
 	    private void doSearchButton() throws SQLException {
 	 	   
 	 	   String column;
 	 	   
+	 	// switch to set search parameter to database field name.
 	 	   switch(searchCombo.getSelectedIndex())
 	 	   {
 	 	   case 0:
@@ -215,6 +224,9 @@ public class SalesItemFrame extends JFrame{
 	 		   
 	 	   }
 	 	   
+	 	// empty search field refreshes table to all entries.
+	 	   // otherwise database is filled with query results from database.
+	 	   // if search result does not return a result a dialog box notifies the user. 
 	 	   if(searchField.getText().equals(""))
 	 		  salesItemTableModel.reset();
 	 	   else

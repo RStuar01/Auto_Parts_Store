@@ -10,11 +10,8 @@ package PresentationLayer;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.ScrollPane;
 import java.sql.SQLException;
-import java.util.function.Supplier;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -26,18 +23,28 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.table.TableModel;
 
-import BusinessLayer.Customer;
-
-
+/**
+ * Extends JFrame to build a frame for customers tracking.
+ * Calls several methods to build the frame.
+ * Written by Michael Meesseman
+ */
 public class SupplierFrame  extends JFrame {
+	
+	//table initalization
     private JTable supplierTable;
     private SupplierTableModel supplierTableModel;
     
+  //search field initialized.
     private JTextField searchField;
     private JComboBox searchCombo;
     
+    /**
+     * Constructor to build the frame.
+     * @exception UnsupportedLookAndFeelException	Handles multiple operating system configs.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
     public SupplierFrame() throws UnsupportedLookAndFeelException, SQLException {
         try {
             UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
@@ -59,9 +66,16 @@ public class SupplierFrame  extends JFrame {
                 
     }
     
+    /**
+     * Method to build the Button Panel.
+     * @return panel	this is the button panel that goes to the SOUTH of the frame.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
     private JPanel buildButtonPanel() throws SQLException {
         JPanel panel = new JPanel();
     
+        //add button
         JButton addButton = new JButton("Add");
         addButton.addActionListener((ActionEvent) -> {
             doAddButton();
@@ -75,6 +89,7 @@ public class SupplierFrame  extends JFrame {
     
         panel.add(addButton);
         
+        //edit button
         JButton editButton = new JButton("Edit");
         editButton.setToolTipText("Edit selected customer");
         editButton.addActionListener((ActionEvent) -> {
@@ -89,7 +104,7 @@ public class SupplierFrame  extends JFrame {
         panel.add(editButton);
         
        
-        
+        //help button
         JButton helpButton = new JButton("Help");
         helpButton.addActionListener((ActionEvent) -> {
             doHelpButton();
@@ -97,6 +112,7 @@ public class SupplierFrame  extends JFrame {
     
         panel.add(helpButton);
          
+        //exit button
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener((ActionEvent) -> {
             dispose();
@@ -108,12 +124,21 @@ public class SupplierFrame  extends JFrame {
         
     }
     
+    /**
+     * Method executes when add button is pressed
+     * Written by Michael Meesseman
+     */ 
     private void doAddButton() {
     	SupplierForm supplierForm = new SupplierForm(this, "Add Supplier", true);
         supplierForm.setLocationRelativeTo(this);
         supplierForm.setVisible(true);
     }
     
+    /**
+     * Method executes when edit button is pressed
+     * * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */ 
     private void doEditButton() throws SQLException {
     	int selectedRow = supplierTable.getSelectedRow();
         if (selectedRow == -1) {
@@ -131,7 +156,10 @@ public class SupplierFrame  extends JFrame {
     }
     
     
-    
+    /**
+     * Method executes when help button is pressed.
+     * Written by Michael Meesseman
+     */
     private void doHelpButton()
     {
     	JOptionPane.showMessageDialog(this, "Press the 'Add' button to add a supplier. \n"
@@ -140,10 +168,22 @@ public class SupplierFrame  extends JFrame {
                     "Help Window", JOptionPane.INFORMATION_MESSAGE);
     }
     
+    
+    /**
+     * Method to refresh the table from the database.
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
     public void fireDatabaseUpdatedEvent() throws SQLException {
     	supplierTableModel.databaseUpdated();
     }
        
+    /**
+     * Method to build the frame table that goes in center.
+     * @return table	JTable to populate database results
+     * @exception SQLException	exception for database queries.
+     * Written by Michael Meesseman
+     */
    private JTable buildSupplierTable() throws SQLException {
         supplierTableModel = new SupplierTableModel();
         JTable table = new JTable((javax.swing.table.TableModel) supplierTableModel);
@@ -152,8 +192,15 @@ public class SupplierFrame  extends JFrame {
         return table;
    }
    
+   
+   /**
+    * Method to build the search panel.
+    * @return panel	panel which populates the NORTH end of frame.
+    * Written by Michael Meesseman
+    */
  private JPanel buildSearchPanel() {
 	   
+	// drop down box fields
 	   String[] fields = {"Supplier ID", "Last Name", 
 	    		"First Name", "Contact Info ID", "Address ID", "Company ID", "Street Address",
 	    		"City", "State", "Zip Code", "Unit Number", "Home Phone", "Cell Phone", 
@@ -161,6 +208,7 @@ public class SupplierFrame  extends JFrame {
 	   
 	   JPanel panel = new JPanel();
 	   
+	 //text field initialize
 	   searchField = new JTextField();
 	   Dimension longField = new Dimension(300, 20);
        searchField.setPreferredSize(longField);
@@ -168,9 +216,11 @@ public class SupplierFrame  extends JFrame {
        
        panel.add(searchField);
        
+    // combo box initialize
        searchCombo = new JComboBox(fields);
        panel.add(searchCombo);
        
+       //search button
        JButton searchButton = new JButton("Search");
        searchButton.addActionListener((ActionEvent) -> {
            try {
@@ -186,10 +236,16 @@ public class SupplierFrame  extends JFrame {
 	   return panel;
    }
    
+ /**
+  * Method executes when search button is pressed
+  * @exception SQLException	exception for database queries.
+  * Written by Michael Meesseman
+  */
    private void doSearchButton() throws SQLException {
 	   
 	   String column;
 	   
+	// switch to set search parameter to database field name.
 	   switch(searchCombo.getSelectedIndex())
 	   {
 	   case 0:
@@ -243,6 +299,9 @@ public class SupplierFrame  extends JFrame {
 		   
 	   }
 	   
+	// empty search field refreshes table to all entries.
+ 	   // otherwise database is filled with query results from database.
+ 	   // if search result does not return a result a dialog box notifies the user. 
 	   if(searchField.getText().equals(""))
 		   supplierTableModel.reset();
 	   else
