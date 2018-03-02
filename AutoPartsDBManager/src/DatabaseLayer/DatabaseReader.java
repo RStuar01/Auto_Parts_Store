@@ -1587,4 +1587,13 @@ public class DatabaseReader implements ReaderDAO {
 		
 		return lineNumber;
 	}
+/**
+	@Override
+	public String getQtyInStock(int parseInt) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+*/
+
 }

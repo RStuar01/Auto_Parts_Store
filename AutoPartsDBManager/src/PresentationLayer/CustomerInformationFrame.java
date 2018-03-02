@@ -19,7 +19,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import BusinessLayer.Customer;
 
 /**
- * Extends JFrame to build a frame for customers purchasing.
+ * Extends JFrame to build a frame for customers tracking.
  * Calls several methods to build the frame.
  * Written by Michael Meesseman
  */

@@ -11,7 +11,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -19,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-
 import BusinessLayer.AccountingPurchases;
 import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;

@@ -7,6 +7,17 @@
  */
 package DatabaseLayer;
 
+import java.util.List;
+
+import BusinessLayer.AccountingPurchases;
+import BusinessLayer.Company;
+import BusinessLayer.Customer;
+import BusinessLayer.Employee;
+import BusinessLayer.Invoice;
+import BusinessLayer.InvoiceLineItem;
+import BusinessLayer.Product;
+import BusinessLayer.Supplier;
+
 /**
  * This interface maps the DataReader interface to the DAOFactory class
  * Written by Rick Stuart

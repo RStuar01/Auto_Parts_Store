@@ -2,9 +2,7 @@ package PresentationLayer;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
-
 import BusinessLayer.Company;
 import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
@@ -17,8 +15,9 @@ import DatabaseLayer.ReaderDAO;
  */
 public class CompanyTableModel extends AbstractTableModel{
 	
+				private static ReaderDAO readerDAO = DAOFactory.getReaderDAO();;
 	
-				ReaderDAO readerDAO = DAOFactory.getReaderDAO();
+				//readerDAO = DAOFactory.getReaderDAO();
 	
 				//return list for some methods initialized
 			    private List<Company> companies;
@@ -34,8 +33,8 @@ public class CompanyTableModel extends AbstractTableModel{
 			     * Written by Michael Meesseman
 			     */
 			    public CompanyTableModel() throws SQLException{
-			    	companies = readerDAO.obtainCompanyList();
-			
+
+			        companies = readerDAO.obtainCompanyList();
 			    }
 			    
 			    @Override 

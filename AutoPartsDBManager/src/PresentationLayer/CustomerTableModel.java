@@ -2,20 +2,20 @@ package PresentationLayer;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
-
 import BusinessLayer.Customer;
 import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
 import DatabaseLayer.ReaderDAO;
 
 /**
- * Extends AbstartTableModel to build a table for companies Frame.
+ * Extends AbstartTableModel to build a table for customer Frame.
  * Written by Michael Meesseman
  */
 public class CustomerTableModel extends AbstractTableModel {
 
+		//static private ReaderDAO readerDAO;
+		
 	//return list for some methods initialized
 	    private List<Customer> customers;
 	    private ReaderDAO readerDAO = DAOFactory.getReaderDAO();
@@ -141,7 +141,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	     * Method is used to see if the database query returned a result.
 	     * @param column 	String of the column name to be searched
 	     * @param search	String of text to search for.
-	     * @return company	returns list of customers to see if a search result was found.
+	     * @return customer	returns list of customers to see if a search result was found.
 	     * Written by Michael Meesseman
 	     */
 	    public List<Customer> resultChecker(String column, String search) {
