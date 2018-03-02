@@ -1,3 +1,10 @@
+/**
+ * Class Name:		DatabaseWriter
+ * Description:		This class contains the methods called using data access objects to Write information
+ * 					to the database, and also methods which call these methods directly.
+ * @author Craig Mathes, Michael Meesseman, Richard Stuart
+ * @created Saturday, 1,20,2018
+ */
 package DatabaseLayer;
 
 import java.sql.Connection;
@@ -10,15 +17,13 @@ import java.util.ArrayList;
 import BusinessLayer.Product;
 
 /**
- * Class Name:		DatabaseWriter
- * Description:		This class contains the methods called using data access objects to Write information
- * 					to the database, and also methods which call these methods directly.
- * @author Craig Mathes, Michael Meesseman, Richard Stuart
- * @created Saturday, 1,20,2018
+ * This class holds the methods called from other classes to write data to the database
+ * Written by Rick Stuart
  */
 public class DatabaseWriter implements WriterDAO {
-	private static Connection connObj = null;	
+	private Connection connObj = null;	
 	private WriteHelper writerHelper = null;
+	private ReaderDAO readerDAO;
 	
 	/**
 	 * This is the Constructor that is called from the DAOFactory class.
@@ -28,6 +33,7 @@ public class DatabaseWriter implements WriterDAO {
 	public DatabaseWriter() {
 		
 		writerHelper = new WriteHelper();
+		readerDAO = DAOFactory.getReaderDAO();
 	}
 	
 	/**
@@ -102,9 +108,9 @@ public class DatabaseWriter implements WriterDAO {
 		
 		// write new address and contact records, obtain the id's
 		writerHelper.writeAddressInformation(stAddress, city, state, zipCode, unitNumber);
-		addressID = writerHelper.obtainNewAddressID(stAddress, city, state, zipCode, unitNumber);
+		addressID = readerDAO.obtainNewAddressID(stAddress, city, state, zipCode, unitNumber);
 		writerHelper.writeContactInformation(phoneNumber, cellPhone, emailAddress);
-		contactInfoID = writerHelper.obtainNewContactInformationID(phoneNumber, cellPhone, emailAddress);
+		contactInfoID = readerDAO.obtainNewContactInformationID(phoneNumber, cellPhone, emailAddress);
 		
 		// determine type of person to create
 		if(choice == "Customer") {
@@ -142,9 +148,9 @@ public class DatabaseWriter implements WriterDAO {
 		
 		// write new address and contact information and obtain their ID's
 		writerHelper.writeAddressInformation(stAddress, city, state, zipCode, unitNumber);
-		addressID = writerHelper.obtainNewAddressID(stAddress, city, state, zipCode, unitNumber);
+		addressID = readerDAO.obtainNewAddressID(stAddress, city, state, zipCode, unitNumber);
 		writerHelper.writeContactInformation(phoneNumber, cellPhone, emailAddress);
-		contactInfoID = writerHelper.obtainNewContactInformationID(phoneNumber, cellPhone, emailAddress);
+		contactInfoID = readerDAO.obtainNewContactInformationID(phoneNumber, cellPhone, emailAddress);
 		
 		// write the new company information.
 		writerHelper.writeCompanyInformation(addressID, contactInfoID, companyName);
@@ -183,12 +189,12 @@ public class DatabaseWriter implements WriterDAO {
 				minStockQuantity, maxStockQuantity, location, quantityInStock);
 		
 		// obtain the ID for the product
-		productID = writerHelper.obtainProductID(description, yearMin, yearMax, make, model,
+		productID = readerDAO.obtainProductID(description, yearMin, yearMax, make, model,
 				supplyPrice, sellPrice, coreCharge, compatNum, companyID,
 				minStockQuantity, maxStockQuantity, location, quantityInStock);
 		
 		// obtain the amount spent on product for accounting
-		dollarValue = writerHelper.obtainDollarValue(quantityInStock, supplyPrice);
+		dollarValue = readerDAO.obtainDollarValue(quantityInStock, supplyPrice);
 	
 		// Enter the purchase to accounting purchases
 		writerHelper.enterToAccountingPurchases (quantityInStock, dollarValue, productID);
@@ -216,16 +222,16 @@ public class DatabaseWriter implements WriterDAO {
 		
 		// create a new invoice and obtain it's id
 		writerHelper.createInvoice(date, time, customerID, employeeID);
-		invoiceID = writerHelper.obtainNewInvoiceNumber(date, time, customerID, employeeID);
+		invoiceID = readerDAO.obtainNewInvoiceNumber(date, time, customerID, employeeID);
 		
 		// create a new line item 
 		writerHelper.createInvoiceLineItem(invoiceID, quantityPurchased, productID);
 		
 		// obtain auto-incremented invoice ID, sale price, total cost and tax collected
-		lineID = writerHelper.obtainLineItemID(invoiceID, quantityPurchased, productID);
-		sellPrice = writerHelper.obtainSellPrice(productID);
-		dollarValue = writerHelper.obtainDollarValue(quantityPurchased, sellPrice);
-		salesTax = writerHelper.obtainSalesTax(dollarValue);
+		lineID = readerDAO.obtainLineItemID(invoiceID, quantityPurchased, productID);
+		sellPrice = readerDAO.obtainSellPrice(productID);
+		dollarValue = readerDAO.obtainDollarValue(quantityPurchased, sellPrice);
+		salesTax = readerDAO.obtainSalesTax(dollarValue);
 		
 		// Enter the sale to accounting records
 		writerHelper.enterAccountingSales(lineID, quantityPurchased, productID, dollarValue,
@@ -290,7 +296,7 @@ public class DatabaseWriter implements WriterDAO {
 		
 		Statement stmt = null;
 		
-		connObj = DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 								
 		try {
 			stmt = connObj.createStatement();
@@ -301,7 +307,7 @@ public class DatabaseWriter implements WriterDAO {
 			System.out.println(e.toString());
 		}
 				
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 	}
 	
 	/**
@@ -340,7 +346,7 @@ public class DatabaseWriter implements WriterDAO {
 		
 		Statement stmt = null;
 		
-		connObj = DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 								
 		try {
 			stmt = connObj.createStatement();
@@ -350,7 +356,7 @@ public class DatabaseWriter implements WriterDAO {
 			System.out.println(e.toString());
 		}
 				
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 	}
 	
 	/**
@@ -372,7 +378,7 @@ public class DatabaseWriter implements WriterDAO {
 		
 		Statement stmt = null;
 		
-		connObj = DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 								
 		try {
 			stmt = connObj.createStatement();
@@ -382,7 +388,7 @@ public class DatabaseWriter implements WriterDAO {
 			System.out.println(e.toString());
 		}
 				
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 	}
 	
 	/**
@@ -405,7 +411,7 @@ public class DatabaseWriter implements WriterDAO {
 		
 		Statement stmt = null;
 		
-		connObj = DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 								
 		try {
 			stmt = connObj.createStatement();
@@ -415,7 +421,7 @@ public class DatabaseWriter implements WriterDAO {
 			System.out.println(e.toString());
 		}
 				
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 	}
 	
 	/**
@@ -436,7 +442,7 @@ public class DatabaseWriter implements WriterDAO {
 		
 		Statement stmt = null;
 		
-		connObj = DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 								
 		try {	
 			stmt = connObj.createStatement();
@@ -449,7 +455,7 @@ public class DatabaseWriter implements WriterDAO {
 			System.out.println(e.toString());
 		}
 				
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 		
 		if(companyName.length() != 0) {
 			valid = true;
@@ -475,7 +481,7 @@ public class DatabaseWriter implements WriterDAO {
 		
 		Statement stmt = null;
 		
-		connObj = DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 								
 		try {	
 			stmt = connObj.createStatement();
@@ -488,7 +494,7 @@ public class DatabaseWriter implements WriterDAO {
 			System.out.println(e.toString());
 		}
 				
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 		
 		if(productName.length() != 0) {
 			valid = true;
@@ -515,7 +521,7 @@ public class DatabaseWriter implements WriterDAO {
 		
 		Statement stmt = null;
 		
-		connObj = DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 								
 		try {	
 			stmt = connObj.createStatement();
@@ -528,7 +534,7 @@ public class DatabaseWriter implements WriterDAO {
 			System.out.println(e.toString());
 		}
 				
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 		
 		if(customerName.length() != 0) {
 			valid = true;
@@ -554,7 +560,7 @@ public class DatabaseWriter implements WriterDAO {
 		
 		Statement stmt = null;
 		
-		connObj = DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 								
 		try {	
 			stmt = connObj.createStatement();
@@ -567,7 +573,7 @@ public class DatabaseWriter implements WriterDAO {
 			System.out.println(e.toString());
 		}
 				
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 		
 		if(employeeName.length() != 0) {
 			valid = true;
@@ -594,13 +600,13 @@ public class DatabaseWriter implements WriterDAO {
 		// Create a new invoice line item and obtain it's line number ID
 		createInvoiceLineItem(invoiceNumber, purchasedQuantity,
 				productID);
-		lineID = writerHelper.obtainInvoiceLineID(invoiceNumber, purchasedQuantity,
+		lineID = readerDAO.obtainInvoiceLineID(invoiceNumber, purchasedQuantity,
 				productID);
 		
 		// obtain price, total value and sales tax for this line item
-		sellPrice = writerHelper.obtainSellPrice(productID);
-		dollarValue = writerHelper.obtainDollarValue(purchasedQuantity, sellPrice);
-		salesTax = writerHelper.obtainSalesTax(dollarValue);
+		sellPrice = readerDAO.obtainSellPrice(productID);
+		dollarValue = readerDAO.obtainDollarValue(purchasedQuantity, sellPrice);
+		salesTax = readerDAO.obtainSalesTax(dollarValue);
 		
 		// write the sale to accounting records and update quantity in warehouse
 		writerHelper.enterAccountingSales(lineID, purchasedQuantity, productID, dollarValue,
@@ -715,7 +721,7 @@ public class DatabaseWriter implements WriterDAO {
 				+ "', quantity_in_stock = '" + quantityInStock
 				+ "' WHERE product = " + productID + ";";
 				
-		connObj = DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 		
 		try {
 			stmt = connObj.createStatement();
@@ -725,7 +731,7 @@ public class DatabaseWriter implements WriterDAO {
 			System.out.println(e.toString());
 		}
 		
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 	}
 	
 	/**

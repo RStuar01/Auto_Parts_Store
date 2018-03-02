@@ -1,5 +1,3 @@
-package DatabaseLayer;
-
 /**
  * Interface Name:		ReaderDAO
  * Description:			This interface provides the data access object used to implement
@@ -7,6 +5,11 @@ package DatabaseLayer;
  * @author Craig Mathes, Michael Meesseman, Richard Stuart
  * @created Saturday, 1,20,2018
  */
+package DatabaseLayer;
+
+/**
+ * This interface maps the DataReader interface to the DAOFactory class
+ * Written by Rick Stuart
+ */
 public interface ReaderDAO extends DataReader {
-	public String obtainCompanyName(String companyID);
 }

@@ -26,6 +26,7 @@ import javax.swing.WindowConstants;
 import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
 import DatabaseLayer.DatabaseWriter;
+import DatabaseLayer.ReaderDAO;
 import DatabaseLayer.WriterDAO;
 import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Customer;
@@ -55,6 +56,7 @@ public class SalesItemForm extends JDialog{
 			    private String employeeID = "";
 			    private boolean dataEntered = true;
 			    private static WriterDAO writerDAO;
+			    private ReaderDAO readerDAO;
 			    
 			    private InvoiceLineItem invoiceLineItem = new InvoiceLineItem();
 			    
@@ -69,6 +71,7 @@ public class SalesItemForm extends JDialog{
 			        
 			     // Added by Rick
 			        writerDAO = DAOFactory.getWriterDAO();
+			        readerDAO = DAOFactory.getReaderDAO();
 			    }
 			    
 			    public SalesItemForm(java.awt.Frame parent, String title, boolean modal, InvoiceLineItem invoiceLineItem) {
@@ -222,7 +225,7 @@ public class SalesItemForm extends JDialog{
 			    	String productID = verifyEntry(productIDField);
 			    	
 
-			    	String qtyInStockString = DatabaseReader.getQtyInStock(Integer.parseInt(productIDField.getText()));
+			    	String qtyInStockString = readerDAO.getQtyInStock(Integer.parseInt(productIDField.getText()));
 			    	Integer qtyInStock = Integer.parseInt(qtyInStockString);
 			    	
 			    	boolean inStock = false;

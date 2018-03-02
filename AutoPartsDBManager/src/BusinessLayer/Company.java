@@ -1,5 +1,3 @@
-package BusinessLayer;
-
 /**
  * Class Name:					Company
  * Description:					This class inherits from People and provides fields specific
@@ -7,6 +5,14 @@ package BusinessLayer;
  * 								overridden toString method.
  * @author Craig Mathes, Michael Meesseman, Richard Stuart
  * @created Saturday, 1,27,2018
+ */
+package BusinessLayer;
+
+/**
+ * This class contains the fields, constructors, get accessors and set mutators necessary
+ * 			to create a Company object for use by the Database and 
+ * 			Presentation layers
+ * Written by Rick Stuart
  */
 public class Company {
 	
@@ -34,8 +40,6 @@ public class Company {
 			String city, String state, String zipCode, String unitNumber,
 			String phoneNumber, String cellPhoneNumber, String emailAddress) {
 		this.companyID = companyID;
-		//this.addressID = addressID;
-		//this.contactInfoID = contactInfoID;
 		this.companyName = companyName;
 		this.streetAddress = streetAddress;
 		this.city = city;
@@ -147,5 +151,4 @@ public class Company {
 	public String toString() {
 		return companyName;
 	}
-
 }

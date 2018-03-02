@@ -23,6 +23,7 @@ import javax.swing.WindowConstants;
 import BusinessLayer.AccountingPurchases;
 import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
+import DatabaseLayer.ReaderDAO;
 import DatabaseLayer.WriterDAO;
 
 
@@ -42,7 +43,8 @@ public class AccountingPurchaseForm extends JDialog{
 		    
 		  //Added by Rick
 		    private boolean dataEntered = true;
-		    private static WriterDAO writerDAO;
+		    private WriterDAO writerDAO;
+		    private ReaderDAO readerDAO;
 		   
 		    private AccountingPurchases purchase = new AccountingPurchases();
 		    
@@ -62,6 +64,7 @@ public class AccountingPurchaseForm extends JDialog{
 		        
 		        //Added by Rick
 		        writerDAO = DAOFactory.getWriterDAO();
+		        readerDAO = DAOFactory.getReaderDAO();
 		    }
 		    
 		    /**
@@ -270,7 +273,7 @@ public class AccountingPurchaseForm extends JDialog{
 		    	if(dataEntered && ValidateInteger.validateInteger(purchaseQtyField, this) && valid) {
 		    		
 		    			// calculates total price of purchase
-		    			double supplierPrice = Double.parseDouble(DatabaseReader.obtainSupplierPrice(productIDField.getText()));
+		    			double supplierPrice = Double.parseDouble(readerDAO.obtainSupplierPrice(productIDField.getText()));
 				    	int qty = Integer.parseInt(quantityPurchased);
 				    	double total = supplierPrice * qty;
 				    	

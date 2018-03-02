@@ -1,22 +1,20 @@
-package DatabaseLayer;
-
-import java.sql.Connection;
-import java.util.ArrayList;
-
-import BusinessLayer.Product;
-
-// List imports
-
 /**
  * Interface Name:	DataWriter
  * Description:		This interface defines the methods which are employed by the DatabaseWriter class.
  * @author Craig Mathes, Michael Meesseman, Richard Stuart
  * @created Saturday, 1,20,2018
  */
+package DatabaseLayer;
+
+import java.util.ArrayList;
+import BusinessLayer.Product;
+
+/**
+ * This interface holds the method signatures for the methods used in the DatabaseWriter class
+ * Written by Rick Stuart
+ */
 public interface DataWriter {
 
-	//public static void closeConnection(Connection connObj);
-	//public static Connection getDBConnection();
 	public void manageNewPersonCreation(String choice, String lastName, String firstName,
 			String stAddress, String city, String state, String zipCode, String unitNumber,
 			String phoneNumber, String cellPhone, String emailAddress, String companyID);

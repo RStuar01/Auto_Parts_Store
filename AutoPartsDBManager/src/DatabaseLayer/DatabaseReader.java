@@ -1,3 +1,10 @@
+/**
+ * Class Name:		DatabaseReader
+ * Description:		This class contains the methods called using data access objects to Read information
+ * 					from the database.
+ * @author Craig Mathes, Michael Meesseman, Richard Stuart
+ * @created Saturday, 1,20,2018
+ */
 package DatabaseLayer;
 
 import java.sql.Connection;
@@ -17,11 +24,8 @@ import BusinessLayer.Product;
 import BusinessLayer.Supplier;
 
 /**
- * Class Name:		DatabaseReader
- * Description:		This class contains the methods called using data access objects to Read information
- * 					from the database.
- * @author Craig Mathes, Michael Meesseman, Richard Stuart
- * @created Saturday, 1,20,2018
+ * This class holds the methods to read data from the database.
+ * Written by Rick Stuart
  */
 public class DatabaseReader implements ReaderDAO {
 	
@@ -34,8 +38,6 @@ public class DatabaseReader implements ReaderDAO {
 	 * Written by Rick Stuart
 	 */
 	public DatabaseReader() {
-		connObj = getDBConnection();
-		closeConnection(connObj);
 	}
 	
 	/**
@@ -81,8 +83,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 		
-		DatabaseWriter.closeConnection(connObj);
-			
+		closeConnection(connObj);
 		return connection;
 	}
 	
@@ -92,7 +93,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return qtyInStock		String to indicate the number of items in stock
 	 * Written by Rick Stuart
 	 */
-	public static String getQtyInStock(Integer productID) {
+	public String getQtyInStock(Integer productID) {
 	
 		String query = "SELECT quantity_in_stock from product where product = " + productID;
 	
@@ -100,7 +101,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj = DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 	
 		try {
 			stmt = connObj.createStatement();
@@ -113,7 +114,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 	
 		return qtyInStock;
 	}
@@ -154,7 +155,7 @@ public class DatabaseReader implements ReaderDAO {
 		
 		Statement stmt = null;
 		
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj =  getDBConnection();
 						
 		try {	
 			System.out.println("In the try statement");
@@ -162,7 +163,6 @@ public class DatabaseReader implements ReaderDAO {
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				System.out.println("In the While statement");
-				//productID = rs.getString(1);
 				description = rs.getString(1);
 				yearMin = rs.getString(2);
 				yearMax = rs.getString(3);
@@ -188,7 +188,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 		
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 		
 		return existingProduct;
 	}
@@ -198,7 +198,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	company		ArrayList of company objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Company> obtainCompanyList() {
+	public ArrayList<Company> obtainCompanyList() {
 	
 		String query = "select * from company, address, contact_info "
 			+ "where Address_address_id = address.address_id "
@@ -208,7 +208,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj =  getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -248,7 +248,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 		
 		return company;
 	}
@@ -258,7 +258,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return customers	ArrayList of customer objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Customer> obtainCustomerList() {
+	public ArrayList<Customer> obtainCustomerList() {
 		
 		String query = "SELECT  * FROM customer, address, contact_info "
 				+ "where customer.contact_info_contact_info_id = contact_info.contact_info_id "
@@ -268,7 +268,7 @@ public class DatabaseReader implements ReaderDAO {
 		
 		Statement stmt = null;
 		
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj =  getDBConnection();
 						
 		try {	
 			stmt = connObj.createStatement();
@@ -310,7 +310,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 		
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 				
 		return customers;
 	}
@@ -320,7 +320,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	employees	ArrayList of employee objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Employee> obtainEmployeeList() {
+	public ArrayList<Employee> obtainEmployeeList() {
 	
 		String query = "SELECT  * FROM employee, address, contact_info "
 			+ "where employee.contact_info_contact_info_id = contact_info.contact_info_id "
@@ -329,7 +329,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj =  getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -371,7 +371,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return employees;
 	}
@@ -381,14 +381,14 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return invoices		ArrayList of invoice objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Invoice> obtainInvoiceList() {
+	public ArrayList<Invoice> obtainInvoiceList() {
 	
 		String query = "SELECT * FROM invoice";
 		ArrayList<Invoice> invoices = new ArrayList<>();
 		
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj =  getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -414,7 +414,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return invoices;
 	}
@@ -424,7 +424,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	invoiceLineItems	ArrayList of lineItem objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemList(String invoiceNumberInput) {
+	public ArrayList<InvoiceLineItem> obtainInvoiceLineItemList(String invoiceNumberInput) {
 	
 		
 		String query = "SELECT * FROM invoice_line_item where invoice_invoice_number = '" + invoiceNumberInput + "'";
@@ -432,7 +432,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj =  getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -457,7 +457,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return invoiceLineItems;
 	}
@@ -468,14 +468,14 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	password		String holding the password for login validation
 	 * Written by Michael Meesseman
 	 */
-	public static String obtainPassword(String username) {
+	public String obtainPassword(String username) {
 	
 		String query = "SELECT password FROM login WHERE username = '" + username + "'";
 		String password = "";
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -489,7 +489,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 	
 		return password;
 	}
@@ -501,7 +501,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	customers	ArrayList of customer objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Customer> obtainCustomerFilter(String column, String search)
+	public ArrayList<Customer> obtainCustomerFilter(String column, String search)
 	{
 		String query = "SELECT  * FROM customer, address, contact_info "
 			+ "where customer.contact_info_contact_info_id = contact_info.contact_info_id "
@@ -511,7 +511,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -553,7 +553,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return customers;
 	}
@@ -565,7 +565,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	employees		ArrayList of employee objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Employee> obtainEmployeeFilter(String column, String search)
+	public ArrayList<Employee> obtainEmployeeFilter(String column, String search)
 	{
 		String query = "SELECT  * FROM employee, address, contact_info "
 			+ "where employee.contact_info_contact_info_id = contact_info.contact_info_id "
@@ -575,7 +575,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -617,7 +617,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return employees;
 	}
@@ -630,7 +630,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	invoiceLineItems		ArrayList of lineItem objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<InvoiceLineItem> obtainInvoiceLineItemFilter(String invoiceNumberInput,
+	public ArrayList<InvoiceLineItem> obtainInvoiceLineItemFilter(String invoiceNumberInput,
 		String column, String search) {
 	
 	
@@ -640,7 +640,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -665,7 +665,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return invoiceLineItems;
 	}
@@ -677,14 +677,14 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	invoices		ArrayList of invoice objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Invoice> obtainInvoiceFilter(String column, String search) {
+	public ArrayList<Invoice> obtainInvoiceFilter(String column, String search) {
 	
 		String query = "SELECT * FROM invoice where " + column + " = '" + search + "'";
 		ArrayList<Invoice> invoices = new ArrayList<>();
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -710,7 +710,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return invoices;
 	}
@@ -722,7 +722,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	company			ArrayList of company objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Company> obtainCompanyFilter(String column, String search) {
+	public ArrayList<Company> obtainCompanyFilter(String column, String search) {
 	
 		String query = "select * from company, address, contact_info "
 			+ "where Address_address_id = address.address_id "
@@ -732,7 +732,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -773,7 +773,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return company;
 	}
@@ -785,7 +785,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	supplier		ArrayList of supplier objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Supplier> obtainSupplierFilter(String column, String search) {
+	public ArrayList<Supplier> obtainSupplierFilter(String column, String search) {
 
 		String query = "SELECT * FROM supplier, address, contact_info, company "
 			+ "where supplier.Address_address_id = address.address_id "
@@ -796,7 +796,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -843,7 +843,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return supplier;
 	}
@@ -863,7 +863,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -876,7 +876,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return companyName;
 	}
@@ -887,7 +887,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return supplierPrice	String holding the suppliers price
 	 * Written by Rick Stuart
 	 */
-	public static String obtainSupplierPrice(String productID) {
+	public String obtainSupplierPrice(String productID) {
 	
 		Integer productIDInt = Integer.parseInt(productID);
 	
@@ -898,7 +898,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -911,7 +911,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return supplierPrice;
 	}
@@ -921,14 +921,14 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	products	ArrayList of product objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Product> obtainProductList() {
+	public ArrayList<Product> obtainProductList() {
 	
 		String query = "SELECT * FROM product";
 		ArrayList<Product> products = new ArrayList<>();
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -974,7 +974,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return products;
 	}
@@ -984,14 +984,14 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	purchases	ArrayList of purchase objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<AccountingPurchases> obtainPurchaseList() {
+	public ArrayList<AccountingPurchases> obtainPurchaseList() {
 	
 		String query = "SELECT * FROM accounting_purchases";
 		ArrayList<AccountingPurchases> purchases = new ArrayList<>();
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -1014,7 +1014,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return purchases;
 	}
@@ -1026,7 +1026,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	purchases		ArrayList of purchase objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<AccountingPurchases> obtainPurchaseFilter(String column, String search)
+	public ArrayList<AccountingPurchases> obtainPurchaseFilter(String column, String search)
 	{
 		String query = "SELECT * FROM accounting_purchases where " + column + " = '" + search + "'";
 	
@@ -1034,7 +1034,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -1057,7 +1057,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return purchases;
 	}
@@ -1069,14 +1069,14 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	products		ArrayList of product objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Product> obtainProductFilter(String column, String search) {
+	public ArrayList<Product> obtainProductFilter(String column, String search) {
 	
 		String query = "SELECT * FROM product where " + column + " = '" + search + "'";
 		ArrayList<Product> products = new ArrayList<>();
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -1122,7 +1122,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 		
 		return products;
 	}
@@ -1132,7 +1132,7 @@ public class DatabaseReader implements ReaderDAO {
 	 * @return	supplier		ArrayList of supplier objects
 	 * Written by Michael Meesseman
 	 */
-	public static ArrayList<Supplier> obtainSupplierList() {
+	public ArrayList<Supplier> obtainSupplierList() {
 	
 		String query = "SELECT * FROM supplier, address, contact_info, company "
 			+ "where supplier.Address_address_id = address.address_id "
@@ -1143,7 +1143,7 @@ public class DatabaseReader implements ReaderDAO {
 	
 		Statement stmt = null;
 	
-		connObj =  DatabaseWriter.getDBConnection();
+		connObj = getDBConnection();
 					
 		try {	
 			stmt = connObj.createStatement();
@@ -1190,7 +1190,7 @@ public class DatabaseReader implements ReaderDAO {
 			System.out.println(e.toString());
 		}
 	
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
 		return supplier;
 	}
@@ -1212,26 +1212,379 @@ public class DatabaseReader implements ReaderDAO {
 		
 		Statement stmt = null;
 		
-		connObj =  DatabaseWriter.getDBConnection();
-		System.out.println("Product ID: " + productID);
+		connObj = getDBConnection();
 		
 		try {	
 			stmt = connObj.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				System.out.println("In the quantity while statement");
 				quantity = rs.getString(1);
 			}
-			System.out.println("quantity: " + quantity);
 		}
 		catch (SQLException e) {
 			System.out.println(e.toString());
 		}
 		
-		DatabaseWriter.closeConnection(connObj);
+		closeConnection(connObj);
 			
-		System.out.println("Quantity: " + quantity);
-		
 		return quantity;
+	}
+	
+	/**
+	 * This helper method uses supplied address information to obtain the ID number 
+	 * 		for an address which was just written to the database.
+	 * @param stAddress				String variable for the street address.
+	 * @param city					String variable for the city.
+	 * @param state					String variable for the state.
+	 * @param zipCode				String variable for the zip code.
+	 * @param unitNumber			String variable for the unit number.
+	 * @return addressID			String variable for the address ID number.
+	 * Written by Rick Stuart
+	 */
+	public String obtainNewAddressID(String stAddress, String city, String state, 
+			String zipCode, String unitNumber) {
+		
+		String addressID = null;
+		String query = null;
+		ResultSet rs = null;
+		
+		if(unitNumber.equals("NULL")) {
+			query = "select address_id " +
+					"from address " +
+					"where street_address = '" + stAddress + "' and city = '" + city + "' and state = '" + state +
+					"' and zip_code = '" + zipCode + "' and unit_number  is null';";
+		}
+		else {
+			query = "select address_id from address where street_address = '" + stAddress +
+					"' and city = '" + city + "' and state = '" + state +
+					"' and zip_code = '" + zipCode +
+					"' and unit_number = '" + unitNumber + "';";
+		}
+		
+		Statement stmt = null;
+								
+		connObj = getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(query);			
+			while(rs.next()) {
+				addressID = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		closeConnection(connObj);		
+				
+		return addressID;
+	}
+	
+	/**
+	 * This helper method uses supplied information to locate and obtain the 
+	 * 		contact information ID number which corresponds to the information 
+	 * 		just written to the database.
+	 * @param phoneNumber			String variable for the phone number.
+	 * @param cellPhone				String variable for the cell phone number.
+	 * @param emailAddress			String variable for the email address.
+	 * @return contactInfoID		String variable for the contact info ID number.
+	 * Written by Rick Stuart
+	 */
+	public String obtainNewContactInformationID(String phoneNumber, String cellPhone, 
+			String emailAddress) {
+		
+		String contactInfoID = null;
+		String query = null;
+		ResultSet rs = null;
+		
+		query = "select contact_info_id " +
+				"from contact_info " +
+				"where phone_number = '" + phoneNumber + "' and cell_phone_number = '" + cellPhone +
+				"' and email_address = '" + emailAddress + "';";
+		
+		Statement stmt = null;
+										
+		connObj = getDBConnection();
+										
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(query);			
+			while(rs.next()) {
+				contactInfoID = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+						
+		closeConnection(connObj);		
+		
+		return contactInfoID;
+	}
+	
+	/**
+	 * This helper method obtains the record ID number of a product just written
+	 * 			to the database
+	 * @param description			String to hold product description
+	 * @param yearMin				String to define minimum of year range
+	 * @param yearMax				String to define maximum of year range
+	 * @param make					String to define vehicle make
+	 * @param model					String to define vehicle model
+	 * @param supplyPrice			String to specify supplier price of product
+	 * @param sellPrice				String to specify selling price of product
+	 * @param coreCharge			String to define core charge cost
+	 * @param compatNum				String to define part compatibility with other parts
+	 * @param companyID				String to hold company record ID number
+	 * @param minStockQuantity		String to specify ordering quantities
+	 * @param maxStockQuantity		String to specify ordering quantities
+	 * @param location				String to define location in warehouse
+	 * @param quantityInStock		String to set quantity entering building
+	 * @return productID			String to define the record ID number for product
+	 * Written by Rick Stuart
+	 */
+	public String obtainProductID(String description, String yearMin, String yearMax,
+			String make, String model, String supplyPrice, String sellPrice,
+			String coreCharge, String compatNum, String companyID, String minStockQuantity,
+			String maxStockQuantity, String location, String quantityInStock) {
+		
+		String productID = null;
+		String query = null;
+		ResultSet rs = null;
+		
+		query = "select product " +
+				"from product " +
+				"where description = '" + description + "' and year_minimum = '" + yearMin +
+				"' and year_maximum = '" + yearMax + "' and make = '" + make + "' and model = '" +
+				model + "' and supplier_price = '" + supplyPrice + "' and sell_price = '" +
+				sellPrice + "' and core_charge = '" + coreCharge + "' and compatibility_number = '" +
+				compatNum + "' and company_company_id = '" + companyID + 
+				"' and min_quantity_in_stock = '" + minStockQuantity + "' and max_quantity_in_stock = '" +
+				maxStockQuantity + "' and warehouse_location = '" + location + "' and quantity_in_stock = '" +
+				quantityInStock + "';";
+		
+		Statement stmt = null;
+								
+		connObj = getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(query);			
+			while(rs.next()) {
+				productID = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		closeConnection(connObj);
+		
+		return productID;
+	}
+	
+	/**
+	 * This helper method obtains the dollar value based on product purchased 
+	 * 			and number of items purchased.
+	 * @param quantityInStock			String to update inventory
+	 * @param supplyPrice				String to define cost to purchase product
+	 * 									to update accounting purchases records
+	 * @return	dollarValue				String to specify total reorder cost
+	 * Written by Rick Stuart
+	 */
+	public String obtainDollarValue(String quantityInStock, String supplyPrice) {
+		
+		double total = 0;
+		String dollarValue = "";
+		
+		double purchasePrice = Double.parseDouble(supplyPrice);
+		int purchasedQuantity = Integer.parseInt(quantityInStock);
+		
+		total = purchasePrice * purchasedQuantity;
+		
+		dollarValue = String.valueOf(total);
+		
+		return dollarValue;
+	}
+	
+	/**
+	 * This helper method obtains the invoice record ID number for an invoice 
+	 * 			just written to the database.
+	 * @param date				String to hold the date the invoice was created
+	 * @param time				String to hold the time the invoice was created
+	 * @param customerID		String to hold the customer record ID number
+	 * @param employeeID		String to hold the employee record ID number
+	 * @return	invoiceNum		String to specify the invoice record ID number
+	 * Written by Rick Stuart
+	 */
+	public String obtainNewInvoiceNumber(String date, String time, String customerID,
+			String employeeID) {
+		
+		String invoiceNum = "";
+		String query = null;
+		ResultSet rs = null;
+		
+		query = "select invoice_number " +
+				"from invoice " +
+				"where date = '" + date + "' and time = '" + time +
+				"' and customer_customer_id = '" + customerID + "' and employee_employee_id = '" +
+				employeeID + "';";
+		
+		Statement stmt = null;
+		
+		connObj = getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(query);			
+			while(rs.next()) {
+				invoiceNum = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		closeConnection(connObj);
+		
+		return invoiceNum;
+	}
+	
+	/**
+	 * This helper method obtains the line item record ID of a line item just 
+	 * 			written to the database.
+	 * @param invoiceID				String to hold the invoice record ID number
+	 * @param quantityPurchased		String to specify number of items purchased/sold
+	 * @param productID				String to specify product ID number
+	 * @return	lineID				String to hold the line item record ID number
+	 * Written by Rick Stuart
+	 */
+	public String obtainLineItemID(String invoiceID, String quantityPurchased, String productID) {
+		
+		String lineID = "";
+		String query = null;
+		ResultSet rs = null;
+		
+		query = "select invoice_line_number " +
+				"from invoice_line_item " +
+				"where invoice_invoice_number = '" + invoiceID + "' and quantity_purchased = '" +
+				quantityPurchased + "' and product_product = '" + productID + "';";
+		
+		Statement stmt = null;  
+		
+		connObj = getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(query);			
+			while(rs.next()) {
+				lineID = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		closeConnection(connObj);
+		
+		return lineID;
+	}
+	
+	/**
+	 * This helper method obtains the customer's cost to purchase the item
+	 * @param productID			String to specify the product ID number
+	 * @return	price			String to specify the selling price of the product
+	 * Written by Rick Stuart
+	 */
+	public String obtainSellPrice(String productID) {
+		
+		String price = "";
+		String query = null;
+		ResultSet rs = null;
+		
+		query = "select sell_price " +
+				"from product " +
+				"where product = '" + productID + "';";
+		
+		Statement stmt = null;
+		
+		connObj = getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(query);			
+			while(rs.next()) {
+				price = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		closeConnection(connObj);
+		
+		return price;
+	}
+	
+	/**
+	 * This helper method obtains the sales tax to be charged for the line item transaction
+	 * @param dollarValue		String to specify total cost for the line item
+	 * @return	tax				String to specify the sales tax to be charged
+	 * Written by Rick Stuart
+	 */
+	public String obtainSalesTax(String dollarValue) {
+		
+		String tax = "";
+		Double salesTax = 0.0;
+		
+		double cost = Double.parseDouble(dollarValue);
+		salesTax = cost * 0.075;
+		salesTax = (double) Math.round((salesTax * 100) + 0.5) / 100;
+		tax = String.valueOf(salesTax);
+		
+		return tax;
+	}
+	
+	/**
+	 * The helper method obtains the invoice line item record ID number for a newly
+	 * 			created line item
+	 * @param invoiceNumber			String to hold the invoice ID number for the line item
+	 * @param purchasedQuantity		String to specify the number of items purchased
+	 * @param productID				String to specify the product purchased
+	 * @return	lineNumber			String to hold the line item ID number
+	 * Written by Rick Stuart
+	 */
+	public String obtainInvoiceLineID(String invoiceNumber, String purchasedQuantity,
+			String productID) {
+		
+		String lineNumber = "";
+		
+		String query = null;
+		ResultSet rs = null;
+		
+		query = "SELECT invoice_line_number "
+				+ "FROM invoice_line_item "
+				+ "WHERE invoice_invoice_number = '" + invoiceNumber 
+				+ "' AND quantity_purchased = '" + purchasedQuantity 
+				+ "' AND product_product = '" + productID + "';";
+		
+		Statement stmt = null;
+		
+		connObj = getDBConnection();
+								
+		try {	
+			stmt = connObj.createStatement();
+			rs = stmt.executeQuery(query);			
+			while(rs.next()) {
+				lineNumber = rs.getString(1);
+			}
+		}											
+		catch (SQLException e) {					
+			System.out.println(e.toString());
+		}
+				
+		closeConnection(connObj);
+		
+		return lineNumber;
 	}
 }

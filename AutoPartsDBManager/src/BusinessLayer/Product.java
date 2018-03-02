@@ -1,10 +1,16 @@
-package BusinessLayer;
-
 /**
- * Class Name:						Product (will we have classes that inherit from this?)
+ * Class Name:						Product 
  * Description:						
  * @author Craig Mathes, Michael Meesseman, Richard Stuart
  * @created Saturday, 1,20,2018
+ */
+package BusinessLayer;
+
+/**
+ * This class contains the fields, constructors, get accessors and set mutators necessary
+ * 			to create a Product object for use by the Database and 
+ * 			Presentation layers
+ * Written by Rick Stuart
  */
 public class Product {
 

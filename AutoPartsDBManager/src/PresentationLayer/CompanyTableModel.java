@@ -6,7 +6,9 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import BusinessLayer.Company;
+import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
+import DatabaseLayer.ReaderDAO;
 
 
 /**
@@ -15,6 +17,8 @@ import DatabaseLayer.DatabaseReader;
  */
 public class CompanyTableModel extends AbstractTableModel{
 	
+	
+				ReaderDAO readerDAO = DAOFactory.getReaderDAO();
 	
 				//return list for some methods initialized
 			    private List<Company> companies;
@@ -30,7 +34,7 @@ public class CompanyTableModel extends AbstractTableModel{
 			     * Written by Michael Meesseman
 			     */
 			    public CompanyTableModel() throws SQLException{
-			        companies = DatabaseReader.obtainCompanyList();
+			    	companies = readerDAO.obtainCompanyList();
 			
 			    }
 			    
@@ -119,7 +123,7 @@ public class CompanyTableModel extends AbstractTableModel{
 			     * Written by Michael Meesseman
 			     */
 			    void databaseUpdated() throws SQLException{
-			        companies = DatabaseReader.obtainCompanyList();
+			        companies = readerDAO.obtainCompanyList();
 					fireTableDataChanged();
 			    }
 			    
@@ -130,7 +134,7 @@ public class CompanyTableModel extends AbstractTableModel{
 			     * Written by Michael Meesseman
 			     */
 			    public void refresh(String column, String search){
-			        companies = DatabaseReader.obtainCompanyFilter(column, search);
+			        companies = readerDAO.obtainCompanyFilter(column, search);
 			        fireTableDataChanged();
 			    }
 			    
@@ -143,7 +147,7 @@ public class CompanyTableModel extends AbstractTableModel{
 			     */
 			    public List<Company> resultChecker(String column, String search) {
 			    	
-			    	List<Company> company = DatabaseReader.obtainCompanyFilter(column, search);
+			    	List<Company> company = readerDAO.obtainCompanyFilter(column, search);
 			    	
 			    	return company;
 			    }
@@ -153,7 +157,7 @@ public class CompanyTableModel extends AbstractTableModel{
 			     * Written by Michael Meesseman
 			     */
 			    public void reset(){
-			        companies = DatabaseReader.obtainCompanyList();
+			        companies = readerDAO.obtainCompanyList();
 			        fireTableDataChanged();
 			    }
 			

@@ -2,26 +2,30 @@ package PresentationLayer;
 
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
 
 import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Company;
 import BusinessLayer.Customer;
 import BusinessLayer.Supplier;
+import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
+import DatabaseLayer.ReaderDAO;
 
 public class SupplierTableModel extends AbstractTableModel {
 	
 	  
 		    private List<Supplier> suppliers;
 		    private List<Company> company;
+		    private ReaderDAO readerDAO = DAOFactory.getReaderDAO();
 		    private final String[] COLUMN_NAMES = {"Supplier ID", "Last Name", 
 		    		"First Name", "Contact Info ID", "Address ID", "Company ID", "Street Address",
 		    		"City", "State", "Zip Code", "Unit Number", "Home Phone", "Cell Phone", 
 		    		"Email Address", "Company Name"};
 		    
 		    public SupplierTableModel() throws SQLException{
-		        suppliers = DatabaseReader.obtainSupplierList();
+		        suppliers = readerDAO.obtainSupplierList();
 		
 		    }
 		    
@@ -85,24 +89,24 @@ public class SupplierTableModel extends AbstractTableModel {
 		    
 		    
 		    void databaseUpdated() throws SQLException{
-		        suppliers = DatabaseReader.obtainSupplierList();
+		        suppliers = readerDAO.obtainSupplierList();
 				fireTableDataChanged();
 		    }
 		    
 		    public void refresh(String column, String search){
-		        suppliers = DatabaseReader.obtainSupplierFilter(column, search);
+		        suppliers = readerDAO.obtainSupplierFilter(column, search);
 		        fireTableDataChanged();
 		    }
 		    
 		    public List<Supplier> resultChecker(String column, String search) {
 		    	
-		    	List<Supplier> suppliers = DatabaseReader.obtainSupplierFilter(column, search);
+		    	List<Supplier> suppliers = readerDAO.obtainSupplierFilter(column, search);
 		    	
 		    	return suppliers;
 		    }
 		    
 		    public void reset(){
-		        suppliers = DatabaseReader.obtainSupplierList();
+		        suppliers = readerDAO.obtainSupplierList();
 		        fireTableDataChanged();
 		    }
 		}

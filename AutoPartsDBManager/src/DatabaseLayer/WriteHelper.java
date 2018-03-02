@@ -1,19 +1,21 @@
+/**
+ * Interface Name:	DataWriter
+ * Description:		This interface defines the methods which are employed by the DatabaseWriter class.
+ * @author Craig Mathes, Michael Meesseman, Richard Stuart
+ * @created Saturday, 1,20,2018
+ */
 package DatabaseLayer;
 
-// List imports
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import BusinessLayer.Product;
 
 /**
- * Class Name:		WriteHelper
- * Description:		This class contains the methods called from the DatabaseWriter class
- * 					to support the methods used there.
- * @author Craig Mathes, Michael Meesseman, Richard Stuart
- * @created Saturday, 1,20,2018
+ * This class holds methods called by the DatabaseWriter class to assist with writing
+ * 			to the database
+ * Written by Rick Stuart
  */
 public class WriteHelper {
 	
@@ -61,57 +63,6 @@ public class WriteHelper {
 	}
 	
 	/**
-	 * This helper method uses supplied address information to obtain the ID number 
-	 * 		for an address which was just written to the database.
-	 * @param stAddress				String variable for the street address.
-	 * @param city					String variable for the city.
-	 * @param state					String variable for the state.
-	 * @param zipCode				String variable for the zip code.
-	 * @param unitNumber			String variable for the unit number.
-	 * @return addressID			String variable for the address ID number.
-	 * Written by Rick Stuart
-	 */
-	public String obtainNewAddressID(String stAddress, String city, String state, 
-			String zipCode, String unitNumber) {
-		
-		String addressID = null;
-		String query = null;
-		ResultSet rs = null;
-		
-		if(unitNumber.equals("NULL")) {
-			query = "select address_id " +
-					"from address " +
-					"where street_address = '" + stAddress + "' and city = '" + city + "' and state = '" + state +
-					"' and zip_code = '" + zipCode + "' and unit_number  is null';";
-		}
-		else {
-			query = "select address_id from address where street_address = '" + stAddress +
-					"' and city = '" + city + "' and state = '" + state +
-					"' and zip_code = '" + zipCode +
-					"' and unit_number = '" + unitNumber + "';";
-		}
-		
-		Statement stmt = null;
-								
-		connObj = DatabaseWriter.getDBConnection();
-								
-		try {	
-			stmt = connObj.createStatement();
-			rs = stmt.executeQuery(query);			
-			while(rs.next()) {
-				addressID = rs.getString(1);
-			}
-		}											
-		catch (SQLException e) {					
-			System.out.println(e.toString());
-		}
-				
-		DatabaseWriter.closeConnection(connObj);		
-				
-		return addressID;
-	}
-	
-	/**
 	 * This helper method writes a new contact information record to the database.
 	 * @param phoneNumber			String variable for the phone number.
 	 * @param cellPhone				String variable for the cell phone number.
@@ -141,48 +92,6 @@ public class WriteHelper {
 		}
 		
 		DatabaseWriter.closeConnection(connObj);
-	}
-	
-	/**
-	 * This helper method uses supplied information to locate and obtain the 
-	 * 		contact information ID number which corresponds to the information 
-	 * 		just written to the database.
-	 * @param phoneNumber			String variable for the phone number.
-	 * @param cellPhone				String variable for the cell phone number.
-	 * @param emailAddress			String variable for the email address.
-	 * @return contactInfoID		String variable for the contact info ID number.
-	 * Written by Rick Stuart
-	 */
-	public String obtainNewContactInformationID(String phoneNumber, String cellPhone, 
-			String emailAddress) {
-		
-		String contactInfoID = null;
-		String query = null;
-		ResultSet rs = null;
-		
-		query = "select contact_info_id " +
-				"from contact_info " +
-				"where phone_number = '" + phoneNumber + "' and cell_phone_number = '" + cellPhone +
-				"' and email_address = '" + emailAddress + "';";
-		
-		Statement stmt = null;
-										
-		connObj = DatabaseWriter.getDBConnection();
-										
-		try {	
-			stmt = connObj.createStatement();
-			rs = stmt.executeQuery(query);			
-			while(rs.next()) {
-				contactInfoID = rs.getString(1);
-			}
-		}											
-		catch (SQLException e) {					
-			System.out.println(e.toString());
-		}
-						
-		DatabaseWriter.closeConnection(connObj);		
-		
-		return contactInfoID;
 	}
 	
 	/**
@@ -372,90 +281,6 @@ public class WriteHelper {
 	}
 	
 	/**
-	 * This helper method obtains the record ID number of a product just written
-	 * 			to the database
-	 * @param description			String to hold product description
-	 * @param yearMin				String to define minimum of year range
-	 * @param yearMax				String to define maximum of year range
-	 * @param make					String to define vehicle make
-	 * @param model					String to define vehicle model
-	 * @param supplyPrice			String to specify supplier price of product
-	 * @param sellPrice				String to specify selling price of product
-	 * @param coreCharge			String to define core charge cost
-	 * @param compatNum				String to define part compatibility with other parts
-	 * @param companyID				String to hold company record ID number
-	 * @param minStockQuantity		String to specify ordering quantities
-	 * @param maxStockQuantity		String to specify ordering quantities
-	 * @param location				String to define location in warehouse
-	 * @param quantityInStock		String to set quantity entering building
-	 * @return productID			String to define the record ID number for product
-	 * Written by Rick Stuart
-	 */
-	public String obtainProductID(String description, String yearMin, String yearMax,
-			String make, String model, String supplyPrice, String sellPrice,
-			String coreCharge, String compatNum, String companyID, String minStockQuantity,
-			String maxStockQuantity, String location, String quantityInStock) {
-		
-		String productID = null;
-		String query = null;
-		ResultSet rs = null;
-		
-		query = "select product " +
-				"from product " +
-				"where description = '" + description + "' and year_minimum = '" + yearMin +
-				"' and year_maximum = '" + yearMax + "' and make = '" + make + "' and model = '" +
-				model + "' and supplier_price = '" + supplyPrice + "' and sell_price = '" +
-				sellPrice + "' and core_charge = '" + coreCharge + "' and compatibility_number = '" +
-				compatNum + "' and company_company_id = '" + companyID + 
-				"' and min_quantity_in_stock = '" + minStockQuantity + "' and max_quantity_in_stock = '" +
-				maxStockQuantity + "' and warehouse_location = '" + location + "' and quantity_in_stock = '" +
-				quantityInStock + "';";
-		
-		Statement stmt = null;
-								
-		connObj = DatabaseWriter.getDBConnection();
-								
-		try {	
-			stmt = connObj.createStatement();
-			rs = stmt.executeQuery(query);			
-			while(rs.next()) {
-				productID = rs.getString(1);
-			}
-		}											
-		catch (SQLException e) {					
-			System.out.println(e.toString());
-		}
-				
-		DatabaseWriter.closeConnection(connObj);
-		
-		return productID;
-	}
-	
-	/**
-	 * This helper method obtains the dollar value based on product purchased 
-	 * 			and number of items purchased.
-	 * @param quantityInStock			String to update inventory
-	 * @param supplyPrice				String to define cost to purchase product
-	 * 									to update accounting purchases records
-	 * @return	dollarValue				String to specify total reorder cost
-	 * Written by Rick Stuart
-	 */
-	public String obtainDollarValue(String quantityInStock, String supplyPrice) {
-		
-		double total = 0;
-		String dollarValue = "";
-		
-		double purchasePrice = Double.parseDouble(supplyPrice);
-		int purchasedQuantity = Integer.parseInt(quantityInStock);
-		
-		total = purchasePrice * purchasedQuantity;
-		
-		dollarValue = String.valueOf(total);
-		
-		return dollarValue;
-	}
-	
-	/**
 	 * This helper method writes a record to accounting purchases
 	 * @param numPurchased		String to specify number of items purchased
 	 * @param dollarValue		String to specify total cost to purchase inventory items
@@ -523,49 +348,6 @@ public class WriteHelper {
 	}
 	
 	/**
-	 * This helper method obtains the invoice record ID number for an invoice 
-	 * 			just written to the database.
-	 * @param date				String to hold the date the invoice was created
-	 * @param time				String to hold the time the invoice was created
-	 * @param customerID		String to hold the customer record ID number
-	 * @param employeeID		String to hold the employee record ID number
-	 * @return	invoiceNum		String to specify the invoice record ID number
-	 * Written by Rick Stuart
-	 */
-	public String obtainNewInvoiceNumber(String date, String time, String customerID,
-			String employeeID) {
-		
-		String invoiceNum = "";
-		String query = null;
-		ResultSet rs = null;
-		
-		query = "select invoice_number " +
-				"from invoice " +
-				"where date = '" + date + "' and time = '" + time +
-				"' and customer_customer_id = '" + customerID + "' and employee_employee_id = '" +
-				employeeID + "';";
-		
-		Statement stmt = null;
-		
-		connObj = DatabaseWriter.getDBConnection();
-								
-		try {	
-			stmt = connObj.createStatement();
-			rs = stmt.executeQuery(query);			
-			while(rs.next()) {
-				invoiceNum = rs.getString(1);
-			}
-		}											
-		catch (SQLException e) {					
-			System.out.println(e.toString());
-		}
-				
-		DatabaseWriter.closeConnection(connObj);
-		
-		return invoiceNum;
-	}
-	
-	/**
 	 * This helper method creates a new invoice line item
 	 * @param invoiceNum			String to hold the invoice number
 	 * @param quantityPurchased		String to specify number of items sold
@@ -596,101 +378,6 @@ public class WriteHelper {
 		}
 				
 		DatabaseWriter.closeConnection(connObj);
-	}
-	
-	/**
-	 * This helper method obtains the line item record ID of a line item just 
-	 * 			written to the database.
-	 * @param invoiceID				String to hold the invoice record ID number
-	 * @param quantityPurchased		String to specify number of items purchased/sold
-	 * @param productID				String to specify product ID number
-	 * @return	lineID				String to hold the line item record ID number
-	 * Written by Rick Stuart
-	 */
-	public String obtainLineItemID(String invoiceID, String quantityPurchased, String productID) {
-		
-		String lineID = "";
-		String query = null;
-		ResultSet rs = null;
-		
-		query = "select invoice_line_number " +
-				"from invoice_line_item " +
-				"where invoice_invoice_number = '" + invoiceID + "' and quantity_purchased = '" +
-				quantityPurchased + "' and product_product = '" + productID + "';";
-		
-		Statement stmt = null;  
-		
-		connObj = DatabaseWriter.getDBConnection();
-								
-		try {	
-			stmt = connObj.createStatement();
-			rs = stmt.executeQuery(query);			
-			while(rs.next()) {
-				lineID = rs.getString(1);
-			}
-		}											
-		catch (SQLException e) {					
-			System.out.println(e.toString());
-		}
-				
-		DatabaseWriter.closeConnection(connObj);
-		
-		return lineID;
-	}
-	
-	/**
-	 * This helper method obtains the customer's cost to purchase the item
-	 * @param productID			String to specify the product ID number
-	 * @return	price			String to specify the selling price of the product
-	 * Written by Rick Stuart
-	 */
-	public String obtainSellPrice(String productID) {
-		
-		String price = "";
-		String query = null;
-		ResultSet rs = null;
-		
-		query = "select sell_price " +
-				"from product " +
-				"where product = '" + productID + "';";
-		
-		Statement stmt = null;
-		
-		connObj = DatabaseWriter.getDBConnection();
-								
-		try {	
-			stmt = connObj.createStatement();
-			rs = stmt.executeQuery(query);			
-			while(rs.next()) {
-				price = rs.getString(1);
-			}
-		}											
-		catch (SQLException e) {					
-			System.out.println(e.toString());
-		}
-				
-		DatabaseWriter.closeConnection(connObj);
-		
-		return price;
-	}
-	
-	/**
-	 * This helper method obtains the sales tax to be charged for the line item transaction
-	 * @param dollarValue		String to specify total cost for the line item
-	 * @return	tax				String to specify the sales tax to be charged
-	 * Written by Rick Stuart
-	 */
-	public String obtainSalesTax(String dollarValue) {
-		
-		String tax = "";
-		Double salesTax = 0.0;
-		
-		double cost = Double.parseDouble(dollarValue);
-		salesTax = cost * 0.075;
-		salesTax = (double) Math.round((salesTax * 100) + 0.5) / 100;
-		tax = String.valueOf(salesTax);
-		
-		return tax;
 	}
 	
 	/**
@@ -854,7 +541,7 @@ public class WriteHelper {
 			String dollarValue = "";
 			String quantityAccepted = Integer.toString(quantityToAccept);
 			supplyPrice = p.getSupplierPrice();
-			dollarValue = obtainDollarValue(quantityAccepted, supplyPrice);
+			dollarValue = readerDAO.obtainDollarValue(quantityAccepted, supplyPrice);
 			enterToAccountingPurchases(quantityAccepted, dollarValue, productID);
 		}
 		
@@ -952,7 +639,7 @@ public class WriteHelper {
 		
 		String update = null;
 		
-		String currentQtyInStock = DatabaseReader.getQtyInStock(Integer.parseInt(productID));
+		String currentQtyInStock = readerDAO.getQtyInStock(Integer.parseInt(productID));
 		Integer newQtyInStock = Integer.parseInt(currentQtyInStock) - Integer.parseInt(quantitySold);
 		
 		update = "UPDATE product "
@@ -982,7 +669,7 @@ public class WriteHelper {
 		
 		String update = null;
 		
-		String currentQtyInStock = DatabaseReader.getQtyInStock(Integer.parseInt(productID));
+		String currentQtyInStock = readerDAO.getQtyInStock(Integer.parseInt(productID));
 		Integer newQtyInStock = Integer.parseInt(currentQtyInStock) + Integer.parseInt(quantityPurchased);
 		
 		update = "UPDATE product "
@@ -1022,14 +709,13 @@ public class WriteHelper {
 		quantityToOrder = Integer.toString(quantity);
 		supplyPrice = obtainSupplyPrice(productID);
 		
-		dollarValue = obtainDollarValue(quantityToOrder, supplyPrice);
+		dollarValue = readerDAO.obtainDollarValue(quantityToOrder, supplyPrice);
 		
 		// write the order to accounting_purchases
 		enterToAccountingPurchases(quantityToOrder, dollarValue, productID);
 		
 		// write the order to products.txt
-		System.out.println("Purchase made!");
-		
+		System.out.println("Purchase made!");	
 	}
 	
 	/**
@@ -1107,49 +793,6 @@ public class WriteHelper {
 		return supplyPrice;
 	}
 	
-	/**
-	 * The helper method obtains the invoice line item record ID number for a newly
-	 * 			created line item
-	 * @param invoiceNumber			String to hold the invoice ID number for the line item
-	 * @param purchasedQuantity		String to specify the number of items purchased
-	 * @param productID				String to specify the product purchased
-	 * @return	lineNumber			String to hold the line item ID number
-	 * Written by Rick Stuart
-	 */
-	public String obtainInvoiceLineID(String invoiceNumber, String purchasedQuantity,
-			String productID) {
-		
-		String lineNumber = "";
-		
-		String query = null;
-		ResultSet rs = null;
-		
-		query = "SELECT invoice_line_number "
-				+ "FROM invoice_line_item "
-				+ "WHERE invoice_invoice_number = '" + invoiceNumber 
-				+ "' AND quantity_purchased = '" + purchasedQuantity 
-				+ "' AND product_product = '" + productID + "';";
-		
-		Statement stmt = null;
-		
-		connObj = DatabaseWriter.getDBConnection();
-								
-		try {	
-			stmt = connObj.createStatement();
-			rs = stmt.executeQuery(query);			
-			while(rs.next()) {
-				lineNumber = rs.getString(1);
-			}
-		}											
-		catch (SQLException e) {					
-			System.out.println(e.toString());
-		}
-				
-		DatabaseWriter.closeConnection(connObj);
-		
-		return lineNumber;
-	}
-
 	/**
 	 * This helper method updates an address record due to data entry errors or when
 	 * 			an address changes for any object with an address

@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="BusinessLayer.AccountingPurchases"/>
 <fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="java.awt.event.FocusAdapter"/>
 <fullyQualifiedTypeName name="java.awt.event.FocusEvent"/>
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
-<fullyQualifiedTypeName name="DatabaseLayer.ReaderDAO"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="BusinessLayer.Company"/>
+<fullyQualifiedTypeName name="BusinessLayer.Customer"/>
+<fullyQualifiedTypeName name="BusinessLayer.Employee"/>
+<fullyQualifiedTypeName name="BusinessLayer.Invoice"/>
+<fullyQualifiedTypeName name="BusinessLayer.Supplier"/>
+<fullyQualifiedTypeName name="BusinessLayer.AccountingPurchases"/>
+<fullyQualifiedTypeName name="DatabaseLayer.ReaderDAO"/>
+<fullyQualifiedTypeName name="DatabaseLayer.DAOFactory"/>
 </qualifiedTypeNameHistroy>

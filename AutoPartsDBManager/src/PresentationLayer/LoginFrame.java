@@ -25,7 +25,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
 import BusinessLayer.InvoiceLineItem;
+import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
+import DatabaseLayer.ReaderDAO;
 
 public class LoginFrame extends JFrame {
 	
@@ -33,6 +35,7 @@ public class LoginFrame extends JFrame {
 	 private JPasswordField passwordField;
 	 private JButton loginButton;
 	 private JButton cancelButton;
+	 private ReaderDAO readerDAO = DAOFactory.getReaderDAO();
 	
 	public LoginFrame() throws UnsupportedLookAndFeelException, SQLException {
         try {
@@ -96,7 +99,7 @@ public class LoginFrame extends JFrame {
     		else
     		{
     		password = passwordField.getText();
-			if (password.equals(DatabaseReader.obtainPassword(usernameField.getText())))
+			if (password.equals(readerDAO.obtainPassword(usernameField.getText())))
 			{
 				dispose();
 				AutoPartsStoreFrame gui = new AutoPartsStoreFrame();

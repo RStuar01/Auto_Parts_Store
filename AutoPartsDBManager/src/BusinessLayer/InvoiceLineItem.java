@@ -1,5 +1,3 @@
-package BusinessLayer;
-
 /**
  * Class Name:					InvoiceLineItem
  * Description:					This class  provides fields specific
@@ -8,7 +6,14 @@ package BusinessLayer;
  * @author Craig Mathes, Michael Meesseman, Richard Stuart
  * @created Saturday, 1,20,2018
  */
+package BusinessLayer;
 
+/**
+ * This class contains the fields, constructors, get accessors and set mutators necessary
+ * 			to create an InvoiceLineItem object for use by the Database and 
+ * 			Presentation layers
+ * Written by Rick Stuart
+ */
 public class InvoiceLineItem {
 	
 	// Fields

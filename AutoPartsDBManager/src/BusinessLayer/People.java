@@ -1,5 +1,3 @@
-package BusinessLayer;
-
 /**
  * Class Name:						People
  * Description:						This is the SuperClass for Customer, Supplier, and Employee classes,
@@ -7,6 +5,13 @@ package BusinessLayer;
  * 									with get/set accessors/mutators, and the toString method.
  * @author Craig Mathes, Michael Meesseman, Richard Stuart
  * @created Saturday, 1,20,2018
+ */
+package BusinessLayer;
+
+/**
+ * This class contains the fields, constructors, get accessors and set mutators necessary
+ * 			to create a People object for use by the sub-classes that inherit from it.
+ * Written by Rick Stuart
  */
 public class People {
 

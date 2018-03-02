@@ -1,5 +1,3 @@
-package DatabaseLayer;
-
 /**
  * Interface Name:		WriterDAO
  * Description:			This interface provides the data access object used to implement
@@ -7,6 +5,11 @@ package DatabaseLayer;
  * @author Craig Mathes, Michael Meesseman, Richard Stuart
  * @created Saturday, 1,20,2018
  */
-public interface WriterDAO extends DataWriter {
+package DatabaseLayer;
 
+/**
+ * This interface maps the DataWriter interface to the DAOFactory class
+ * Written by Rick Stuart
+ */
+public interface WriterDAO extends DataWriter {
 }

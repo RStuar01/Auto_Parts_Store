@@ -1,3 +1,9 @@
+/**
+ * Interface Name:	DataWriter
+ * Description:		This interface defines the methods which are employed by the DatabaseWriter class.
+ * @author Craig Mathes, Michael Meesseman, Richard Stuart
+ * @created Saturday, 1,20,2018
+ */
 package DatabaseLayer;
 
 import java.io.*;
@@ -6,6 +12,10 @@ import java.util.*;
 
 import BusinessLayer.Product;
 
+/**
+ * This class holds the methods used to simulate reading RFID tags
+ * Written by Rick Stuart
+ */
 public class RFIDTextReader implements RFIDDAO {
 
 	private ArrayList<Product> products = null;
@@ -14,7 +24,11 @@ public class RFIDTextReader implements RFIDDAO {
 	
 	private final String FIELD_SEP = ",";
 		
-	// Write methods here
+	/**
+	 * This method searches for the "products.txt" file and deletes it after it has
+	 * 			been read
+	 * Written by Rick Stuart
+	 */
 	public ArrayList<Product> ProductTextFile() {
 		productsPath = Paths.get("products.txt");
 		productsFile = productsPath.toFile();
@@ -25,20 +39,22 @@ public class RFIDTextReader implements RFIDDAO {
 			System.out.println("File deleted!");
 		}
 		else {
-			System.out.println("Could not delete file!");
+			System.out.println("No file found!");
 		}
 		
 		return products;
 	}
 	
+	/**
+	 * This method simulates reading RFID tags by reading the "products.txt" file
+	 * Written by Rick Stuart
+	 */
 	public ArrayList<Product> getProducts() {
 		
 		// if the products file has already been read, don't read it again
 		if(products != null) {
 			return products;
 		}
-		
-		
 		
 		// prevent the FileNotFounException
 		if(Files.exists(productsPath)) {
@@ -85,5 +101,4 @@ public class RFIDTextReader implements RFIDDAO {
 		
 		return products;
 	}
-	
 }

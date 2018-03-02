@@ -2,18 +2,22 @@ package PresentationLayer;
 
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
 
 import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Customer;
 import BusinessLayer.Product;
 import BusinessLayer.Supplier;
+import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
+import DatabaseLayer.ReaderDAO;
 
 public class PartsTableModel extends AbstractTableModel{
 	
 			  
 			    private static List<Product> products;
+			    private ReaderDAO readerDAO = DAOFactory.getReaderDAO();
 			    private final String[] COLUMN_NAMES = {"Product ID", "Description", 
 			    		"Minimum Year", "Maximum Year", "Make", "Model", "Supplier Price",
 			    		"Sell Price", "Core Charge", "Compatibility Number", "Company ID",
@@ -21,7 +25,7 @@ public class PartsTableModel extends AbstractTableModel{
 			    		"Quantity in Stock"};
 			    
 			    public PartsTableModel() throws SQLException{
-			        products = DatabaseReader.obtainProductList();
+			        products = readerDAO.obtainProductList();
 			    }
 			    
 			    @Override 
@@ -82,24 +86,24 @@ public class PartsTableModel extends AbstractTableModel{
 			    }
 			    
 			    void databaseUpdated() throws SQLException{
-			        products = DatabaseReader.obtainProductList();
+			        products = readerDAO.obtainProductList();
 					fireTableDataChanged();
 			    }
 			    
 			    public void refresh(String column, String search){
-			        products = DatabaseReader.obtainProductFilter(column, search);
+			        products = readerDAO.obtainProductFilter(column, search);
 			        fireTableDataChanged();
 			    }
 			    
 			    public List<Product> resultChecker(String column, String search) {
 			    	
-			    	List<Product> products = DatabaseReader.obtainProductFilter(column, search);
+			    	List<Product> products = readerDAO.obtainProductFilter(column, search);
 			    	
 			    	return products;
 			    }
 			    
 			    public void reset(){
-			        products = DatabaseReader.obtainProductList();
+			        products = readerDAO.obtainProductList();
 			        fireTableDataChanged();
 			    }
 			}

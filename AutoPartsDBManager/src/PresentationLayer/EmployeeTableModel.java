@@ -3,24 +3,28 @@ package PresentationLayer;
 
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
 
 import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Customer;
 import BusinessLayer.Employee;
+import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
+import DatabaseLayer.ReaderDAO;
 
 public class EmployeeTableModel extends AbstractTableModel{
 
 			   
 		    private List<Employee> employees;
+		    private ReaderDAO readerDAO = DAOFactory.getReaderDAO();
 		    private final String[] COLUMN_NAMES = {"Employee ID", "Last Name", 
 		    		"First Name", "Contact Info ID", "Address ID", "Street Address", 
 		    		"City", "State", "Zip Code", "Unit Number", "Home Phone", "Cell Phone", 
 		    		"Email Address"};
 		    
 		    public EmployeeTableModel() throws SQLException{
-		        employees = DatabaseReader.obtainEmployeeList();
+		        employees = readerDAO.obtainEmployeeList();
 		    }
 		    
 		    @Override 
@@ -77,24 +81,24 @@ public class EmployeeTableModel extends AbstractTableModel{
 		    }
 		    
 		    void databaseUpdated() throws SQLException{
-		    	employees = DatabaseReader.obtainEmployeeList();
+		    	employees = readerDAO.obtainEmployeeList();
 				fireTableDataChanged();
 		    }
 		    
 		    public void refresh(String column, String search){
-		    	employees = DatabaseReader.obtainEmployeeFilter(column, search);
+		    	employees = readerDAO.obtainEmployeeFilter(column, search);
 		        fireTableDataChanged();
 		    }
 		    
 		    public List<Employee> resultChecker(String column, String search) {
 		    	
-		    	List<Employee> employeess = DatabaseReader.obtainEmployeeFilter(column, search);
+		    	List<Employee> employeess = readerDAO.obtainEmployeeFilter(column, search);
 		    	
 		    	return employeess;
 		    }
 		    
 		    public void reset(){
-		    	employees = DatabaseReader.obtainEmployeeList();
+		    	employees = readerDAO.obtainEmployeeList();
 		        fireTableDataChanged();
 		    }
 		

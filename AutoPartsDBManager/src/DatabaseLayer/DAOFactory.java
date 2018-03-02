@@ -1,5 +1,3 @@
-package DatabaseLayer;
-
 /**
  * Class Name:			DAOFactory
  * Description:			This class provides the methods that return data access objects 
@@ -7,7 +5,13 @@ package DatabaseLayer;
  * @author Craig Mathes, Michael Meesseman, Richard Stuart
  * @created Saturday, 1,20,2018
  */
+package DatabaseLayer;
 
+/**
+ * This Interface maps the DataReader, DataWriter and RFIDReader interfaces to the 
+ * 			rest of the classes.
+ *Written by Rick Stuart
+ */
 public class DAOFactory {
 
 	/**

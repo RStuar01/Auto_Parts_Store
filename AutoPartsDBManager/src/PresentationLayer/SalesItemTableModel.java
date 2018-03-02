@@ -2,6 +2,7 @@ package PresentationLayer;
 
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
 
 import BusinessLayer.AccountingPurchases;
@@ -10,20 +11,23 @@ import BusinessLayer.Invoice;
 import BusinessLayer.InvoiceLineItem;
 import BusinessLayer.Product;
 import BusinessLayer.Supplier;
+import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
+import DatabaseLayer.ReaderDAO;
 
 public class SalesItemTableModel extends AbstractTableModel {
 
 	
 				  
 				private List<InvoiceLineItem> invoiceLineItems;
+				private ReaderDAO readerDAO = DAOFactory.getReaderDAO();
 				private final String[] COLUMN_NAMES = {"Invoice Line Number", "Invoice Number", 
 					  	"Quantity Purchased", "Product ID"};
 				String invoiceNumberInput;
 					    
 				public SalesItemTableModel(String invoiceNumberInput) throws SQLException{
 					 this.invoiceNumberInput = invoiceNumberInput;
-				     invoiceLineItems = DatabaseReader.obtainInvoiceLineItemList(invoiceNumberInput);
+				     invoiceLineItems = readerDAO.obtainInvoiceLineItemList(invoiceNumberInput);
 				     
 				}
 					    
@@ -63,24 +67,24 @@ public class SalesItemTableModel extends AbstractTableModel {
 					    }
 					    
 					    void databaseUpdated() throws SQLException{
-					        invoiceLineItems = DatabaseReader.obtainInvoiceLineItemList(invoiceNumberInput);
+					        invoiceLineItems = readerDAO.obtainInvoiceLineItemList(invoiceNumberInput);
 							fireTableDataChanged();
 					    }
 					    
 					    public void refresh(String column, String search){
-					        invoiceLineItems = DatabaseReader.obtainInvoiceLineItemFilter(invoiceNumberInput, column, search);
+					        invoiceLineItems = readerDAO.obtainInvoiceLineItemFilter(invoiceNumberInput, column, search);
 					        fireTableDataChanged();
 					    }
 					    
 					    public List<InvoiceLineItem> resultChecker(String column, String search) {
 					    	
-					    	List<InvoiceLineItem> lineItem = DatabaseReader.obtainInvoiceLineItemFilter(invoiceNumberInput, column, search);
+					    	List<InvoiceLineItem> lineItem = readerDAO.obtainInvoiceLineItemFilter(invoiceNumberInput, column, search);
 					    	
 					    	return lineItem;
 					    }
 					    
 					    public void reset(){
-					    	 invoiceLineItems = DatabaseReader.obtainInvoiceLineItemList(invoiceNumberInput);
+					    	 invoiceLineItems = readerDAO.obtainInvoiceLineItemList(invoiceNumberInput);
 					        fireTableDataChanged();
 					    }
 					}

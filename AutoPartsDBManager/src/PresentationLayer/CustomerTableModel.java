@@ -6,7 +6,9 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import BusinessLayer.Customer;
+import DatabaseLayer.DAOFactory;
 import DatabaseLayer.DatabaseReader;
+import DatabaseLayer.ReaderDAO;
 
 /**
  * Extends AbstartTableModel to build a table for companies Frame.
@@ -16,6 +18,7 @@ public class CustomerTableModel extends AbstractTableModel {
 
 	//return list for some methods initialized
 	    private List<Customer> customers;
+	    private ReaderDAO readerDAO = DAOFactory.getReaderDAO();
 	    
 	  //table column names
 	    private final String[] COLUMN_NAMES = {"Customer ID", "Last Name", 
@@ -29,7 +32,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	     * Written by Michael Meesseman
 	     */
 	    public CustomerTableModel() throws SQLException{
-	        customers = DatabaseReader.obtainCustomerList();
+	        customers = readerDAO.obtainCustomerList();
 	    }
 	    
 	    /**
@@ -118,7 +121,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	     * Written by Michael Meesseman
 	     */
 	    void databaseUpdated() throws SQLException{
-	        customers = DatabaseReader.obtainCustomerList();
+	        customers = readerDAO.obtainCustomerList();
 			fireTableDataChanged();
 	    }
 	    
@@ -129,7 +132,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	     * Written by Michael Meesseman
 	     */
 	    public void refresh(String column, String search){
-	        customers = DatabaseReader.obtainCustomerFilter(column, search);
+	        customers = readerDAO.obtainCustomerFilter(column, search);
 	       
 	        fireTableDataChanged();
 	    }
@@ -143,7 +146,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	     */
 	    public List<Customer> resultChecker(String column, String search) {
 	    	
-	    	List<Customer> customer = DatabaseReader.obtainCustomerFilter(column, search);
+	    	List<Customer> customer = readerDAO.obtainCustomerFilter(column, search);
 	    	
 	    	return customer;
 	    }
@@ -153,7 +156,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	     * Written by Michael Meesseman
 	     */
 	    public void reset(){
-	        customers = DatabaseReader.obtainCustomerList();
+	        customers = readerDAO.obtainCustomerList();
 	        fireTableDataChanged();
 	    }
 	}
