@@ -6,7 +6,6 @@
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="BusinessLayer.Company"/>
 <fullyQualifiedTypeName name="BusinessLayer.Customer"/>
 <fullyQualifiedTypeName name="BusinessLayer.Employee"/>
 <fullyQualifiedTypeName name="BusinessLayer.Invoice"/>
@@ -14,4 +13,5 @@
 <fullyQualifiedTypeName name="BusinessLayer.AccountingPurchases"/>
 <fullyQualifiedTypeName name="DatabaseLayer.ReaderDAO"/>
 <fullyQualifiedTypeName name="DatabaseLayer.DAOFactory"/>
+<fullyQualifiedTypeName name="BusinessLayer.Company"/>
 </qualifiedTypeNameHistroy>
