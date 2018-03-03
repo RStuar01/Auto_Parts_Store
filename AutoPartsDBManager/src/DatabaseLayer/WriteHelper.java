@@ -21,11 +21,14 @@ public class WriteHelper {
 	
 	private Connection connObj = null;
 	private static ReaderDAO readerDAO;
+	private static RFIDDAO rfidDAO;
 	
 	/**
 	 * Constructor called from the DatabaseWriter class to create an instance of this class.
 	 */
 	public WriteHelper() {
+		readerDAO = DAOFactory.getReaderDAO();
+		rfidDAO = DAOFactory.getRFIDDAO();
 	}
 
 	/**
@@ -428,7 +431,7 @@ public class WriteHelper {
 		
 		String productID = p.getProductID();
 		
-		readerDAO = DAOFactory.getReaderDAO();
+		//readerDAO = DAOFactory.getReaderDAO();
 		Product existingProduct = readerDAO.lookupProduct(productID);
 		
 		if(existingProduct != null) {
@@ -495,7 +498,7 @@ public class WriteHelper {
 		
 		int quantityToAccept = 0;
 		int sum = 0;
-		int quantityRejected = 0;	//*********needed for writing to .txt file
+		int quantityRejected = 0;	
 		String quantityInStock = "";
 		String quantityArriving = "";
 		String maxQuantityInStock = "";
@@ -526,14 +529,17 @@ public class WriteHelper {
 			
 			// quantity rejected = arriving - accepted
 			quantityRejected = Integer.parseInt(quantityArriving) - quantityToAccept;
+			
+			// write rejected quantity to a file
+			String reasonRejected = "Exceeds Max Quantity: ";
+			rfidDAO.writeQuantityRejected(reasonRejected, p, productID, quantityRejected);
 		}
 		else {
 			quantityToAccept = Integer.parseInt(quantityArriving);
 			
 		}
 				
-		// write rejected quantity to a file
-		// writeQuantityRejected()
+		
 		
 		//update purchases	
 		if(quantityToAccept > 0) {
@@ -716,6 +722,7 @@ public class WriteHelper {
 		
 		// write the order to products.txt
 		System.out.println("Purchase made!");	
+		rfidDAO.writeProductOrder(productID, quantityToOrder);
 	}
 	
 	/**

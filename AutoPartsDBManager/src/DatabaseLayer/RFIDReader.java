@@ -19,5 +19,8 @@ public interface RFIDReader {
 	// List method signatures
 	public ArrayList<Product> ProductTextFile();
 	public ArrayList<Product> getProducts();
+	public void writeQuantityRejected(String reasonRejected, Product p, String productID,
+			int quantityRejected);
+	public void writeProductOrder(String productID, String quantityToOrder);
 	
 }
