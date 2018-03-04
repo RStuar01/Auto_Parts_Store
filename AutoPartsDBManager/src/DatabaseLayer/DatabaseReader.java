@@ -158,11 +158,9 @@ public class DatabaseReader implements ReaderDAO {
 		connObj =  getDBConnection();
 						
 		try {	
-			System.out.println("In the try statement");
 			stmt = connObj.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				System.out.println("In the While statement");
 				description = rs.getString(1);
 				yearMin = rs.getString(2);
 				yearMax = rs.getString(3);
@@ -1587,13 +1585,4 @@ public class DatabaseReader implements ReaderDAO {
 		
 		return lineNumber;
 	}
-/**
-	@Override
-	public String getQtyInStock(int parseInt) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-*/
-
 }

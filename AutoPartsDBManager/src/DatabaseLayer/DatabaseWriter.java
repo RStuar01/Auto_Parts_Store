@@ -273,7 +273,6 @@ public class DatabaseWriter implements WriterDAO {
 				exists = false;
 			}
 			else {	// If product is new - must enter manually
-				System.out.println("Product does not exist in database - enter product!");
 				int quantityRejected = Integer.parseInt(p.getQuantityInStock());
 				String reasonRejected = "Product not in database: ";
 				rfidDAO.writeQuantityRejected(reasonRejected, p, productID, quantityRejected);
@@ -620,7 +619,6 @@ public class DatabaseWriter implements WriterDAO {
 		
 		// check if reorder necessary
 		reorderProduct = writerHelper.checkReorderNecessity(productID);
-		System.out.println("Need to reorder: " + reorderProduct);
 		
 		// create an order for the product if necessary
 		if(reorderProduct) {

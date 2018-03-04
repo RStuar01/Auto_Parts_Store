@@ -37,16 +37,8 @@ public class AutoPartsStoreGui {
 		// read any incoming products
 		rfidProducts = rfidDAO.ProductTextFile();
 				
-		if(rfidProducts != null) {
-			System.out.println("Products from the arraylist");
-			for(Product p: rfidProducts) {
-				System.out.println(p.toString());
-			}
-					
+		if(rfidProducts != null) {		
 			writerDAO.writeIncomingProducts(rfidProducts);
-		}
-		else {
-			System.out.println("Products is null");
 		}
     }
 	

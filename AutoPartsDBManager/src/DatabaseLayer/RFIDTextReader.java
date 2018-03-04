@@ -37,10 +37,10 @@ public class RFIDTextReader implements RFIDDAO {
 		
 		// delete the RFID file after products are read
 		if(productsFile.delete()) {
-			System.out.println("File deleted!");
+			System.out.println("RFID tags read!");
 		}
 		else {
-			System.out.println("No file found!");
+			System.out.println("No incoming products!");
 		}
 		
 		return products;
@@ -152,7 +152,6 @@ public class RFIDTextReader implements RFIDDAO {
 	 * Written by Rick Stuart
 	 */
 	public void writeProductOrder(String productID, String quantityToOrder) {
-		System.out.println("Writing products.txt");
 		
 		Product p;
 		
