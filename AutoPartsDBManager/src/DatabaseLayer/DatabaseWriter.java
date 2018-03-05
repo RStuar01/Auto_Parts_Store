@@ -24,6 +24,7 @@ public class DatabaseWriter implements WriterDAO {
 	private Connection connObj = null;	
 	private WriteHelper writerHelper = null;
 	private ReaderDAO readerDAO;
+	private RFIDDAO rfidDAO;
 	
 	/**
 	 * This is the Constructor that is called from the DAOFactory class.
@@ -34,6 +35,7 @@ public class DatabaseWriter implements WriterDAO {
 		
 		writerHelper = new WriteHelper();
 		readerDAO = DAOFactory.getReaderDAO();
+		rfidDAO = DAOFactory.getRFIDDAO();
 	}
 	
 	/**
@@ -271,7 +273,9 @@ public class DatabaseWriter implements WriterDAO {
 				exists = false;
 			}
 			else {	// If product is new - must enter manually
-				System.out.println("Product does not exist in database - enter product!");
+				int quantityRejected = Integer.parseInt(p.getQuantityInStock());
+				String reasonRejected = "Product not in database: ";
+				rfidDAO.writeQuantityRejected(reasonRejected, p, productID, quantityRejected);
 			}
 		}
 	}
@@ -615,7 +619,6 @@ public class DatabaseWriter implements WriterDAO {
 		
 		// check if reorder necessary
 		reorderProduct = writerHelper.checkReorderNecessity(productID);
-		System.out.println("Need to reorder: " + reorderProduct);
 		
 		// create an order for the product if necessary
 		if(reorderProduct) {

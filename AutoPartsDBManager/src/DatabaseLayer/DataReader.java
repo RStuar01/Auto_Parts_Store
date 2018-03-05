@@ -6,33 +6,15 @@
  */
 package DatabaseLayer;
 
-import java.sql.Connection;
-//import java.util.ArrayList;
 
 import java.util.ArrayList;
-import java.util.List;
-
-
-
-
-
-
-
-
 import BusinessLayer.AccountingPurchases;
 import BusinessLayer.Company;
 import BusinessLayer.Customer;
 import BusinessLayer.Employee;
 import BusinessLayer.Invoice;
 import BusinessLayer.InvoiceLineItem;
-//import BusinessLayer.AccountingPurchases;
-//import BusinessLayer.Company;
-//import BusinessLayer.Customer;
-//import BusinessLayer.Employee;
-//import BusinessLayer.Invoice;
-//import BusinessLayer.InvoiceLineItem;
 import BusinessLayer.Product;
-//import BusinessLayer.Supplier;
 import BusinessLayer.Supplier;
 
 /**
